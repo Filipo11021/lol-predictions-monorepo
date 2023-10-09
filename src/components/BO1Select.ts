@@ -6,12 +6,7 @@ import { getCurrentEvents } from "../api/events.api";
 import { EventT } from "../schema/events.schema";
 import { db } from "../utils/db";
 import { Team } from "@prisma/client";
-
-function addHours(date: Date, hours: number): Date {
-  date.setHours(date.getHours() + hours);
-
-  return date;
-}
+import { addHours } from "../utils/time";
 
 function buildBO1Selects(events: EventT[]) {
   const selects = events.map(({ match: { id, teams, strategy } }) => {
