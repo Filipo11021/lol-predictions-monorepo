@@ -85,13 +85,13 @@ export function collectSelectResponses(msg: Message | undefined) {
         new Date(res?.gameDay?.firstMatchStart ?? "").getTime()
       ) {
         collector.stop();
-        i.reply("Zakończono głosowanie")
+        i.reply("Zakończono głosowanie");
       }
     }, 60 * 1000);
 
-    const va = i.values[0].split("_")
-    const selection = va[0]
-    const score = va[1]
+    const va = i.values[0].split("_");
+    const selection = va[0];
+    const score = va[1];
 
     await db.user.upsert({
       where: { id: i.user.id },
@@ -100,6 +100,8 @@ export function collectSelectResponses(msg: Message | undefined) {
         username:
           i.user.username === i.user.tag || !i.user.tag
             ? i.user.username
+            : i.user.tag.length > 4
+            ? i.user.tag
             : `${i.user.username}#${i.user.tag}`,
       },
       update: {},
@@ -129,7 +131,9 @@ export function collectSelectResponses(msg: Message | undefined) {
       },
     });
     await i.reply({
-      content: `wybrano ${r.teamCode} ${r.score !== "1-0" ? r.score : ""}`.trim(),
+      content: `wybrano ${r.teamCode} ${
+        r.score !== "1-0" ? r.score : ""
+      }`.trim(),
       ephemeral: true,
     });
   });
