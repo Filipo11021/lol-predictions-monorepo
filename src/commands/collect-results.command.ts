@@ -6,6 +6,7 @@ import {
 } from "discord.js";
 import { db } from "../utils/db";
 import fs from "node:fs";
+import { $Enums } from "@prisma/client";
 
 export const data = new SlashCommandBuilder()
   .setName("collect")
@@ -45,15 +46,17 @@ export const execute = async (
     },
   });
 
-  const result = data?.gameDay?.games.map(({ voters, teams, id }) => ({
-    voters: voters.map(({ team, user: { username, id } }) => ({
+  const result = data?.gameDay?.games.map(({ voters, teams, id, type }) => ({
+    voters: voters.map(({ team, user: { username, id }, score }) => ({
       username,
       teamCode: team.code,
       teamName: team.name,
       user_id: id,
+      score,
     })),
     teams: teams.map(({ code, name, image }) => ({ code, name, image })),
     id,
+    type: type ?? $Enums.MatchType.BO3,
   }));
 
   if (!result) {
@@ -61,7 +64,7 @@ export const execute = async (
       content: "Brak danych",
       ephemeral: isPublic === true ? false : true,
     });
-    return
+    return;
   }
 
   const date = new Date();

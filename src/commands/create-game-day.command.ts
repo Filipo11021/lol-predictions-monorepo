@@ -154,11 +154,12 @@ export function collectSelectResponses(msg: Message | undefined) {
         },
       });
       const a = res?.gameDay?.games.map(({ voters, id }) => ({
-        voters: voters.map(({ team, user: { username, id } }) => ({
+        voters: voters.map(({ team, user: { username, id }, score }) => ({
           username,
           teamCode: team.code,
           teamName: team.name,
           user_id: id,
+          score,
         })),
         id,
       }));
@@ -168,7 +169,13 @@ export function collectSelectResponses(msg: Message | undefined) {
         content: a
           ?.map(
             ({ voters }, i) =>
-              `${i + 1}. ${voters.length === 0 ? "Brak" : voters[0].teamName}`
+              `${i + 1}. ${
+                voters.length === 0
+                  ? "Brak"
+                  : `${voters[0].teamName} ${
+                      voters[0].score !== "1-0" ? voters[0].score : ""
+                    }`.trim()
+              }`
           )
           .join(" | "),
       });

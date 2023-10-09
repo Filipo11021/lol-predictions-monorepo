@@ -8,7 +8,12 @@ import { db } from "../utils/db";
 export const data = new SlashCommandBuilder()
   .setName("votes")
   .setDescription("Zobacz jak inni głosowali")
-  .addUserOption((option) => option.setName("user").setRequired(true).setDescription("Podaj użytkownika którego chcesz sprawdzić"))
+  .addUserOption((option) =>
+    option
+      .setName("user")
+      .setRequired(true)
+      .setDescription("Podaj użytkownika którego chcesz sprawdzić")
+  )
   .addBooleanOption((option) =>
     option
       .setName("public")
@@ -47,11 +52,12 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
     },
   });
   const a = res?.gameDay?.games.map(({ voters, id }) => ({
-    voters: voters.map(({ team, user: { username, id } }) => ({
+    voters: voters.map(({ team, user: { username, id }, score }) => ({
       username,
       teamCode: team.code,
       teamName: team.name,
       user_id: id,
+      score,
     })),
     id,
   }));
@@ -61,15 +67,20 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
       content: "Brak danych",
       ephemeral: isPublic === true ? false : true,
     });
-    return
+    return;
   }
 
   i.reply({
     ephemeral: isPublic === true ? false : true,
     content: `${user.username} - ${a
-      ?.map(
-        ({ voters }, i) =>
-          `${i + 1}. ${voters.length === 0 ? "Brak" : voters[0].teamName}`
+      ?.map(({ voters }, i) =>
+        `${i + 1}. ${
+          voters.length === 0
+            ? "Brak"
+            : `${voters[0].teamName} ${
+                voters[0].score !== "1-0" ? voters[0].score : ""
+              }`
+        }`.trim()
       )
       .join(" | ")}`,
   });

@@ -55,6 +55,14 @@ model Game {
   voters Vote[]
 
   startTime DateTime
+
+  type MatchType? @default(BO3)
+}
+
+enum MatchType {
+  BO1
+  BO3
+  BO5
 }
 
 model GameDay {

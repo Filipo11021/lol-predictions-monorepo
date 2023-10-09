@@ -8,17 +8,51 @@ import { db } from "../utils/db";
 import { Team } from "@prisma/client";
 
 function buildBO1Selects(events: EventT[]) {
-  const selects = events.map(({ match: { id, teams } }) => {
-    const options = teams.map(({ code, name }) => {
-      return new StringSelectMenuOptionBuilder()
-        .setLabel(`${name} (${code})`)
-        .setValue(code);
-    });
+  const selects = events.map(({ match: { id, teams, strategy } }) => {
+
+    let options: StringSelectMenuOptionBuilder[] = []
+
+    if (strategy.count === 1) {
+      options = teams.map(({ code, name }) => {
+        return new StringSelectMenuOptionBuilder()
+          .setLabel(`${name} (${code})`)
+          .setValue(code);
+      });
+    }
+
+    if (strategy.count === 3) {
+      options = teams.flatMap(({ code, name }) => {
+        return [
+          new StringSelectMenuOptionBuilder()
+            .setLabel(`${name} (${code}) 2-0`)
+            .setValue(code),
+          new StringSelectMenuOptionBuilder()
+            .setLabel(`${name} (${code}) 2-1`)
+            .setValue(code),
+        ];
+      });
+    }
+
+    if (strategy.count === 5) {
+      options = teams.flatMap(({ code, name }) => {
+        return [
+          new StringSelectMenuOptionBuilder()
+            .setLabel(`${name} (${code}) 3-0`)
+            .setValue(code),
+          new StringSelectMenuOptionBuilder()
+            .setLabel(`${name} (${code}) 3-1`)
+            .setValue(code),
+          new StringSelectMenuOptionBuilder()
+            .setLabel(`${name} (${code}) 3-2`)
+            .setValue(code),
+        ];
+      });
+    }
 
     const select = new StringSelectMenuBuilder()
       .setCustomId(id)
       .setPlaceholder(`${teams[0].name} vs ${teams[1].name}`)
-      .addOptions(options)
+      .addOptions(options);
 
     return select;
   });
@@ -29,7 +63,7 @@ function buildBO1Selects(events: EventT[]) {
 async function createTeamIfNotExist({
   code,
   image,
-  
+
   name,
 }: Omit<Team, "gameIds">) {
   return db.team.upsert({
@@ -47,7 +81,7 @@ async function createTeamIfNotExist({
 
 async function createGame(
   gameDayId: string,
-  { match: { teams }, match, startTime }: EventT
+  { match: { teams, strategy }, match, startTime }: EventT
 ) {
   await Promise.all([
     createTeamIfNotExist({
@@ -71,6 +105,7 @@ async function createGame(
       id: match.id,
       gameDayId,
       teamCodes: [teams[0].code, teams[1].code],
+      type: strategy.count === 1 ? "BO1" : strategy.count === 5 ? "BO5" : "BO3",
     },
     update: {},
   });
