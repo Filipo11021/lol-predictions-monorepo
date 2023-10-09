@@ -85,10 +85,13 @@ export function collectSelectResponses(msg: Message | undefined) {
         new Date(res?.gameDay?.firstMatchStart ?? "").getTime()
       ) {
         collector.stop();
+        i.reply("Zakończono głosowanie")
       }
     }, 60 * 1000);
 
-    const selection = i.values[0];
+    const va = i.values[0].split("_")
+    const selection = va[0]
+    const score = va[1]
 
     await db.user.upsert({
       where: { id: i.user.id },
@@ -118,13 +121,15 @@ export function collectSelectResponses(msg: Message | undefined) {
         gameId: id,
         userId: i.user.id,
         teamCode: selection,
+        score,
       },
       update: {
         teamCode: selection,
+        score,
       },
     });
     await i.reply({
-      content: `wybrano ${r.teamCode}!`,
+      content: `wybrano ${r.teamCode} ${r.score !== "1-0" ? r.score : ""}`.trim(),
       ephemeral: true,
     });
   });

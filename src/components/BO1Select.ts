@@ -7,10 +7,15 @@ import { EventT } from "../schema/events.schema";
 import { db } from "../utils/db";
 import { Team } from "@prisma/client";
 
+function addHours(date: Date, hours: number): Date {
+  date.setHours(date.getHours() + hours);
+
+  return date;
+}
+
 function buildBO1Selects(events: EventT[]) {
   const selects = events.map(({ match: { id, teams, strategy } }) => {
-
-    let options: StringSelectMenuOptionBuilder[] = []
+    let options: StringSelectMenuOptionBuilder[] = [];
 
     if (strategy.count === 1) {
       options = teams.map(({ code, name }) => {
@@ -25,10 +30,10 @@ function buildBO1Selects(events: EventT[]) {
         return [
           new StringSelectMenuOptionBuilder()
             .setLabel(`${name} (${code}) 2-0`)
-            .setValue(code),
+            .setValue(`${code}_2-0`),
           new StringSelectMenuOptionBuilder()
             .setLabel(`${name} (${code}) 2-1`)
-            .setValue(code),
+            .setValue(`${code}_2-1`),
         ];
       });
     }
@@ -38,13 +43,13 @@ function buildBO1Selects(events: EventT[]) {
         return [
           new StringSelectMenuOptionBuilder()
             .setLabel(`${name} (${code}) 3-0`)
-            .setValue(code),
+            .setValue(`${code}_3-0`),
           new StringSelectMenuOptionBuilder()
             .setLabel(`${name} (${code}) 3-1`)
-            .setValue(code),
+            .setValue(`${code}_3-1`),
           new StringSelectMenuOptionBuilder()
             .setLabel(`${name} (${code}) 3-2`)
-            .setValue(code),
+            .setValue(`${code}_3-2`),
         ];
       });
     }
@@ -151,7 +156,9 @@ export async function createBO1Selects() {
     selects,
     {
       startDate,
-      displayStartDate: new Date(startDate).toLocaleString("pl").slice(0, -3),
+      displayStartDate: addHours(new Date(startDate), 2)
+        .toLocaleString("pl")
+        .slice(0, -3),
       title,
       gameDayId: gameDay.id,
     },
