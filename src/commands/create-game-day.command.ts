@@ -97,12 +97,7 @@ export function collectSelectResponses(msg: Message | undefined) {
       where: { id: i.user.id },
       create: {
         id: i.user.id,
-        username:
-          i.user.username === i.user.tag || !i.user.tag
-            ? i.user.username
-            : i.user.tag.length > 4
-            ? i.user.tag
-            : `${i.user.username}#${i.user.tag}`,
+        username: i.user.tag,
       },
       update: {},
     });
