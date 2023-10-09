@@ -124,7 +124,7 @@ export function collectSelectResponses(msg: Message | undefined) {
       },
     });
     await i.reply({
-      content: `${i.user.username} wybrałeś ${r.teamCode}!`,
+      content: `wybrano ${r.teamCode}!`,
       ephemeral: true,
     });
   });
