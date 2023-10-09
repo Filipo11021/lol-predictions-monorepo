@@ -1,9 +1,12 @@
 import {
   ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
   CacheType,
   ChatInputCommandInteraction,
   ComponentType,
   Message,
+  PermissionFlagsBits,
   SlashCommandBuilder,
 } from "discord.js";
 import { createBO1Selects } from "../components/BO1Select";
@@ -11,7 +14,8 @@ import { db } from "../utils/db";
 
 export const data = new SlashCommandBuilder()
   .setName("game")
-  .setDescription("set game");
+  .setDescription("create game day")
+  .setDefaultMemberPermissions(PermissionFlagsBits.Administrator);
 
 export const execute = async (
   interaction: ChatInputCommandInteraction<CacheType>
@@ -20,13 +24,19 @@ export const execute = async (
     await createBO1Selects();
 
   await interaction.reply({ ephemeral: true, content: "generated games:" });
+  const btn = new ButtonBuilder()
+    .setCustomId("results")
+    .setLabel("Sprawdź swoje wybory")
+    .setStyle(ButtonStyle.Primary);
 
   const res = await interaction.channel?.send({
-    //@ts-expect-error
-    components: selects.map((select) =>
-      new ActionRowBuilder().addComponents(select)
-    ),
-    content: `${title} - koniec głosowania: ${displayStartDate}`,
+    components: [
+      //@ts-expect-error
+      ...selects.map((select) => new ActionRowBuilder().addComponents(select)),
+      //@ts-expect-error
+      new ActionRowBuilder().addComponents(btn),
+    ],
+    content: `${title} - koniec głosowania: ${displayStartDate} <@&1024338951881887764>`,
   });
 
   collectSelectResponses(res);
@@ -42,9 +52,12 @@ export const execute = async (
 };
 
 export function collectSelectResponses(msg: Message | undefined) {
-  msg?.awaitMessageComponent;
+  // setInterval(() => {}, 1000 * 60);
   const collector = msg?.createMessageComponentCollector({
     componentType: ComponentType.StringSelect,
+  });
+  const btnCollector = msg?.createMessageComponentCollector({
+    componentType: ComponentType.Button,
   });
 
   collector?.on("dispose", () => {
@@ -59,10 +72,107 @@ export function collectSelectResponses(msg: Message | undefined) {
     console.log("ignore");
   });
   collector?.on("collect", async (i) => {
+    const id = i.customId;
+
+    setInterval(async () => {
+      const res = await db.currentGameDay.findUnique({
+        where: { id: "main" },
+        include: { gameDay: true },
+      });
+
+      if (
+        new Date().getTime() >
+        new Date(res?.gameDay?.firstMatchStart ?? "").getTime()
+      ) {
+        collector.stop();
+      }
+    }, 60 * 1000);
+
     const selection = i.values[0];
+
+    await db.user.upsert({
+      where: { id: i.user.id },
+      create: {
+        id: i.user.id,
+        username:
+          i.user.username === i.user.tag || !i.user.tag
+            ? i.user.username
+            : `${i.user.username}#${i.user.tag}`,
+      },
+      update: {},
+    });
+
+    try {
+      const role = i?.guild?.roles.cache.get("1024338951881887764");
+      if (!Array.isArray(i.member?.roles) && !!role) {
+        i.member?.roles?.add(role);
+      }
+    } catch {}
+
+    const r = await db.vote.upsert({
+      where: {
+        id: id + i.user.id,
+      },
+      create: {
+        id: id + i.user.id,
+        gameId: id,
+        userId: i.user.id,
+        teamCode: selection,
+      },
+      update: {
+        teamCode: selection,
+      },
+    });
     await i.reply({
-      content: `${i.user} has selected ${selection}!`,
+      content: `${i.user.username} wybrałeś ${r.teamCode}!`,
       ephemeral: true,
     });
+  });
+
+  btnCollector?.on("collect", async (i) => {
+    const id = i.customId;
+
+    if (id === "results") {
+      const res = await db.currentGameDay.findUnique({
+        where: { id: "main" },
+        include: {
+          gameDay: {
+            include: {
+              games: {
+                include: {
+                  voters: {
+                    where: { userId: i.user.id },
+                    include: {
+                      team: true,
+                      user: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+      const a = res?.gameDay?.games.map(({ voters, id }) => ({
+        voters: voters.map(({ team, user: { username, id } }) => ({
+          username,
+          teamCode: team.code,
+          teamName: team.name,
+          user_id: id,
+        })),
+        id,
+      }));
+
+      i.reply({
+        ephemeral: true,
+        content: a
+          ?.map(
+            ({ voters }, i) =>
+              `${i + 1}. ${voters.length === 0 ? "Brak" : voters[0].teamName}`
+          )
+          .join(" | "),
+      });
+      return;
+    }
   });
 }

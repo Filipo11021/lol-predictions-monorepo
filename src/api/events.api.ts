@@ -10,7 +10,9 @@ export async function fetchSchedule(): Promise<EventT[]> {
   });
   const data = scheduleResponseSchema.parse(await res.json());
 
-  return data.data.schedule.events;
+  if (!data.data) throw Error("lolesports data error")
+
+  return data.data?.schedule.events
 }
 
 export function filterCurrentEvents<E extends EventT>(

@@ -126,10 +126,9 @@ const eventSchema = z.union([
 export const scheduleResponseSchema = z.object({
   data: z.object({
     schedule: z.object({
-      pages: z.object({ older: z.string(), newer: z.null() }),
       events: z.array(eventSchema),
     }),
   }),
-});
+})
 
 export type EventT = z.infer<typeof eventSchema>

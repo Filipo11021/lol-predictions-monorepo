@@ -10,7 +10,6 @@ const envSchema = z.object({
 
   DISCORD_TOKEN: z.string(),
   DISCORD_CHANNEL_ID: z.string(),
-  DISCORD_GUILD_ID: z.string(),
   DISCORD_APP_ID: z.string(),
 
   LOLESPORTS_API_KEY: z.string(),

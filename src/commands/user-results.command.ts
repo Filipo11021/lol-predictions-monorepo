@@ -1,16 +1,14 @@
 import {
   CacheType,
   ChatInputCommandInteraction,
-  PermissionFlagsBits,
   SlashCommandBuilder,
 } from "discord.js";
 import { db } from "../utils/db";
-import fs from "node:fs";
 
 export const data = new SlashCommandBuilder()
-  .setName("collect")
-  .setDescription("collect all results")
-  .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+  .setName("votes")
+  .setDescription("Zobacz jak inni głosowali")
+  .addUserOption((option) => option.setName("user").setRequired(true).setDescription("Podaj użytkownika którego chcesz sprawdzić"))
   .addBooleanOption((option) =>
     option
       .setName("public")
@@ -19,12 +17,16 @@ export const data = new SlashCommandBuilder()
       )
   );
 
-export const execute = async (
-  interaction: ChatInputCommandInteraction<CacheType>
-) => {
-  const isPublic = interaction.options.getBoolean("public");
+export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
+  const user = i.options.getUser("user");
+  const isPublic = i.options.getBoolean("public");
 
-  const data = await db.currentGameDay.findUnique({
+  if (!user) {
+    i.reply({ content: "podaj użytkownika", ephemeral: true });
+    return;
+  }
+
+  const res = await db.currentGameDay.findUnique({
     where: { id: "main" },
     include: {
       gameDay: {
@@ -32,48 +34,43 @@ export const execute = async (
           games: {
             include: {
               voters: {
+                where: { userId: user.id },
                 include: {
-                  user: true,
                   team: true,
+                  user: true,
                 },
               },
-              teams: true,
             },
           },
         },
       },
     },
   });
-
-  const result = data?.gameDay?.games.map(({ voters, teams, id }) => ({
+  const a = res?.gameDay?.games.map(({ voters, id }) => ({
     voters: voters.map(({ team, user: { username, id } }) => ({
       username,
       teamCode: team.code,
       teamName: team.name,
       user_id: id,
     })),
-    teams: teams.map(({ code, name, image }) => ({ code, name, image })),
     id,
   }));
 
-  if (!result) {
-    await interaction.reply({
+  if (!a) {
+    await i.reply({
       content: "Brak danych",
       ephemeral: isPublic === true ? false : true,
     });
     return
   }
 
-  const date = new Date();
-  const fileName = `results_${date.getHours()}-${date.getMinutes()}_${date.getDate()}.${date.getMonth()}.${date.getFullYear()}.json`;
-
-  fs.writeFileSync(fileName, JSON.stringify(result), { encoding: "utf8" });
-
-  await interaction.reply({
-    files: [fileName],
-    content: "results:",
+  i.reply({
     ephemeral: isPublic === true ? false : true,
+    content: `${user.username} - ${a
+      ?.map(
+        ({ voters }, i) =>
+          `${i + 1}. ${voters.length === 0 ? "Brak" : voters[0].teamName}`
+      )
+      .join(" | ")}`,
   });
-
-  fs.unlinkSync(fileName);
 };

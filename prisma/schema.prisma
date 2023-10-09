@@ -29,7 +29,7 @@ model Team {
 }
 
 model Vote {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @map("_id")
 
   team     Team   @relation(fields: [teamCode], references: [code])
   teamCode String

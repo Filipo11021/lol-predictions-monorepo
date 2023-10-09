@@ -3,11 +3,8 @@ import {
   Client,
   Events,
   GatewayIntentBits,
-  ActionRowBuilder,
-  ComponentType,
   ChannelType,
 } from "discord.js";
-import { createBO1Selects } from "./components/BO1Select";
 import { handleSlashCommands } from "./handle-slash-commands";
 import { db } from "./utils/db";
 import { collectSelectResponses } from "./commands/create-game-day.command";

@@ -116,7 +116,7 @@ export async function createBO1Selects() {
     selects,
     {
       startDate,
-      displayStartDate: new Date(startDate).toLocaleString("pl"),
+      displayStartDate: new Date(startDate).toLocaleString("pl").slice(0, -3),
       title,
       gameDayId: gameDay.id,
     },
