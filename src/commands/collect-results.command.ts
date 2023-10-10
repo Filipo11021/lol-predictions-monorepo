@@ -18,17 +18,18 @@ export const data = new SlashCommandBuilder()
       .setDescription(
         "czy wynik ma być publiczny czy widoczny tylko dla ciebie?"
       )
-  );
+  )
+  .addStringOption((option) => option.setName("id").setDescription("Podaj id"));
 
 export const execute = async (
   interaction: ChatInputCommandInteraction<CacheType>
 ) => {
   const isPublic = interaction.options.getBoolean("public");
+  const gameDayId = interaction.options.getString("id");
 
-  const data = await db.currentGameDay.findUnique({
-    where: { id: "main" },
-    include: {
-      gameDay: {
+  const data = !!gameDayId
+    ? await db.gameDay.findUnique({
+        where: { id: gameDayId },
         include: {
           games: {
             include: {
@@ -42,11 +43,31 @@ export const execute = async (
             },
           },
         },
-      },
-    },
-  });
+      })
+    : (
+        await db.currentGameDay.findUnique({
+          where: { id: "main" },
+          include: {
+            gameDay: {
+              include: {
+                games: {
+                  include: {
+                    voters: {
+                      include: {
+                        user: true,
+                        team: true,
+                      },
+                    },
+                    teams: true,
+                  },
+                },
+              },
+            },
+          },
+        })
+      )?.gameDay;
 
-  const result = data?.gameDay?.games.map(({ voters, teams, id, type }) => ({
+  const result = data?.games.map(({ voters, teams, id, type }) => ({
     voters: voters.map(({ team, user: { username, id }, score }) => ({
       username,
       teamCode: team.code,
