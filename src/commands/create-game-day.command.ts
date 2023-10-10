@@ -39,7 +39,7 @@ export const execute = async (
     content: `${title} - koniec głosowania: ${displayStartDate} <@&1024338951881887764>`,
   });
 
-  collectSelectResponses(res);
+  await collectSelectResponses(res);
 
   await db.currentGameDay.update({
     data: {
@@ -51,7 +51,7 @@ export const execute = async (
   });
 };
 
-export function collectSelectResponses(msg: Message | undefined) {
+export async function collectSelectResponses(msg: Message | undefined) {
   // setInterval(() => {}, 1000 * 60);
   const collector = msg?.createMessageComponentCollector({
     componentType: ComponentType.StringSelect,
@@ -59,6 +59,33 @@ export function collectSelectResponses(msg: Message | undefined) {
   const btnCollector = msg?.createMessageComponentCollector({
     componentType: ComponentType.Button,
   });
+
+  setInterval(async () => {
+    const res = await db.currentGameDay.findUnique({
+      where: { id: "main" },
+      include: { gameDay: true },
+    });
+
+    if (
+      new Date().getTime() >
+      new Date(res?.gameDay?.firstMatchStart ?? "").getTime()
+    ) {
+      collector?.stop();
+      msg?.reply("Zakończono głosowanie");
+    }
+  }, 60 * 1000);
+  const res = await db.currentGameDay.findUnique({
+    where: { id: "main" },
+    include: { gameDay: true },
+  });
+
+  if (
+    new Date().getTime() >
+    new Date(res?.gameDay?.firstMatchStart ?? "").getTime()
+  ) {
+    collector?.stop();
+    msg?.reply("Zakończono głosowanie");
+  }
 
   collector?.on("dispose", () => {
     console.log("dispose");
@@ -74,20 +101,8 @@ export function collectSelectResponses(msg: Message | undefined) {
   collector?.on("collect", async (i) => {
     const id = i.customId;
 
-    setInterval(async () => {
-      const res = await db.currentGameDay.findUnique({
-        where: { id: "main" },
-        include: { gameDay: true },
-      });
 
-      if (
-        new Date().getTime() >
-        new Date(res?.gameDay?.firstMatchStart ?? "").getTime()
-      ) {
-        collector.stop();
-        i.reply("Zakończono głosowanie");
-      }
-    }, 60 * 1000);
+    
 
     const va = i.values[0].split("_");
     const selection = va[0];
