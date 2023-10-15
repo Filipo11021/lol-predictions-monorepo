@@ -77,7 +77,7 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
         `${i + 1}. ${
           voters.length === 0
             ? "Brak"
-            : `${voters[0].teamName} ${
+            : `${voters[0].teamCode} ${
                 voters[0].score !== "1-0" ? voters[0].score : ""
               }`
         }`.trim()

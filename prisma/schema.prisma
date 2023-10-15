@@ -11,8 +11,9 @@ datasource db {
 }
 
 model User {
-  id       String @id @map("_id")
-  username String
+  id            String  @id @map("_id")
+  username      String
+  notifications Boolean @default(true)
 
   votes Vote[]
 }
@@ -81,4 +82,10 @@ model CurrentGameDay {
   gameDayId String?  @unique
 
   messageId String?
+}
+
+model Info {
+  id String @id @default("main") @map("_id")
+  notifyCheckMessageId String?
+  notifyCheckMessageChannel String?
 }

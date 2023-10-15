@@ -29,21 +29,51 @@ export const execute = async (
     .setLabel("Sprawdź swoje wybory")
     .setStyle(ButtonStyle.Primary);
 
-  const res = await interaction.channel?.send({
-    components: [
-      //@ts-expect-error
-      ...selects.map((select) => new ActionRowBuilder().addComponents(select)),
-      //@ts-expect-error
-      new ActionRowBuilder().addComponents(btn),
-    ],
+  const selects1 = selects.slice(0, 4);
+  const selects2 = selects.slice(4, selects.length);
+
+  const arr =
+    selects2.length === 0
+      ? [
+          ...selects1.map((select) =>
+            new ActionRowBuilder().addComponents(select)
+          ),
+          new ActionRowBuilder().addComponents(btn),
+        ]
+      : [
+          ...selects1.map((select) =>
+            new ActionRowBuilder().addComponents(select)
+          ),
+        ];
+
+  const res1 = await interaction.channel?.send({
+    //@ts-expect-error
+    components: arr,
     content: `${title} - koniec głosowania: ${displayStartDate} <@&1024338951881887764>`,
   });
 
-  await collectSelectResponses(res);
+  const res2 =
+    selects2.length > 0
+      ? await interaction.channel?.send({
+          components: [
+            //@ts-expect-error
+            ...selects2.map((select) =>
+              new ActionRowBuilder().addComponents(select)
+            ),
+            //@ts-expect-error
+            new ActionRowBuilder().addComponents(btn),
+          ],
+        })
+      : undefined;
+
+  await collectSelectResponses(res1, { withEndMessage: true });
+  if (res2) {
+    await collectSelectResponses(res2, { withEndMessage: false });
+  }
 
   await db.currentGameDay.update({
     data: {
-      messageId: res?.id,
+      messageId: res2?.id ? `${res1?.id}$$${res2?.id}` : res1?.id,
     },
     where: {
       id: "main",
@@ -51,8 +81,12 @@ export const execute = async (
   });
 };
 
-export async function collectSelectResponses(msg: Message | undefined) {
-  // setInterval(() => {}, 1000 * 60);
+export async function collectSelectResponses(
+  msg: Message | undefined,
+  { withEndMessage = true }: { withEndMessage: boolean }
+) {
+  if (!msg) return;
+
   const collector = msg?.createMessageComponentCollector({
     componentType: ComponentType.StringSelect,
   });
@@ -71,7 +105,9 @@ export async function collectSelectResponses(msg: Message | undefined) {
       new Date(res?.gameDay?.firstMatchStart ?? "").getTime()
     ) {
       collector?.stop();
-      msg?.reply("Zakończono głosowanie");
+      if (withEndMessage) {
+        msg?.reply("Zakończono głosowanie");
+      }
     }
   }, 60 * 1000);
   const res = await db.currentGameDay.findUnique({
@@ -84,7 +120,9 @@ export async function collectSelectResponses(msg: Message | undefined) {
     new Date(res?.gameDay?.firstMatchStart ?? "").getTime()
   ) {
     collector?.stop();
-    msg?.reply("Zakończono głosowanie");
+    if (withEndMessage) {
+      msg?.reply("Zakończono głosowanie");
+    }
   }
 
   collector?.on("dispose", () => {
@@ -101,14 +139,11 @@ export async function collectSelectResponses(msg: Message | undefined) {
   collector?.on("collect", async (i) => {
     const id = i.customId;
 
-
-    
-
     const va = i.values[0].split("_");
     const selection = va[0];
     const score = va[1];
 
-    await db.user.upsert({
+    const user = await db.user.upsert({
       where: { id: i.user.id },
       create: {
         id: i.user.id,
@@ -191,7 +226,7 @@ export async function collectSelectResponses(msg: Message | undefined) {
               `${i + 1}. ${
                 voters.length === 0
                   ? "Brak"
-                  : `${voters[0].teamName} ${
+                  : `${voters[0].teamCode} ${
                       voters[0].score !== "1-0" ? voters[0].score : ""
                     }`.trim()
               }`

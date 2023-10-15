@@ -25,9 +25,6 @@ client.once(Events.ClientReady, async (c) => {
     },
   });
 
-  const msg = (await channel.messages.fetch({ limit: 10 })).find(
-    ({ id }) => currentGameDay?.messageId === id
-  );
 
   setInterval(async () => {
     const currentGameDay = await db.currentGameDay.findUnique({
@@ -53,7 +50,7 @@ client.once(Events.ClientReady, async (c) => {
     });
 
     const msg = (await channel.messages.fetch({ limit: 10 })).find(
-      ({ id }) => currentGameDay?.messageId === id
+      ({ id }) => currentGameDay?.messageId?.split("$$")[0] === id
     );
 
     const res = currentGameDay?.gameDay?.games.map(({ voters, id, teams }) =>
@@ -89,7 +86,17 @@ client.once(Events.ClientReady, async (c) => {
     });
   }, 1000 * 32);
 
-  collectSelectResponses(msg);
+
+  const msg1 = (await channel.messages.fetch({ limit: 10 })).find(
+    ({ id }) => currentGameDay?.messageId?.split("$$")[0] === id
+  );
+  const msg2 = (await channel.messages.fetch({ limit: 10 })).find(
+    ({ id }) => currentGameDay?.messageId?.split("$$")[1] === id
+  );
+  collectSelectResponses(msg1, {withEndMessage: true});
+  if (msg2) {
+    collectSelectResponses(msg2, {withEndMessage: false});
+  }
 
   console.log(`Ready! Logged in as ${c.user.tag}`);
 });
