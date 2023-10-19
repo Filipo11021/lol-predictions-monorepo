@@ -94,7 +94,8 @@ export async function collectSelectResponses(
     componentType: ComponentType.Button,
   });
 
-  setInterval(async () => {
+  let intervalId: NodeJS.Timeout;
+  intervalId = setInterval(async () => {
     const res = await db.currentGameDay.findUnique({
       where: { id: "main" },
       include: { gameDay: true },
@@ -105,6 +106,7 @@ export async function collectSelectResponses(
       new Date(res?.gameDay?.firstMatchStart ?? "").getTime()
     ) {
       collector?.stop();
+      clearInterval(intervalId);
       if (withEndMessage) {
         msg?.reply("Zakończono głosowanie");
       }
@@ -120,6 +122,7 @@ export async function collectSelectResponses(
     new Date(res?.gameDay?.firstMatchStart ?? "").getTime()
   ) {
     collector?.stop();
+    clearInterval(intervalId);
     if (withEndMessage) {
       msg?.reply("Zakończono głosowanie");
     }
