@@ -35,7 +35,15 @@ export const execute = async (
             include: {
               voters: {
                 include: {
-                  user: true,
+                  user: {
+                    include: {
+                      _count: {
+                        select: {
+                          votes: true,
+                        },
+                      },
+                    },
+                  },
                   team: true,
                 },
               },
@@ -54,7 +62,15 @@ export const execute = async (
                   include: {
                     voters: {
                       include: {
-                        user: true,
+                        user: {
+                          include: {
+                            _count: {
+                              select: {
+                                votes: true,
+                              },
+                            },
+                          },
+                        },
                         team: true,
                       },
                     },
@@ -67,17 +83,21 @@ export const execute = async (
         })
       )?.gameDay;
 
+  const allCount = await db.game.count();
+
   const result = data?.games.map(({ voters, teams, id, type }) => ({
-    voters: voters.map(({ team, user: { username, id }, score }) => ({
+    all_votes_count: allCount,
+    teams: teams.map(({ code, name, image }) => ({ code, name, image })),
+    type: type ?? $Enums.MatchType.BO3,
+    id,
+    voters: voters.map(({ team, user: { username, id, _count }, score }) => ({
       username,
       teamCode: team.code,
       teamName: team.name,
       user_id: id,
       score,
+      votes_count: _count.votes,
     })),
-    teams: teams.map(({ code, name, image }) => ({ code, name, image })),
-    id,
-    type: type ?? $Enums.MatchType.BO3,
   }));
 
   if (!result) {
