@@ -112,7 +112,9 @@ async function createGame(
 }
 
 function generateIdFromEvents(events: EventT[]) {
-  return events.map(({ match: { id } }) => id.slice(id.length - 10)).join("");
+  // return events.map(({ match: { id } }) => id.slice(id.length - 10)).join("");
+  const date = new Date(events[0].startTime)
+  return `${date.getDate()}-${date.getMonth()}`
 }
 
 export async function createBO1Selects() {
