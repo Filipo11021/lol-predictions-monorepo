@@ -94,19 +94,16 @@ client.once(Events.ClientReady, async (c) => {
       let text = "";
 
       teams.forEach(({ teamCode, count }, i) => {
-        text += `${teamCode}: `;
+        text += `${i === 0 ? "🟦" : "🟥"}${teamCode}: `;
+
         Object.keys(count).forEach((key, i) => {
           //@ts-expect-error
-          text += `${key} ${count[key]} `;
+          text += `${key} - ${count[key]} `;
 
           if (Object.keys(count).length - 1 !== i) {
             text += "| ";
           }
         });
-        
-        if (i !== teams.length - 1) {
-          text += "🟦";
-        }
       });
 
       return text;
