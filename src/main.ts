@@ -68,7 +68,7 @@ client.once(Events.ClientReady, async (c) => {
                   ? {
                       ...arg,
                       //@ts-expect-error
-                      count: { [current.score]: arg.count[current.score] + 1 },
+                      count: { [current.score]: (arg.count[current.score] ?? 0) + 1 },
                     }
                   : arg
               );
@@ -96,7 +96,6 @@ client.once(Events.ClientReady, async (c) => {
           //@ts-expect-error
           text += `${key} ${count[key]} | `;
         });
-        text += "||"
       });
 
       return text
@@ -108,7 +107,7 @@ client.once(Events.ClientReady, async (c) => {
         ?.map((teams) => formatDisplay(teams))
         .join("\n")}`,
     });
-  }, 1000 * 32);
+  }, 1000 * 28);
 
   const msg1 = (await channel.messages.fetch({ limit: 10 })).find(
     ({ id }) => currentGameDay?.messageId?.split("$$")[0] === id
