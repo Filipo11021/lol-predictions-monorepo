@@ -67,8 +67,11 @@ client.once(Events.ClientReady, async (c) => {
                 arg.teamCode === current.teamCode
                   ? {
                       ...arg,
-                      //@ts-expect-error
-                      count: { ...arg.count, [current.score]: (arg.count?.[current.score] ?? 0) + 1 },
+                      count: {
+                        ...arg.count,
+                         //@ts-expect-error
+                        [current.score]: (arg.count?.[current.score] ?? 0) + 1,
+                      },
                     }
                   : arg
               );
@@ -90,15 +93,23 @@ client.once(Events.ClientReady, async (c) => {
     ) {
       let text = "";
 
-      teams.forEach(({ teamCode, count }) => {
+      teams.forEach(({ teamCode, count }, i) => {
         text += `${teamCode}: `;
-        Object.keys(count).forEach((key) => {
+        Object.keys(count).forEach((key, i) => {
           //@ts-expect-error
-          text += `${key} ${count[key]} | `;
+          text += `${key} ${count[key]} `;
+
+          if (Object.keys(count).length - 1 !== i) {
+            text += "| ";
+          }
         });
+        
+        if (i !== teams.length - 1) {
+          text += "🟦";
+        }
       });
 
-      return text
+      return text;
     }
 
     const content = msg?.content.split("\n")[0];
