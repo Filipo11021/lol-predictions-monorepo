@@ -19,13 +19,13 @@ export const data = new SlashCommandBuilder()
         "czy wynik ma być publiczny czy widoczny tylko dla ciebie?"
       )
   )
-  .addStringOption((option) => option.setName("id").setDescription("Podaj id"));
+  .addStringOption((option) => option.setName("date").setDescription("Podaj date w formacie D-M np. 23-10"));
 
 export const execute = async (
   interaction: ChatInputCommandInteraction<CacheType>
 ) => {
   const isPublic = interaction.options.getBoolean("public");
-  const gameDayId = interaction.options.getString("id");
+  const gameDayId = interaction.options.getString("date");
 
   await interaction.deferReply({ephemeral: !isPublic});
 

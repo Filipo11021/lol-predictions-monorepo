@@ -20,21 +20,26 @@ export const data = new SlashCommandBuilder()
       .setDescription(
         "czy wynik ma być publiczny czy widoczny tylko dla ciebie?"
       )
+  )
+  .addStringOption((option) =>
+    option.setName("date").setDescription("podaj date w formacie D-M np. 23-10")
   );
 
 export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
   const user = i.options.getUser("user");
   const isPublic = i.options.getBoolean("public");
+  const gameDayId = i.options.getString("date");
 
   if (!user) {
     i.reply({ content: "podaj użytkownika", ephemeral: true });
     return;
   }
 
-  const res = await db.currentGameDay.findUnique({
-    where: { id: "main" },
-    include: {
-      gameDay: {
+  const res = !!gameDayId
+    ? (await db.gameDay.findUnique({
+        where: {
+          id: gameDayId,
+        },
         include: {
           games: {
             include: {
@@ -48,10 +53,31 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
             },
           },
         },
-      },
-    },
-  });
-  const a = res?.gameDay?.games.map(({ voters, id }) => ({
+      }))
+    : (
+        await db.currentGameDay.findUnique({
+          where: { id: "main" },
+          include: {
+            gameDay: {
+              include: {
+                games: {
+                  include: {
+                    voters: {
+                      where: { userId: user.id },
+                      include: {
+                        team: true,
+                        user: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        })
+      )?.gameDay;
+
+  const a = res?.games.map(({ voters, id }) => ({
     voters: voters.map(({ team, user: { username, id }, score }) => ({
       username,
       teamCode: team.code,
@@ -65,13 +91,13 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
   if (!a) {
     await i.reply({
       content: "Brak danych",
-      ephemeral: isPublic === true ? false : true,
+      ephemeral: !isPublic,
     });
     return;
   }
 
   i.reply({
-    ephemeral: isPublic === true ? false : true,
+    ephemeral: !isPublic,
     content: `${user.username} - ${a
       ?.map(({ voters }, i) =>
         `${i + 1}. ${
