@@ -98,12 +98,12 @@ export const execute = async (
     ({ voters, teams, id, type }) => ({
       all_votes_count: allCount,
       voters: voters.map(({ team, user: { username, id, _count }, score }) => ({
+        votes_count: _count.votes,
         username,
         teamCode: team.code,
         teamName: team.name,
         user_id: id,
         score,
-        votes_count: _count.votes,
       })),
       teams: teams.map(({ code, name, image }) => ({ code, name, image })),
       type: type ?? $Enums.MatchType.BO3,
