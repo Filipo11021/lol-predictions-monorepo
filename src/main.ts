@@ -68,7 +68,7 @@ client.once(Events.ClientReady, async (c) => {
                   ? {
                       ...arg,
                       //@ts-expect-error
-                      count: { [current.score]: (arg.count[current.score] ?? 0) + 1 },
+                      count: { ...arg.count, [current.score]: (arg.count?.[current.score] ?? 0) + 1 },
                     }
                   : arg
               );
