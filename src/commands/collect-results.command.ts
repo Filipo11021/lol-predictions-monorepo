@@ -19,7 +19,9 @@ export const data = new SlashCommandBuilder()
         "czy wynik ma być publiczny czy widoczny tylko dla ciebie?"
       )
   )
-  .addStringOption((option) => option.setName("date").setDescription("Podaj date w formacie D-M np. 23-10"));
+  .addStringOption((option) =>
+    option.setName("date").setDescription("Podaj date w formacie D-M np. 23-10")
+  );
 
 export const execute = async (
   interaction: ChatInputCommandInteraction<CacheType>
@@ -27,7 +29,7 @@ export const execute = async (
   const isPublic = interaction.options.getBoolean("public");
   const gameDayId = interaction.options.getString("date");
 
-  await interaction.deferReply({ephemeral: !isPublic});
+  await interaction.deferReply({ ephemeral: !isPublic });
 
   const dataPromise = !!gameDayId
     ? await db.gameDay.findUnique({
@@ -54,38 +56,36 @@ export const execute = async (
           },
         },
       })
-    : (
-         db.currentGameDay.findUnique({
-          where: { id: "main" },
-          include: {
-            gameDay: {
-              include: {
-                games: {
-                  include: {
-                    voters: {
-                      include: {
-                        user: {
-                          include: {
-                            _count: {
-                              select: {
-                                votes: true,
-                              },
+    : db.currentGameDay.findUnique({
+        where: { id: "main" },
+        include: {
+          gameDay: {
+            include: {
+              games: {
+                include: {
+                  voters: {
+                    include: {
+                      user: {
+                        include: {
+                          _count: {
+                            select: {
+                              votes: true,
                             },
                           },
                         },
-                        team: true,
                       },
+                      team: true,
                     },
-                    teams: true,
                   },
+                  teams: true,
                 },
               },
             },
           },
-        })
-      )
+        },
+      });
 
-  const [data, allCount] = await Promise.all([dataPromise, db.game.count()])
+  const [data, allCount] = await Promise.all([dataPromise, db.game.count()]);
 
   if (!data) {
     await interaction.editReply({
@@ -94,20 +94,22 @@ export const execute = async (
     return;
   }
 
-  const result = ("gameDay" in data ? data.gameDay : data)?.games.map(({ voters, teams, id, type }) => ({
-    all_votes_count: allCount,
-    teams: teams.map(({ code, name, image }) => ({ code, name, image })),
-    type: type ?? $Enums.MatchType.BO3,
-    id,
-    voters: voters.map(({ team, user: { username, id, _count }, score }) => ({
-      username,
-      teamCode: team.code,
-      teamName: team.name,
-      user_id: id,
-      score,
-      votes_count: _count.votes,
-    })),
-  }));
+  const result = ("gameDay" in data ? data.gameDay : data)?.games.map(
+    ({ voters, teams, id, type }) => ({
+      all_votes_count: allCount,
+      voters: voters.map(({ team, user: { username, id, _count }, score }) => ({
+        username,
+        teamCode: team.code,
+        teamName: team.name,
+        user_id: id,
+        score,
+        votes_count: _count.votes,
+      })),
+      teams: teams.map(({ code, name, image }) => ({ code, name, image })),
+      type: type ?? $Enums.MatchType.BO3,
+      id,
+    })
+  );
 
   if (!result) {
     await interaction.editReply({
