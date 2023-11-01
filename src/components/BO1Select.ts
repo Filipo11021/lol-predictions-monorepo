@@ -153,7 +153,7 @@ export async function createBO1Selects() {
     selects,
     {
       startDate,
-      displayStartDate: addHours(new Date(startDate), 2)
+      displayStartDate: addHours(new Date(startDate), 1)
         .toLocaleString("pl")
         .slice(0, -3),
       title,
