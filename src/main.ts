@@ -98,7 +98,7 @@ client.once(Events.ClientReady, async (c) => {
 
         Object.keys(count).forEach((key, i) => {
           //@ts-expect-error
-          text += `${key} - ${count[key].replace("-", ":")} `;
+          text += `${key?.replace("-", ":")} - ${count[key]} `;
 
           if (Object.keys(count).length - 1 !== i) {
             text += "| ";
