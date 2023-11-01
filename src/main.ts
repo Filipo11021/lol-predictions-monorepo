@@ -69,7 +69,7 @@ client.once(Events.ClientReady, async (c) => {
                       ...arg,
                       count: {
                         ...arg.count,
-                         //@ts-expect-error
+                        //@ts-expect-error
                         [current.score]: (arg.count?.[current.score] ?? 0) + 1,
                       },
                     }
@@ -94,7 +94,7 @@ client.once(Events.ClientReady, async (c) => {
       let text = "";
 
       teams.forEach(({ teamCode, count }, i) => {
-        text += `${"\n"}${teamCode}: `;
+        text += `${i !== 0 ? "\n" : ""}${teamCode}: `;
 
         Object.keys(count).forEach((key, i) => {
           //@ts-expect-error
