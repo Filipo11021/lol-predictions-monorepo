@@ -121,6 +121,27 @@ const eventSchema = z.union([
       strategy: z.object({ type: z.string(), count: z.number() }),
     }),
   }),
+  z.object({
+    startTime: z.string(),
+    state: z.string(),
+    type: z.string(),
+    blockName: z.string(),
+    league: z.object({ name: z.string(), slug: z.string() }),
+    match: z.object({
+      id: z.string(),
+      flags: z.array(z.string()),
+      teams: z.array(
+        z.object({
+          name: z.string(),
+          code: z.string(),
+          image: z.string(),
+          result: z.object({ outcome: z.null(), gameWins: z.number() }),
+          record: z.object({ wins: z.number(), losses: z.number() })
+        })
+      ),
+      strategy: z.object({ type: z.string(), count: z.number() })
+    })
+  })
 ]);
 
 export const scheduleResponseSchema = z.object({
