@@ -5,9 +5,9 @@
   "main": "./build/main.js",
   "scripts": {
     "build": "tsc",
-    "start": "export NODE_ENV=production && node ./build/src/deploy-slash-commands.js && node ./build/src/main.js",
+    "start": "node ./build/deploy-slash-commands.js && node ./build/main.js",
     "dev": "tsx ./src/main.ts",
-    "deploy-cmd": "npm run build && node ./build/src/deploy-slash-commands.js",
+    "deploy-cmd": "npm run build && node ./build/deploy-slash-commands.js",
     "postinstall": "prisma generate"
   },
   "keywords": [],
