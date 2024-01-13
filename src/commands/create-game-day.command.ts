@@ -24,6 +24,7 @@ export const execute = async (
     await createBO1Selects();
 
   await interaction.reply({ ephemeral: true, content: "generated games:" });
+
   const btn = new ButtonBuilder()
     .setCustomId("results")
     .setLabel("Sprawdź swoje wybory")
@@ -49,7 +50,7 @@ export const execute = async (
   const res1 = await interaction.channel?.send({
     //@ts-expect-error
     components: arr,
-    content: `${title} - koniec głosowania: ${displayStartDate} <@&1024338951881887764>`,
+    content: `${title} - koniec głosowania: ${displayStartDate} <@&1195437562450427999>`,
   });
 
   const res2 =
@@ -156,7 +157,7 @@ export async function collectSelectResponses(
     });
 
     try {
-      const role = i?.guild?.roles.cache.get("1024338951881887764");
+      const role = i?.guild?.roles.cache.get("1195437562450427999");
       if (!Array.isArray(i.member?.roles) && !!role) {
         i.member?.roles?.add(role);
       }

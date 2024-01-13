@@ -109,10 +109,40 @@ client.once(Events.ClientReady, async (c) => {
       return text;
     }
 
+    //TODO change for bo3 and bo5
+    function formatBo1(
+      teams: {
+        teamCode: string;
+        teamName: string;
+        count: {};
+      }[]
+    ) {
+      let text = "";
+
+      teams.forEach(({ teamCode, count }, i) => {
+        text += `${i !== 0 ? " - " : ""}${teamCode}: `;
+
+        Object.keys(count).forEach((key, i) => {
+          //@ts-expect-error
+          text += count[key]
+
+          if (Object.keys(count).length - 1 !== i) {
+            text += "| ";
+          }
+        });
+
+        if (Object.keys(count).length === 0) {
+          text += 0
+        }
+      });
+
+      return text;
+    }
+
     const content = msg?.content.split("\n")[0];
     msg?.edit({
       content: `${content}\n${res
-        ?.map((teams) => formatDisplay(teams))
+        ?.map((teams) => formatBo1(teams))
         .join("\n")}`,
     });
   }, 1000 * 28);
