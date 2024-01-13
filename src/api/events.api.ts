@@ -36,7 +36,7 @@ export function filterCurrentEvents<E extends EventT>(
         : new Date(event[fieldName] as string)
     );
 
-    const isFuture = date.getTime() > currentDate.getTime();
+    const isFuture = date.getTime() >= currentDate.getTime();
 
     if (!isFuture) continue;
 
