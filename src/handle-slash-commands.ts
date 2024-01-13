@@ -51,10 +51,11 @@ export function collectSlashCommands() {
   const commandsPath =
     env.NODE_ENV === "production"
       ? path.join(__dirname, "commands")
-      : path.join(__dirname, "../build/commands");
+      : path.join(__dirname, "../build/src/commands");
   const commandFiles = fs
     .readdirSync(commandsPath)
     .filter((file) => file.endsWith(".js"));
+
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);

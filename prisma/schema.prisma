@@ -27,6 +27,7 @@ model Team {
   gameIds String[]
 
   Vote Vote[]
+  wonGames Game[] @relation(name: "winner")
 }
 
 model Vote {
@@ -58,6 +59,9 @@ model Game {
   startTime DateTime
 
   type MatchType? @default(BO3)
+
+  winner     Team?   @relation(fields: [winnerCode], references: [code], name: "winner")
+  winnerCode String?
 }
 
 enum MatchType {
@@ -85,7 +89,7 @@ model CurrentGameDay {
 }
 
 model Info {
-  id String @id @default("main") @map("_id")
-  notifyCheckMessageId String?
+  id                        String  @id @default("main") @map("_id")
+  notifyCheckMessageId      String?
   notifyCheckMessageChannel String?
 }

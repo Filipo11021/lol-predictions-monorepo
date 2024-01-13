@@ -121,6 +121,7 @@ export async function createBO1Selects() {
   const events = await getCurrentEvents();
 
   const selects = buildBO1Selects(events);
+
   const gameDay = await db.gameDay.upsert({
     create: {
       firstMatchStart: events[0].startTime,
@@ -134,6 +135,7 @@ export async function createBO1Selects() {
       games: true,
     },
   });
+
 
   await Promise.all(events.map((event) => createGame(gameDay.id, event)));
 

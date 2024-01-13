@@ -19,7 +19,8 @@ const rest = new REST().setToken(env.DISCORD_TOKEN);
       `Started refreshing ${commands.size} application (/) commands.`
     );
 
-    console.log(commands.forEach((a) => console.log(a)));
+    //@ts-expect-error
+    console.log(commands.forEach((a) => console.log(a?.data?.name)));
 
     // The put method is used to fully refresh all commands in the guild with the current set
     const data = await rest.put(
