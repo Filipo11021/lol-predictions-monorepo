@@ -28,4 +28,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/worlds-predictions-bot:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lol-predictions-bot:latest
