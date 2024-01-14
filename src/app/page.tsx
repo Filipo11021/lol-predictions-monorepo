@@ -1,8 +1,7 @@
-"use server";
 import { db } from "@/utils/db";
-import { DataTable } from "./data-table";
-import { columns } from "./columns";
 import { PointsTable } from "./points-table";
+
+export const revalidate = 1000 * 60
 
 export default async function Home() {
   const data = await db.user.findMany({
@@ -38,6 +37,7 @@ export default async function Home() {
       </h1>
       </div>
       <PointsTable data={users} />
+      <p className="my-8 opacity-80">last update: {new Date().toLocaleString("pl")}</p>
     </div>
   );
 }
