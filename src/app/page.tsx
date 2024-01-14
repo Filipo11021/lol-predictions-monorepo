@@ -1,20 +1,23 @@
 import { db } from "@/utils/db";
 import { PointsTable } from "./points-table";
 
-export const revalidate = 1000 * 60
+export const revalidate = 1000 * 60;
 
 export default async function Home() {
-  const data = await db.user.findMany({
-    include: {
-      votes: {
-        include: {
-          Game: true
-        }
-      }
-    }
-  });
+  const [data, gamesCount] = await Promise.all([
+    db.user.findMany({
+      include: {
+        votes: {
+          include: {
+            Game: true,
+          },
+        },
+      },
+    }),
+    db.game.count()
+  ]);
 
-  const users: Array<{ username: string; points: number }> = [];
+  const users: Array<{ username: string; points: number, coverage: number }> = [];
   for (const user of data) {
     users.push({
       username: user.username,
@@ -23,21 +26,16 @@ export default async function Home() {
           teamCode === winnerCode ? 1 : 0
         )
         .reduce((a, b) => a + b, 0 as number),
+      coverage: user.votes.length * 100 / gamesCount
     });
   }
 
   return (
-    <div className="mx-auto max-w-xl p-4">
-      <div className="relative">
-      <h1
-        style={{ backgroundImage: "linear-gradient(to top left,#19e6c3,#9470fd)" }}
-        className="scroll-m-20 bg-clip-text text-transparent inline-block text-4xl mb-5 text-center font-extrabold tracking-tight lg:text-5xl"
-      >
-        LEC PREDYKCJE
-      </h1>
-      </div>
+    <div className="mx-auto max-w-xl">
       <PointsTable data={users} />
-      <p className="my-8 opacity-80">last update: {new Date().toLocaleString("pl")}</p>
+      <p className="my-8 opacity-80">
+        last update: {new Date().toLocaleString("pl")}
+      </p>
     </div>
   );
 }
