@@ -14,10 +14,11 @@ export default async function Home() {
         },
       },
     }),
-    db.game.count()
+    db.game.count({ where: { winnerCode: { not: null } } }),
   ]);
 
-  const users: Array<{ username: string; points: number, coverage: number }> = [];
+  const users: Array<{ username: string; points: number; coverage: number }> =
+    [];
   for (const user of data) {
     users.push({
       username: user.username,
@@ -26,7 +27,10 @@ export default async function Home() {
           teamCode === winnerCode ? 1 : 0
         )
         .reduce((a, b) => a + b, 0 as number),
-      coverage: user.votes.length * 100 / gamesCount
+      coverage:
+        (user.votes.filter(({ Game: { winnerCode } }) => winnerCode).length *
+          100) /
+        gamesCount,
     });
   }
 
