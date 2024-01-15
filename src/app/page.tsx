@@ -1,8 +1,6 @@
 import { db } from "@/utils/db";
 import { PointsTable } from "./points-table";
 
-export const revalidate = 120;
-
 export default async function Home() {
   const [data, gamesCount] = await Promise.all([
     db.user.findMany({
@@ -35,7 +33,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="mx-auto max-w-xl">
+    <div className="mx-auto max-w-lg">
       <PointsTable data={users} />
       <p className="my-8 opacity-80">
         last update: {new Date().toLocaleString("pl")}
