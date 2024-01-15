@@ -31,7 +31,7 @@ export const columns: ColumnDef<{
       );
     },
     cell({ getValue }) {
-      return <div className="text-center">{Number(getValue()).toFixed(1)}</div>;
+      return <div className="text-center">{Number(getValue())}</div>;
     },
   },
   {
@@ -51,7 +51,7 @@ export const columns: ColumnDef<{
     },
     cell({ getValue }) {
       return (
-        <div className="text-center">{Number(getValue()).toFixed(1)}%</div>
+        <div className="text-center">{Math.round(Number(getValue()))}%</div>
       );
     },
   },
