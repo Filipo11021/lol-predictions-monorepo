@@ -1,7 +1,7 @@
 import { db } from "@/utils/db";
 import { PointsTable } from "./points-table";
 
-export const revalidate = 1000 * 60;
+export const revalidate = 120;
 
 export default async function Home() {
   const [data, gamesCount] = await Promise.all([
