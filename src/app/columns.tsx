@@ -8,7 +8,14 @@ export const columns: ColumnDef<{
   username: string;
   points: number;
   coverage: number;
+  index: number;
 }>[] = [
+  {
+    accessorKey: "index",
+    header: () => {
+      return <div>#</div>;
+    },
+  },
   {
     accessorKey: "username",
     header: () => {

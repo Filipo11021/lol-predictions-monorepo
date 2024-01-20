@@ -32,9 +32,32 @@ export default async function Home() {
     });
   }
 
+  const sortedData = users.sort((a, b) => b.points - a.points);
+
+  const dataWithIndex: Array<{
+    username: string;
+    points: number;
+    coverage: number;
+    index: number;
+  }> = [];
+
+  let currentIndex = 0;
+  sortedData.forEach((user, i) => {
+    currentIndex = user.points !== sortedData[i - 1]?.points
+        ? currentIndex + 1
+        : currentIndex;
+
+    dataWithIndex.push({
+      username: user.username,
+      points: user.points,
+      coverage: user.coverage,
+      index: currentIndex,
+    });
+  });
+
   return (
     <div className="mx-auto max-w-lg">
-      <PointsTable data={users} />
+      <PointsTable data={dataWithIndex} />
       <p className="my-8 opacity-80">
         last update: {new Date().toLocaleString("pl")}
       </p>
