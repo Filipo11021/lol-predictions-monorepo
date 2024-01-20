@@ -10,7 +10,7 @@ import debounce from "lodash.debounce";
 export function PointsTable({
   data,
 }: {
-  data: Array<{ username: string; points: number, coverage: number }>;
+  data: Array<{ username: string; points: number, coverage: number, index: number }>;
 }) {
   const [query, setQuery] = useState("");
 
