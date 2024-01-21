@@ -5,7 +5,7 @@ import { env } from "../env";
 export async function fetchSchedule(): Promise<EventT[]> {
   try {
     const url =
-    "https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-GB&leagueId=98767991302996019,98767975604431411";
+    "https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-GB&leagueId=98767991302996019";
   const res = await fetch(url, {
     headers: { "x-api-key": env.LOLESPORTS_API_KEY },
   });
@@ -31,6 +31,7 @@ export function filterCurrentEvents<E extends EventT>(
 
   for (const event of events) {
     const date = resetDateToSameDay(
+      //@ts-expect-error
       event[fieldName] instanceof Date
         ? (event[fieldName] as Date)
         : new Date(event[fieldName] as string)
