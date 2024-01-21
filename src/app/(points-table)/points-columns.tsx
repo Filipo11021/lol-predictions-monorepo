@@ -4,12 +4,14 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
-export const columns: ColumnDef<{
+export type PointsTableData = Readonly<{
   username: string;
   points: number;
   coverage: number;
   index: number;
-}>[] = [
+}>;
+
+export const columns: ColumnDef<PointsTableData>[] = [
   {
     accessorKey: "index",
     header: () => {
@@ -24,7 +26,6 @@ export const columns: ColumnDef<{
   },
   {
     accessorKey: "points",
-    id: "points",
     header: ({ column }) => {
       return (
         <Button
@@ -43,7 +44,6 @@ export const columns: ColumnDef<{
   },
   {
     accessorKey: "coverage",
-    id: "coverage",
     header: ({ column }) => {
       return (
         <Button

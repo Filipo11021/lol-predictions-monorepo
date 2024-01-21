@@ -1,7 +1,9 @@
 import { db } from "@/utils/db";
-import { PointsTable } from "./points-table";
+import type { PointsTableData } from "./points-columns";
 
-export default async function Home() {
+export async function pointsTableData(): Promise<{
+  data: Array<PointsTableData>;
+}> {
   const [data, gamesCount] = await Promise.all([
     db.user.findMany({
       include: {
@@ -15,7 +17,7 @@ export default async function Home() {
     db.game.count({ where: { winnerCode: { not: null } } }),
   ]);
 
-  const users: Array<{ username: string; points: number; coverage: number }> =
+  const users: Array<Pick<PointsTableData, "username" | "points" | "coverage">> =
     [];
   for (const user of data) {
     users.push({
@@ -33,17 +35,12 @@ export default async function Home() {
   }
 
   const sortedData = users.sort((a, b) => b.points - a.points);
-
-  const dataWithIndex: Array<{
-    username: string;
-    points: number;
-    coverage: number;
-    index: number;
-  }> = [];
+  const dataWithIndex: Array<PointsTableData> = [];
 
   let currentIndex = 0;
   sortedData.forEach((user, i) => {
-    currentIndex = user.points !== sortedData[i - 1]?.points
+    currentIndex =
+      user.points !== sortedData[i - 1]?.points
         ? currentIndex + 1
         : currentIndex;
 
@@ -55,12 +52,5 @@ export default async function Home() {
     });
   });
 
-  return (
-    <div className="mx-auto max-w-lg">
-      <PointsTable data={dataWithIndex} />
-      <p className="my-8 opacity-80">
-        last update: {new Date().toLocaleString("pl")}
-      </p>
-    </div>
-  );
+  return { data: dataWithIndex };
 }
