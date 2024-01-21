@@ -31,7 +31,6 @@ export function filterCurrentEvents<E extends EventT>(
 
   for (const event of events) {
     const date = resetDateToSameDay(
-      //@ts-expect-error
       event[fieldName] instanceof Date
         ? (event[fieldName] as Date)
         : new Date(event[fieldName] as string)
