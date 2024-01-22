@@ -29,6 +29,16 @@ const eventSchema = z.union([
     startTime: z.string(),
     state: z.string(),
     type: z.string(),
+    league: z.object({
+      name: z.string(),
+      slug: z.string(),
+      image: z.string(),
+    }),
+  }),
+  z.object({
+    startTime: z.string(),
+    state: z.string(),
+    type: z.string(),
     blockName: z.string(),
     league: z.object({ name: z.string(), slug: z.string() }),
     match: z.object({
@@ -46,102 +56,6 @@ const eventSchema = z.union([
       strategy: z.object({ type: z.string(), count: z.number() }),
     }),
   }),
-  z.object({
-    startTime: z.string(),
-    state: z.string(),
-    type: z.string(),
-    blockName: z.string(),
-    league: z.object({ name: z.string(), slug: z.string() }),
-    match: z.object({
-      id: z.string(),
-      flags: z.array(z.unknown()),
-      teams: z.array(
-        z.union([
-          z.object({
-            name: z.string(),
-            code: z.string(),
-            image: z.string(),
-            result: z.null(),
-            record: z.null(),
-          }),
-          z.object({
-            name: z.string(),
-            code: z.string(),
-            image: z.string(),
-            result: z.object({
-              outcome: z.null(),
-              gameWins: z.number(),
-            }),
-            record: z.object({ wins: z.number(), losses: z.number() }),
-          }),
-        ])
-      ),
-      strategy: z.object({ type: z.string(), count: z.number() }),
-    }),
-  }),
-  z.object({
-    startTime: z.string(),
-    state: z.string(),
-    type: z.string(),
-    blockName: z.string(),
-    league: z.object({ name: z.string(), slug: z.string() }),
-    match: z.object({
-      id: z.string(),
-      flags: z.array(z.string()),
-      teams: z.array(
-        z.object({
-          name: z.string(),
-          code: z.string(),
-          image: z.string(),
-          result: z.null(),
-          record: z.null(),
-        })
-      ),
-      strategy: z.object({ type: z.string(), count: z.number() }),
-    }),
-  }),
-  z.object({
-    startTime: z.string(),
-    state: z.string(),
-    type: z.string(),
-    blockName: z.string(),
-    league: z.object({ name: z.string(), slug: z.string() }),
-    match: z.object({
-      id: z.string(),
-      flags: z.array(z.unknown()),
-      teams: z.array(
-        z.object({
-          name: z.string(),
-          code: z.string(),
-          image: z.string(),
-          result: z.null(),
-          record: z.null(),
-        })
-      ),
-      strategy: z.object({ type: z.string(), count: z.number() }),
-    }),
-  }),
-  z.object({
-    startTime: z.string(),
-    state: z.string(),
-    type: z.string(),
-    blockName: z.string(),
-    league: z.object({ name: z.string(), slug: z.string() }),
-    match: z.object({
-      id: z.string(),
-      flags: z.array(z.string()),
-      teams: z.array(
-        z.object({
-          name: z.string(),
-          code: z.string(),
-          image: z.string(),
-          result: z.object({ outcome: z.null(), gameWins: z.number() }),
-          record: z.object({ wins: z.number(), losses: z.number() })
-        })
-      ),
-      strategy: z.object({ type: z.string(), count: z.number() })
-    })
-  })
 ]);
 
 export const scheduleResponseSchema = z.object({
@@ -150,6 +64,6 @@ export const scheduleResponseSchema = z.object({
       events: z.array(eventSchema),
     }),
   }),
-})
+});
 
-export type EventT = z.infer<typeof eventSchema>
+export type EventT = z.infer<typeof eventSchema>;
