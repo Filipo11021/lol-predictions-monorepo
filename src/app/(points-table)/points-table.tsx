@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { TableSearch } from "@/app/shared/table-search/table-search";
 import { DataTable } from "@/components/ui/data-table";
-import { Input } from "@/components/ui/input";
+import type { GameDay } from "@prisma/client";
 import {
 	getCoreRowModel,
 	getFilteredRowModel,
@@ -10,7 +10,6 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 import type { ColumnFiltersState, SortingState } from "@tanstack/react-table";
-import { SearchIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 import { columns } from "./points-columns";
 import type { PointsTableData } from "./points-columns";
@@ -58,28 +57,15 @@ function usePointsTable(data: Array<PointsTableData>) {
 	};
 }
 
-export function PointsTable({ data }: { data: Array<PointsTableData> }) {
+export function PointsTable({
+	data,
+	gameDays,
+}: { data: Array<PointsTableData>; gameDays: GameDay[] }) {
 	const { table, usernameFilter } = usePointsTable(data);
 
 	return (
 		<div className="flex flex-col gap-6">
-			<div className="flex gap-2 justify-center items-center">
-				<SearchIcon />
-				<Input
-					onInput={(e) => usernameFilter.handler(e.currentTarget.value)}
-					value={usernameFilter.value}
-					placeholder="Search by username"
-					type="search"
-				/>
-				<Button
-					variant="ghost"
-					className=""
-					onClick={() => usernameFilter.handler("")}
-				>
-					<span className="sr-only">clear username filter</span>
-					<XIcon />
-				</Button>
-			</div>
+			<TableSearch gameDays={gameDays} usernameFilter={usernameFilter} />
 			<DataTable table={table} />
 		</div>
 	);
