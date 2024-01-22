@@ -51,8 +51,8 @@ export const getColumns = ({
 						className={cn("p-4 font-medium text-center h-full border-x", [
 							winner.code
 								? value === winner.code
-									? "bg-green-950"
-									: "bg-red-950"
+									? "bg-success text-success-foreground"
+									: "bg-error text-error-foreground"
 								: "bg-inherit",
 						])}
 					>
@@ -69,7 +69,7 @@ export const getColumns = ({
 				return <div>Username</div>;
 			},
 			cell(props) {
-				return <div className="p-4">{props.getValue()}</div>;
+				return <div className="p-4 border-t mt-[-1px]">{props.getValue()}</div>;
 			},
 		},
 		{

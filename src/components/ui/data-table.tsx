@@ -8,6 +8,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/utils/ui";
 import { type Table as TableT, flexRender } from "@tanstack/react-table";
 
 interface DataTableProps<Data> {
@@ -26,7 +27,7 @@ export function DataTable<Data>({ table, className }: DataTableProps<Data>) {
 						<TableRow key={headerGroup.id}>
 							{headerGroup.headers.map((header) => {
 								return (
-									<TableHead key={header.id}>
+									<TableHead className="bg-background" key={header.id}>
 										{header.isPlaceholder
 											? null
 											: flexRender(
@@ -47,7 +48,7 @@ export function DataTable<Data>({ table, className }: DataTableProps<Data>) {
 								data-state={row.getIsSelected() && "selected"}
 							>
 								{row.getVisibleCells().map((cell) => (
-									<TableCell className={className?.cell ?? ""} key={cell.id}>
+									<TableCell className={cn(className?.cell ?? "", "bg-background")} key={cell.id}>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</TableCell>
 								))}

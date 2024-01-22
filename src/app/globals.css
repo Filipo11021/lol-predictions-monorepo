@@ -24,6 +24,10 @@
     --input: 240 5.9% 90%;
     --ring: 142.1 76.2% 36.3%;
     --radius: 0.75rem;
+    --error-background: theme(colors.red.300);
+    --error-foreground: theme(colors.black);
+    --success-background: theme(colors.green.300);
+    --success-foreground: theme(colors.black);
   }
 
   .dark {
@@ -46,6 +50,10 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 142.4 71.8% 29.2%;
+    --error-background: theme(colors.red.950);
+    --error-foreground: theme(colors.white);
+    --success-background: theme(colors.green.950);
+    --success-foreground: theme(colors.white);
   }
 }
 

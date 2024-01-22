@@ -81,13 +81,6 @@ export function GamesTable({
   position: sticky;
   left: 0;
   top: 0;
-  background: #0c0a09;
-}
-
-:global(td:nth-of-type(1) > div) {
-  border-top: 1px solid white;
-  border-right: 1px solid white;
-  margin-top: -1px;
 }
 			`}</style>
 		</div>

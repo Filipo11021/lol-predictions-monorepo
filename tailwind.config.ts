@@ -24,6 +24,14 @@ const config = {
 				ring: "hsl(var(--ring))",
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",
+				error: {
+					DEFAULT: "var(--error-background)",
+					foreground: "var(--error-foreground)",
+				},
+				success: {
+					DEFAULT: "var(--success-background)",
+					foreground: "var(--success-foreground)",
+				},
 				primary: {
 					DEFAULT: "hsl(var(--primary))",
 					foreground: "hsl(var(--primary-foreground))",
