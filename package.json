@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "biome check --apply .",
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@prisma/client": "5.8.0",
+    "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-table": "^8.11.6",
     "class-variance-authority": "^0.7.0",
@@ -39,12 +40,11 @@
     "typescript": "^5"
   },
   "lint-staged": {
-   
     "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
       "biome check --files-ignore-unknown=true"
     ],
     "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}": [
-      "npx tsc --noEmit"
+      "bash -c tsc --noEmit"
     ]
   }
 }
