@@ -12,9 +12,12 @@ import { type Table as TableT, flexRender } from "@tanstack/react-table";
 
 interface DataTableProps<Data> {
 	table: TableT<Data>;
+	className?: {
+		cell?: string;
+	};
 }
 
-export function DataTable<Data>({ table }: DataTableProps<Data>) {
+export function DataTable<Data>({ table, className }: DataTableProps<Data>) {
 	return (
 		<div className="rounded-md border">
 			<Table>
@@ -44,7 +47,7 @@ export function DataTable<Data>({ table }: DataTableProps<Data>) {
 								data-state={row.getIsSelected() && "selected"}
 							>
 								{row.getVisibleCells().map((cell) => (
-									<TableCell key={cell.id}>
+									<TableCell className={className?.cell ?? ""} key={cell.id}>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</TableCell>
 								))}
