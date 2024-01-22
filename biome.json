@@ -1,7 +1,8 @@
 {
 	"$schema": "https://biomejs.dev/schemas/1.5.2/schema.json",
 	"organizeImports": {
-		"enabled": true
+		"enabled": true,
+		"ignore": [".next"]
 	},
 	"linter": {
 		"ignore": [".next"],
@@ -45,6 +46,7 @@
 		"indentStyle": "tab",
 		"lineEnding": "lf",
 		"lineWidth": 80,
-		"formatWithErrors": false
+		"formatWithErrors": false,
+		"ignore": [".next"]
 	}
 }
