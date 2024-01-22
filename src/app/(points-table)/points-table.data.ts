@@ -1,3 +1,4 @@
+import { calculatePoints } from "@/utils/calculatePoints";
 import { db } from "@/utils/db";
 import type { PointsTableData } from "./points-columns";
 
@@ -24,8 +25,12 @@ export async function pointsTableData(): Promise<{
 		users.push({
 			username: user.username,
 			points: user.votes
-				.map(({ teamCode, Game: { winnerCode } }) =>
-					teamCode === winnerCode ? 1 : 0,
+				.map(({ teamCode, score, Game: { winnerCode, type } }) =>
+					calculatePoints({
+						type,
+						voter: { code: teamCode, score },
+						winner: { code: winnerCode, score: "1-0" },
+					}),
 				)
 				.reduce((a, b) => a + b, 0 as number),
 			coverage:
