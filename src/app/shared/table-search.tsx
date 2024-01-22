@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import type { GameDay } from "@prisma/client";
 import { SearchIcon, XIcon } from "lucide-react";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export function TableSearch({
 	usernameFilter,

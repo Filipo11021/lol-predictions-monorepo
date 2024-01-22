@@ -1,4 +1,4 @@
-import { TableTitle } from "@/app/shared/TableTitle";
+import { TableTitle } from "@/app/shared/table-title";
 import { getAllGameDays } from "../shared/game-days.data";
 import { PointsTable } from "./points-table";
 import { pointsTableData } from "./points-table.data";
