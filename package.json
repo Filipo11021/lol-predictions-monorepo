@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "biome check --apply .",
     "type-check": "tsc --pretty --noEmit",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate && husky install"
   },
   "dependencies": {
     "@prisma/client": "5.8.0",
@@ -31,9 +31,20 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
     "postcss": "^8",
     "prisma": "^5.8.0",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
+  },
+  "lint-staged": {
+   
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+      "biome check --files-ignore-unknown=true"
+    ],
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}": [
+      "npx tsc --noEmit"
+    ]
   }
 }
