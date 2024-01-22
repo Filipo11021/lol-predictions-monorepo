@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# lol predictions frontend
+
+## Built With
+
+| Library name                                                                            | Description                                                                  |
+| --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| [TypeScript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) | Library that adds static typing with optional type annotations to JavaScript |
+| [Next with app router](https://nextjs.org/docs)                                         | Frontend Framework                                                           |
+| [Lodash 4](https://lodash.com/docs/4.17.15)                                             | Utils                                                                        |
+| [shadcn](https://www.shadcn.com/docs/introduction.html)                                 | Base UI Components                                                           |
+| [Tailwind CSS](https://tailwindcss.com/docs/configuration)                              | CSS Framework with utility classes                                           |
+| [Radix Vue](https://www.radix-vue.com/overview/introduction.html)                       | Headless UI components                                                       |
+| [Lucide](https://lucide.dev/icons/)                                                     | Icons                                                                        |
+| [TanStack Table](https://tanstack.com/table/v8/docs/guide/introduction)                 | Headless UI library for building tables                                      |
+| [Biome](https://biomejs.dev/guides/getting-started/)                                    | Linter and Formatter                                                         |
+| [Prisma](https://www.prisma.io/client)                                                  | Database ORM                                                                 |
+
+## Prerequisites
+
+- [Node.js minimal v18](https://nodejs.org/en)
+- [pnpm](https://pnpm.io/installation)
 
 ## Getting Started
 
-First, run the development server:
+```bash
+pnpm install #install dependencies
+```
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm dev #run development mode with turbo bundler
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev #check linting and formatting and fix possible issues
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Related
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [lol predictions discord bot](https://github.com/lewe-maszynki/lol-predictions-discord-bot)
