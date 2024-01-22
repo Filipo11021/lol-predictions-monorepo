@@ -19,7 +19,6 @@
 				"useHookAtTopLevel": "error"
 			},
 			"style": {
-				"noImplicitBoolean": "error",
 				"noNegationElse": "error",
 				"useShorthandAssign": "error"
 			},
