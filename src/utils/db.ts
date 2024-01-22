@@ -1,13 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 
 const prismaClientSingleton = () => {
-  return new PrismaClient()
-}
+	return new PrismaClient();
+};
 
 declare global {
-  var db: undefined | ReturnType<typeof prismaClientSingleton>
+	// biome-ignore lint/style/noVar: <explanation>
+	var db: undefined | ReturnType<typeof prismaClientSingleton>;
 }
 
-export const db = globalThis.db ?? prismaClientSingleton()
+// biome-ignore lint/suspicious/noRedeclare: <explanation>
+export const db = globalThis.db ?? prismaClientSingleton();
 
-if (process.env.NODE_ENV !== 'production') globalThis.db = db
+if (process.env.NODE_ENV !== "production") globalThis.db = db;
