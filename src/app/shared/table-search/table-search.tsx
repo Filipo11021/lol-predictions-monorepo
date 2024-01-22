@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import type { GameDay } from "@prisma/client";
 import { SearchIcon, XIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 
 export function TableSearch({
 	usernameFilter,
@@ -24,6 +24,7 @@ export function TableSearch({
 	gameDays: GameDay[];
 }) {
 	const { push } = useRouter();
+	const path = usePathname();
 
 	return (
 		<div className="flex gap-2 max-w-lg w-full mx-auto justify-center items-center">
@@ -47,6 +48,7 @@ export function TableSearch({
 				onValueChange={(url) => {
 					push(url);
 				}}
+				defaultValue={path}
 			>
 				<SelectTrigger className="w-[230px]">
 					<SelectValue placeholder="View" />
