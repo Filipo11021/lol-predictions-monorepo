@@ -1,5 +1,6 @@
 "use client";
 
+import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,7 +11,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import type { GameDay } from "@prisma/client";
-import { SearchIcon, XIcon } from "lucide-react";
+import { XIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 export function TableSearch({
@@ -28,7 +29,7 @@ export function TableSearch({
 
 	return (
 		<div className="flex gap-2 max-w-lg w-full mx-auto justify-center items-center">
-			<SearchIcon />
+			<ModeToggle />
 			<Input
 				onInput={(e) => usernameFilter.handler(e.currentTarget.value)}
 				value={usernameFilter.value}
