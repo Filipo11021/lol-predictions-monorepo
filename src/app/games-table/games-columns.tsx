@@ -49,7 +49,11 @@ export const getColumns = ({
 				return (
 					<div
 						className={cn("p-4 font-medium text-center h-full border-x", [
-							value === winner.code ? "bg-green-950" : "bg-red-950",
+							winner.code
+								? value === winner.code
+									? "bg-green-950"
+									: "bg-red-950"
+								: "bg-inherit",
 						])}
 					>
 						{value}
