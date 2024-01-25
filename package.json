@@ -1,20 +1,16 @@
 {
-  "name": "new-version",
+  "name": "lol-predictions-discord-bot",
   "version": "1.0.0",
-  "description": "",
   "main": "./build/main.js",
   "scripts": {
     "build": "tsc",
     "start": "node ./build/deploy-slash-commands.js && node ./build/main.js",
-    "dev": "tsx ./src/main.ts",
+    "dev": "tsx watch ./src/main.ts",
     "deploy-cmd": "npm run build && node ./build/deploy-slash-commands.js",
     "postinstall": "prisma generate"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
-    "@flydotio/dockerfile": "^0.4.10",
     "@types/node": "^20.6.3",
     "eslint": "^8.50.0",
     "tsx": "^3.12.10",
