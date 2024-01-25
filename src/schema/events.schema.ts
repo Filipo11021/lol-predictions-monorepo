@@ -1,4 +1,4 @@
-import { ZodSchema, ZodTypeAny, ZodUnion, z } from "zod";
+import { ZodSchema, z } from "zod";
 
 const mainEventSchema = z.object({
   startTime: z.string(),

@@ -9,7 +9,7 @@ import {
   PermissionFlagsBits,
   SlashCommandBuilder,
 } from "discord.js";
-import { createBO1Selects } from "../components/BO1Select";
+import { createTeamSelects } from "../components/SelectTeam";
 import { db } from "../utils/db";
 
 export const data = new SlashCommandBuilder()
@@ -21,7 +21,7 @@ export const execute = async (
   interaction: ChatInputCommandInteraction<CacheType>
 ) => {
   const [selects, { title, displayStartDate, gameDayId }] =
-    await createBO1Selects();
+    await createTeamSelects();
 
   await interaction.reply({ ephemeral: true, content: "generated games:" });
 

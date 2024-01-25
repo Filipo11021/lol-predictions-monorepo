@@ -5,10 +5,10 @@ import {
 import { getCurrentEvents } from "../api/events.api";
 import { EventT } from "../schema/events.schema";
 import { db } from "../utils/db";
-import { Team } from "@prisma/client";
+import { $Enums, Team } from "@prisma/client";
 import { addHours } from "../utils/time";
 
-function buildBO1Selects(events: EventT[]) {
+function buildTeamSelects(events: EventT[]) {
   const selects = events.map(({ match: { id, teams, strategy } }) => {
     let options: StringSelectMenuOptionBuilder[] = [];
 
@@ -63,7 +63,6 @@ function buildBO1Selects(events: EventT[]) {
 async function createTeamIfNotExist({
   code,
   image,
-
   name,
 }: Omit<Team, "gameIds">) {
   return db.team.upsert({
@@ -77,6 +76,19 @@ async function createTeamIfNotExist({
       name,
     },
   });
+}
+
+function strategyCountToEnumType(strategyCount: number): $Enums.MatchType {
+  switch (strategyCount) {
+    case 1:
+      return "BO1";
+    case 3:
+      return "BO3";
+    case 5:
+      return "BO5";
+    default:
+      return "BO1"
+  }
 }
 
 async function createGame(
@@ -105,37 +117,36 @@ async function createGame(
       id: match.id,
       gameDayId,
       teamCodes: [teams[0].code, teams[1].code],
-      type: strategy.count === 1 ? "BO1" : strategy.count === 5 ? "BO5" : "BO3",
+      type: strategyCountToEnumType(strategy.count),
     },
     update: {},
   });
 }
 
-function generateIdFromEvents(events: EventT[]) {
+function generateGameDayId(events: EventT[]) {
   // return events.map(({ match: { id } }) => id.slice(id.length - 10)).join("");
-  const date = new Date(events[0].startTime)
-  return `${date.getDate()}-${date.getMonth()}`
+  const date = new Date(events[0].startTime);
+  return `${date.getDate()}-${date.getMonth()}`;
 }
 
-export async function createBO1Selects() {
+export async function createTeamSelects() {
   const events = await getCurrentEvents();
 
-  const selects = buildBO1Selects(events);
+  const selects = buildTeamSelects(events);
 
   const gameDay = await db.gameDay.upsert({
     create: {
       firstMatchStart: events[0].startTime,
-      id: generateIdFromEvents(events),
+      id: generateGameDayId(events),
     },
     update: {},
     where: {
-      id: generateIdFromEvents(events),
+      id: generateGameDayId(events),
     },
     include: {
       games: true,
     },
   });
-
 
   await Promise.all(events.map((event) => createGame(gameDay.id, event)));
 
@@ -148,7 +159,6 @@ export async function createBO1Selects() {
   });
 
   const startDate = events[0].startTime;
-
   const title = events[0].blockName;
 
   return [
