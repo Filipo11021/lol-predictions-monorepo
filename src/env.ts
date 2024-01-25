@@ -1,18 +1,18 @@
-import { z } from "zod";
-import "dotenv/config";
+import 'dotenv/config'
+import { z } from 'zod'
 
 const envSchema = z.object({
-  PORT: z.coerce.number().default(4000),
-  NODE_ENV: z
-    .literal("development")
-    .or(z.literal("production"))
-    .default("development"),
+	PORT: z.coerce.number().default(4000),
+	NODE_ENV: z
+		.literal('development')
+		.or(z.literal('production'))
+		.default('development'),
 
-  DISCORD_TOKEN: z.string(),
-  DISCORD_CHANNEL_ID: z.string(),
-  DISCORD_APP_ID: z.string(),
+	DISCORD_TOKEN: z.string(),
+	DISCORD_CHANNEL_ID: z.string(),
+	DISCORD_APP_ID: z.string(),
 
-  LOLESPORTS_API_KEY: z.string(),
-});
+	LOLESPORTS_API_KEY: z.string(),
+})
 
-export const env = envSchema.parse(process.env);
+export const env = envSchema.parse(process.env)
