@@ -2,8 +2,7 @@ import { env } from "./env";
 import { Client, Events, GatewayIntentBits, ChannelType } from "discord.js";
 import { handleSlashCommands } from "./handle-slash-commands";
 import { db } from "./utils/db";
-import { collectSelectResponses } from "./commands/create-game-day.command";
-import { $Enums } from "@prisma/client";
+import { collectTeamSelectResponses } from "./components/collect-team-select-responses";
 
 const client = new Client({
   intents: [
@@ -153,9 +152,9 @@ client.once(Events.ClientReady, async (c) => {
   const msg2 = (await channel.messages.fetch({ limit: 10 })).find(
     ({ id }) => currentGameDay?.messageId?.split("$$")[1] === id
   );
-  collectSelectResponses(msg1, { withEndMessage: true });
+  collectTeamSelectResponses(msg1, { withEndMessage: true });
   if (msg2) {
-    collectSelectResponses(msg2, { withEndMessage: false });
+    collectTeamSelectResponses(msg2, { withEndMessage: false });
   }
 
   console.log(`Ready! Logged in as ${c.user.tag}`);
