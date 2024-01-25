@@ -48,10 +48,7 @@ export function handleSlashCommands(client: Client<boolean>) {
 export function collectSlashCommands() {
   const commands = new Collection();
 
-  const commandsPath =
-    env.NODE_ENV === "production"
-      ? path.join(__dirname, "commands")
-      : path.join(__dirname, "../build/src/commands");
+  const commandsPath = path.join(__dirname, "./commands")
   const commandFiles = fs
     .readdirSync(commandsPath)
     .filter((file) => file.endsWith(".js"));
