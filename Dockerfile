@@ -1,19 +1,15 @@
-# syntax = docker/dockerfile:1
-
 # Adjust NODE_VERSION as desired
-ARG NODE_VERSION=18.17.1
+ARG NODE_VERSION=20
 FROM node:${NODE_VERSION}-slim as base
 
-LABEL fly_launch_runtime="Node.js/Prisma"
-
-# Node.js/Prisma app lives here
+# App lives here
 WORKDIR /app
 
 # Set production environment
 ENV NODE_ENV="production"
 
 # Install pnpm
-ARG PNPM_VERSION=8.2.0
+ARG PNPM_VERSION=8.14.3
 RUN npm install -g pnpm@$PNPM_VERSION
 
 
@@ -28,10 +24,6 @@ RUN apt-get update -qq && \
 COPY --link package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile --prod=false
 
-# Generate Prisma Client
-COPY --link prisma .
-RUN npx prisma generate
-
 # Copy application code
 COPY --link . .
 
@@ -40,7 +32,6 @@ RUN pnpm run build
 
 # Remove development dependencies
 RUN pnpm prune --prod
-
 
 # Final stage for app image
 FROM base
