@@ -48,7 +48,10 @@ export function DataTable<Data>({ table, className }: DataTableProps<Data>) {
 								data-state={row.getIsSelected() && "selected"}
 							>
 								{row.getVisibleCells().map((cell) => (
-									<TableCell className={cn(className?.cell ?? "", "bg-background")} key={cell.id}>
+									<TableCell
+										className={cn(className?.cell ?? "", "bg-background")}
+										key={cell.id}
+									>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</TableCell>
 								))}
