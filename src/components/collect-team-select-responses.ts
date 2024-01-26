@@ -54,6 +54,15 @@ export async function collectTeamSelectResponses(
 		const selection = va[0]
 		const score = va[1]
 
+		await db.user.upsert({
+			where: { id: i.user.id },
+			create: {
+				id: i.user.id,
+				username: i.user.tag,
+			},
+			update: {},
+		})
+
 		try {
 			const role = i?.guild?.roles.cache.get('1195437562450427999')
 			if (!Array.isArray(i.member?.roles) && !!role) {
