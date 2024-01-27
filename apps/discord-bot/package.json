@@ -1,0 +1,27 @@
+{
+  "name": "lol-predictions-discord-bot",
+  "version": "1.0.0",
+  "main": "./build/main.js",
+  "scripts": {
+    "build": "rm -rf ./build && tsc",
+    "start": "node ./build/deploy-slash-commands.js && node ./build/main.js",
+    "dev": "tsx watch ./src/main.ts",
+    "deploy-cmd": "npm run build && node ./build/deploy-slash-commands.js",
+    "db:generate": "prisma generate",
+    "lint": "biome check --apply ."
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "1.5.3",
+    "@types/node": "^20.6.3",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@prisma/client": "5.8.1",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.1",
+    "prisma": "5.8.1",
+    "zod": "^3.22.4"
+  }
+}
