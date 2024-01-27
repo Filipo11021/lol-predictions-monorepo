@@ -4,14 +4,25 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "turbo lint"
+    "lint": "turbo lint",
+    "postinstall": "husky install"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
+    "husky": "^9.0.6",
+    "lint-staged": "^15.2.0",
     "turbo": "latest"
   },
   "packageManager": "pnpm@8.9.0",
   "engines": {
     "node": ">=18"
+  },
+  "lint-staged": {
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+      "biome check --files-ignore-unknown=true"
+    ],
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}": [
+      "bash -c tsc --noEmit"
+    ]
   }
 }
