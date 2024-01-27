@@ -1,29 +1,29 @@
-"use client";
+'use client';
 
-import { TableSearch } from "@/app/shared/table-search";
-import { DataTable } from "@/components/ui/data-table";
-import type { GameDay } from "@prisma/client";
+import { TableSearch } from '@/app/shared/table-search';
+import { DataTable } from '@/components/ui/data-table';
+import type { GameDay } from '@prisma/client';
 import {
 	getCoreRowModel,
 	getFilteredRowModel,
 	getSortedRowModel,
 	useReactTable,
-} from "@tanstack/react-table";
-import type { ColumnFiltersState, SortingState } from "@tanstack/react-table";
-import { useState } from "react";
-import { getColumns } from "./games-columns";
-import type { GamesTableData, GamesTableInfo } from "./games-columns";
+} from '@tanstack/react-table';
+import type { ColumnFiltersState, SortingState } from '@tanstack/react-table';
+import { useState } from 'react';
+import { getColumns } from './games-columns';
+import type { GamesTableData, GamesTableInfo } from './games-columns';
 
 function useGamesTable({
 	tableData,
 	tableInfo,
 }: { tableData: Array<GamesTableData>; tableInfo: GamesTableInfo }) {
 	const [sorting, setSorting] = useState<SortingState>([
-		{ id: "points", desc: true },
+		{ id: 'points', desc: true },
 	]);
 
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
-		{ id: "username", value: "" },
+		{ id: 'username', value: '' },
 	]);
 
 	const table = useReactTable({
@@ -44,11 +44,11 @@ function useGamesTable({
 	});
 
 	function handleUsernameFilter(value: string) {
-		table.getColumn("username")?.setFilterValue(value ?? "");
+		table.getColumn('username')?.setFilterValue(value ?? '');
 	}
 	const usernameFilter = (() => {
-		const value = table.getColumn("username")?.getFilterValue();
-		return typeof value === "string" ? value : "";
+		const value = table.getColumn('username')?.getFilterValue();
+		return typeof value === 'string' ? value : '';
 	})();
 
 	return {
@@ -74,7 +74,7 @@ export function GamesTable({
 	return (
 		<div className="flex flex-col gap-6">
 			<TableSearch gameDays={gameDays} usernameFilter={usernameFilter} />
-			<DataTable className={{ cell: "p-0" }} table={table} />
+			<DataTable className={{ cell: 'p-0' }} table={table} />
 			<style jsx>{`
 :global(td:nth-of-type(1)),
 :global(th:nth-of-type(1)) {

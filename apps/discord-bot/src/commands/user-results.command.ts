@@ -2,8 +2,8 @@ import {
 	type CacheType,
 	type ChatInputCommandInteraction,
 	SlashCommandBuilder,
-} from 'discord.js'
-import { db } from '../utils/db'
+} from 'discord.js';
+import { db } from 'utils/db';
 
 export const data = new SlashCommandBuilder()
 	.setName('votes')
@@ -23,16 +23,16 @@ export const data = new SlashCommandBuilder()
 	)
 	.addStringOption((option) =>
 		option.setName('date').setDescription('podaj date w formacie D-M np. 23-10')
-	)
+	);
 
 export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
-	const user = i.options.getUser('user')
-	const isPublic = i.options.getBoolean('public')
-	const gameDayId = i.options.getString('date')
+	const user = i.options.getUser('user');
+	const isPublic = i.options.getBoolean('public');
+	const gameDayId = i.options.getString('date');
 
 	if (!user) {
-		i.reply({ content: 'podaj użytkownika', ephemeral: true })
-		return
+		i.reply({ content: 'podaj użytkownika', ephemeral: true });
+		return;
 	}
 
 	const res = gameDayId
@@ -75,7 +75,7 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
 						},
 					},
 				})
-		  )?.gameDay
+		  )?.gameDay;
 
 	const a = res?.games.map(({ voters, id }) => ({
 		voters: voters.map(({ team, user: { username, id }, score }) => ({
@@ -86,14 +86,14 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
 			score,
 		})),
 		id,
-	}))
+	}));
 
 	if (!a) {
 		await i.reply({
 			content: 'Brak danych',
 			ephemeral: !isPublic,
-		})
-		return
+		});
+		return;
 	}
 
 	i.reply({
@@ -109,5 +109,5 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
 				}`.trim()
 			)
 			.join(' | ')}`,
-	})
-}
+	});
+};

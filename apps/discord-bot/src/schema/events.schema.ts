@@ -1,4 +1,4 @@
-import { type ZodSchema, z } from 'zod'
+import { type ZodSchema, z } from 'zod';
 
 const mainEventSchema = z.object({
 	startTime: z.string(),
@@ -22,7 +22,7 @@ const mainEventSchema = z.object({
 		),
 		strategy: z.object({ type: z.string(), count: z.number() }),
 	}),
-})
+});
 
 const eventSchema = z.union([
 	mainEventSchema,
@@ -36,7 +36,7 @@ const eventSchema = z.union([
 			image: z.string(),
 		}),
 	}),
-])
+]);
 
 export const scheduleResponseSchema = z.object({
 	data: z.object({
@@ -48,6 +48,6 @@ export const scheduleResponseSchema = z.object({
 				) as unknown as ZodSchema<z.infer<typeof mainEventSchema>[]>,
 		}),
 	}),
-})
+});
 
-export type EventT = z.infer<typeof mainEventSchema>
+export type EventT = z.infer<typeof mainEventSchema>;

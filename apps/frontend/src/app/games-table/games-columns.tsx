@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/utils/ui";
-import type { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { cn } from '@/utils/ui';
+import type { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown } from 'lucide-react';
 
 export type GamesTableInfo = Record<
 	`team${number}`,
@@ -20,7 +20,7 @@ export type GamesTableData = {
 
 function isKeyOf<Obj extends object>(
 	obj: Obj,
-	key: PropertyKey,
+	key: PropertyKey
 ): key is keyof Obj {
 	return key in obj;
 }
@@ -48,12 +48,12 @@ export const getColumns = ({
 				const value = props.getValue();
 				return (
 					<div
-						className={cn("p-4 font-medium text-center h-full border-x", [
+						className={cn('p-4 font-medium text-center h-full border-x', [
 							winner.code
 								? value === winner.code
-									? "bg-success text-success-foreground"
-									: "bg-error text-error-foreground"
-								: "bg-inherit",
+									? 'bg-success text-success-foreground'
+									: 'bg-error text-error-foreground'
+								: 'bg-inherit',
 						])}
 					>
 						{value}
@@ -64,7 +64,7 @@ export const getColumns = ({
 	}
 	return [
 		{
-			accessorKey: "username",
+			accessorKey: 'username',
 			header: () => {
 				return <div>Username</div>;
 			},
@@ -73,13 +73,13 @@ export const getColumns = ({
 			},
 		},
 		{
-			accessorKey: "points",
+			accessorKey: 'points',
 			header: ({ column }) => {
 				return (
 					<Button
 						variant="ghost"
 						className="text-center flex mx-auto"
-						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 					>
 						Points
 						<ArrowUpDown className="ml-2 h-4 w-4" />

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import type { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import type { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown } from 'lucide-react';
 
 export type PointsTableData = Readonly<{
 	username: string;
@@ -13,25 +13,25 @@ export type PointsTableData = Readonly<{
 
 export const columns: ColumnDef<PointsTableData>[] = [
 	{
-		accessorKey: "index",
+		accessorKey: 'index',
 		header: () => {
 			return <div>#</div>;
 		},
 	},
 	{
-		accessorKey: "username",
+		accessorKey: 'username',
 		header: () => {
 			return <div>Username</div>;
 		},
 	},
 	{
-		accessorKey: "points",
+		accessorKey: 'points',
 		header: ({ column }) => {
 			return (
 				<Button
 					variant="ghost"
 					className="text-center flex mx-auto"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
 					Points
 					<ArrowUpDown className="ml-2 h-4 w-4" />
@@ -43,13 +43,13 @@ export const columns: ColumnDef<PointsTableData>[] = [
 		},
 	},
 	{
-		accessorKey: "coverage",
+		accessorKey: 'coverage',
 		header: ({ column }) => {
 			return (
 				<Button
 					variant="ghost"
 					className="text-center flex mx-auto"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
 					Coverage
 					<ArrowUpDown className="ml-2 h-4 w-4" />

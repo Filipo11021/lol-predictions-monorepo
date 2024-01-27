@@ -1,4 +1,4 @@
-import type { $Enums } from "@prisma/client";
+import type { $Enums } from '@prisma/client';
 
 export function calculatePoints({
 	voter,
@@ -14,13 +14,13 @@ export function calculatePoints({
 	if (!won) return 0;
 
 	switch (type) {
-		case "BO1":
+		case 'BO1':
 			return 1;
-		case "BO3":
+		case 'BO3':
 			return voter.score === winner.score ? 3 : 2;
-		case "BO5":
+		case 'BO5':
 			return voter.score === winner.score ? 5 : 3;
 		default:
-			throw Error("not implemented");
+			throw Error('not implemented');
 	}
 }

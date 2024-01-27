@@ -1,3 +1,5 @@
+import { createTeamSelects } from 'components/SelectTeam';
+import { collectTeamSelectResponses } from 'components/collect-team-select-responses';
 import {
 	ActionRowBuilder,
 	ButtonBuilder,
@@ -6,30 +8,28 @@ import {
 	type ChatInputCommandInteraction,
 	PermissionFlagsBits,
 	SlashCommandBuilder,
-} from 'discord.js'
-import { createTeamSelects } from '../components/SelectTeam'
-import { collectTeamSelectResponses } from '../components/collect-team-select-responses'
-import { db } from '../utils/db'
+} from 'discord.js';
+import { db } from 'utils/db';
 
 export const data = new SlashCommandBuilder()
 	.setName('game')
 	.setDescription('create game day')
-	.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+	.setDefaultMemberPermissions(PermissionFlagsBits.Administrator);
 
 export const execute = async (
 	interaction: ChatInputCommandInteraction<CacheType>
 ) => {
-	const [selects, { title, displayStartDate }] = await createTeamSelects()
+	const [selects, { title, displayStartDate }] = await createTeamSelects();
 
-	await interaction.reply({ ephemeral: true, content: 'generated games:' })
+	await interaction.reply({ ephemeral: true, content: 'generated games:' });
 
 	const btn = new ButtonBuilder()
 		.setCustomId('results')
 		.setLabel('Sprawdź swoje wybory')
-		.setStyle(ButtonStyle.Primary)
+		.setStyle(ButtonStyle.Primary);
 
-	const selects1 = selects.slice(0, 4)
-	const selects2 = selects.slice(4, selects.length)
+	const selects1 = selects.slice(0, 4);
+	const selects2 = selects.slice(4, selects.length);
 
 	const arr =
 		selects2.length === 0
@@ -43,13 +43,13 @@ export const execute = async (
 					...selects1.map((select) =>
 						new ActionRowBuilder().addComponents(select)
 					),
-			  ]
+			  ];
 
 	const res1 = await interaction.channel?.send({
 		//@ts-expect-error
 		components: arr,
 		content: `${title} - koniec głosowania: ${displayStartDate} <@&1195437562450427999>`,
-	})
+	});
 
 	const res2 =
 		selects2.length > 0
@@ -63,11 +63,11 @@ export const execute = async (
 						new ActionRowBuilder().addComponents(btn),
 					],
 			  })
-			: undefined
+			: undefined;
 
-	await collectTeamSelectResponses(res1, { withEndMessage: true })
+	await collectTeamSelectResponses(res1, { withEndMessage: true });
 	if (res2) {
-		await collectTeamSelectResponses(res2, { withEndMessage: false })
+		await collectTeamSelectResponses(res2, { withEndMessage: false });
 	}
 
 	await db.currentGameDay.update({
@@ -77,5 +77,5 @@ export const execute = async (
 		where: {
 			id: 'main',
 		},
-	})
-}
+	});
+};

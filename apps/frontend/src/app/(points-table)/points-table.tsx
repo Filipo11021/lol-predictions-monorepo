@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { TableSearch } from "@/app/shared/table-search";
-import { DataTable } from "@/components/ui/data-table";
-import type { GameDay } from "@prisma/client";
+import { TableSearch } from '@/app/shared/table-search';
+import { DataTable } from '@/components/ui/data-table';
+import type { GameDay } from '@prisma/client';
 import {
 	getCoreRowModel,
 	getFilteredRowModel,
 	getSortedRowModel,
 	useReactTable,
-} from "@tanstack/react-table";
-import type { ColumnFiltersState, SortingState } from "@tanstack/react-table";
-import { useState } from "react";
-import { columns } from "./points-columns";
-import type { PointsTableData } from "./points-columns";
+} from '@tanstack/react-table';
+import type { ColumnFiltersState, SortingState } from '@tanstack/react-table';
+import { useState } from 'react';
+import { columns } from './points-columns';
+import type { PointsTableData } from './points-columns';
 
 function usePointsTable(data: Array<PointsTableData>) {
 	const [sorting, setSorting] = useState<SortingState>([
-		{ id: "points", desc: true },
+		{ id: 'points', desc: true },
 	]);
 
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
-		{ id: "username", value: "" },
+		{ id: 'username', value: '' },
 	]);
 
 	const table = useReactTable({
@@ -41,11 +41,11 @@ function usePointsTable(data: Array<PointsTableData>) {
 	});
 
 	function handleUsernameFilter(value: string) {
-		table.getColumn("username")?.setFilterValue(value ?? "");
+		table.getColumn('username')?.setFilterValue(value ?? '');
 	}
 	const usernameFilter = (() => {
-		const value = table.getColumn("username")?.getFilterValue();
-		return typeof value === "string" ? value : "";
+		const value = table.getColumn('username')?.getFilterValue();
+		return typeof value === 'string' ? value : '';
 	})();
 
 	return {

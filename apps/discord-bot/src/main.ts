@@ -1,8 +1,8 @@
-import { ChannelType, Client, Events, GatewayIntentBits } from 'discord.js'
-import { collectTeamSelectResponses } from './components/collect-team-select-responses'
-import { env } from './env'
-import { handleSlashCommands } from './handle-slash-commands'
-import { db } from './utils/db'
+import { collectTeamSelectResponses } from 'components/collect-team-select-responses';
+import { ChannelType, Client, Events, GatewayIntentBits } from 'discord.js';
+import { db } from 'utils/db';
+import { env } from './env';
+import { handleSlashCommands } from './handle-slash-commands';
 
 const client = new Client({
 	intents: [
@@ -11,19 +11,19 @@ const client = new Client({
 		GatewayIntentBits.MessageContent,
 		GatewayIntentBits.GuildMembers,
 	],
-})
+});
 
 client.once(Events.ClientReady, async (c) => {
-	const channel = client.channels.cache.get(env.DISCORD_CHANNEL_ID)
+	const channel = client.channels.cache.get(env.DISCORD_CHANNEL_ID);
 	if (channel?.type !== ChannelType.GuildText) {
-		throw Error('channel type')
+		throw Error('channel type');
 	}
 
 	const currentGameDay = await db.currentGameDay.findUnique({
 		where: {
 			id: 'main',
 		},
-	})
+	});
 
 	setInterval(async () => {
 		const currentGameDay = await db.currentGameDay.findUnique({
@@ -46,11 +46,11 @@ client.once(Events.ClientReady, async (c) => {
 					},
 				},
 			},
-		})
+		});
 
 		const msg = (await channel.messages.fetch({ limit: 10 })).find(
 			({ id }) => currentGameDay?.messageId?.split('$$')[0] === id
-		)
+		);
 
 		const res = currentGameDay?.gameDay?.games.map(({ voters, teams }) =>
 			voters
@@ -72,95 +72,95 @@ client.once(Events.ClientReady, async (c) => {
 										},
 								  }
 								: arg
-						)
-						return result
+						);
+						return result;
 					},
 					[
 						{ teamCode: teams[0].code, teamName: teams[0].name, count: {} },
 						{ teamCode: teams[1].code, teamName: teams[1].name, count: {} },
 					]
 				)
-		)
+		);
 
 		// biome-ignore lint/correctness/noUnusedVariables: <explanation>
 		function formatDisplay(
 			teams: {
-				teamCode: string
-				teamName: string
-				count: object
+				teamCode: string;
+				teamName: string;
+				count: object;
 			}[]
 		) {
-			let text = ''
+			let text = '';
 
 			teams.forEach(({ teamCode, count }, i) => {
-				text += `${i !== 0 ? '\n' : ''}${teamCode}: `
+				text += `${i !== 0 ? '\n' : ''}${teamCode}: `;
 
 				Object.keys(count).forEach((key, i) => {
 					//@ts-expect-error
-					text += `${key?.replace('-', ':')} - ${count[key]} `
+					text += `${key?.replace('-', ':')} - ${count[key]} `;
 
 					if (Object.keys(count).length - 1 !== i) {
-						text += '| '
+						text += '| ';
 					}
-				})
-			})
+				});
+			});
 
-			return text
+			return text;
 		}
 
 		//TODO change for bo3 and bo5
 		function formatBo1(
 			teams: {
-				teamCode: string
-				teamName: string
-				count: object
+				teamCode: string;
+				teamName: string;
+				count: object;
 			}[]
 		) {
-			let text = ''
+			let text = '';
 
 			teams.forEach(({ teamCode, count }, i) => {
-				text += `${i !== 0 ? ' - ' : ''}${teamCode}: `
+				text += `${i !== 0 ? ' - ' : ''}${teamCode}: `;
 
 				Object.keys(count).forEach((key, i) => {
 					//@ts-expect-error
-					text += count[key]
+					text += count[key];
 
 					if (Object.keys(count).length - 1 !== i) {
-						text += '| '
+						text += '| ';
 					}
-				})
+				});
 
 				if (Object.keys(count).length === 0) {
-					text += 0
+					text += 0;
 				}
-			})
+			});
 
-			return text
+			return text;
 		}
 
-		const content = msg?.content.split('\n')[0]
+		const content = msg?.content.split('\n')[0];
 		msg?.edit({
 			content: `${content}\n${res
 				?.map((teams) => formatBo1(teams))
 				.join('\n')}`,
-		})
-	}, 1000 * 28)
+		});
+	}, 1000 * 28);
 
 	const msg1 = (await channel.messages.fetch({ limit: 10 })).find(
 		({ id }) => currentGameDay?.messageId?.split('$$')[0] === id
-	)
+	);
 	const msg2 = (await channel.messages.fetch({ limit: 10 })).find(
 		({ id }) => currentGameDay?.messageId?.split('$$')[1] === id
-	)
-	collectTeamSelectResponses(msg1, { withEndMessage: true })
+	);
+	collectTeamSelectResponses(msg1, { withEndMessage: true });
 	if (msg2) {
-		collectTeamSelectResponses(msg2, { withEndMessage: false })
+		collectTeamSelectResponses(msg2, { withEndMessage: false });
 	}
 
 	// biome-ignore lint/suspicious/noConsoleLog: bot ready info
-	console.log(`Ready! Logged in as ${c.user.tag}`)
-})
+	console.log(`Ready! Logged in as ${c.user.tag}`);
+});
 
-handleSlashCommands(client)
+handleSlashCommands(client);
 
-client.login(env.DISCORD_TOKEN)
+client.login(env.DISCORD_TOKEN);

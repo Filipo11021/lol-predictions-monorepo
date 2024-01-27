@@ -1,24 +1,24 @@
-import { env } from '../env'
-import { type EventT, scheduleResponseSchema } from '../schema/events.schema'
-import { resetDateToSameDay } from '../utils/reset-date-to-same-day'
+import { type EventT, scheduleResponseSchema } from 'schema/events.schema';
+import { resetDateToSameDay } from 'utils/reset-date-to-same-day';
+import { env } from '../env';
 
 export async function fetchSchedule(): Promise<EventT[]> {
 	try {
 		const url =
-			'https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-GB&leagueId=98767991302996019'
+			'https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-GB&leagueId=98767991302996019';
 		const res = await fetch(url, {
 			headers: { 'x-api-key': env.LOLESPORTS_API_KEY },
-		})
-		const data = scheduleResponseSchema.parse(await res.json())
+		});
+		const data = scheduleResponseSchema.parse(await res.json());
 
-		if (!data.data) throw Error('lolesports data error')
+		if (!data.data) throw Error('lolesports data error');
 
-		return data.data?.schedule.events
+		return data.data?.schedule.events;
 	} catch (error) {
 		// biome-ignore lint/suspicious/noConsoleLog: fetching error info
-		console.log(error)
+		console.log(error);
 
-		throw Error('fetch error')
+		throw Error('fetch error');
 	}
 }
 
@@ -26,37 +26,37 @@ export function filterCurrentEvents<E extends EventT>(
 	events: E[],
 	fieldName: keyof E
 ): EventT[] {
-	const currentDate = resetDateToSameDay(new Date())
-	let futureEvents: E[] = []
-	let closestDiff = Number.POSITIVE_INFINITY
+	const currentDate = resetDateToSameDay(new Date());
+	let futureEvents: E[] = [];
+	let closestDiff = Number.POSITIVE_INFINITY;
 
 	for (const event of events) {
 		const date = resetDateToSameDay(
 			event[fieldName] instanceof Date
 				? (event[fieldName] as Date)
 				: new Date(event[fieldName] as string)
-		)
+		);
 
-		const isFuture = date.getTime() > currentDate.getTime()
+		const isFuture = date.getTime() > currentDate.getTime();
 
-		if (!isFuture) continue
+		if (!isFuture) continue;
 
-		const diff = Math.abs(date.getTime() - currentDate.getTime())
+		const diff = Math.abs(date.getTime() - currentDate.getTime());
 		if (diff < closestDiff) {
-			closestDiff = diff
-			futureEvents = [event]
+			closestDiff = diff;
+			futureEvents = [event];
 		} else if (diff === closestDiff) {
-			futureEvents.push(event)
+			futureEvents.push(event);
 		}
 	}
 
-	return futureEvents
+	return futureEvents;
 }
 
 export async function getCurrentEvents(): Promise<EventT[]> {
-	const events = await fetchSchedule()
+	const events = await fetchSchedule();
 
-	const currentEvents = filterCurrentEvents(events, 'startTime')
+	const currentEvents = filterCurrentEvents(events, 'startTime');
 
-	return currentEvents
+	return currentEvents;
 }

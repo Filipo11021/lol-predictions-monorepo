@@ -1,6 +1,6 @@
-import { calculatePoints } from "@/utils/calculatePoints";
-import { db } from "@/utils/db";
-import type { PointsTableData } from "./points-columns";
+import { calculatePoints } from '@/utils/calculatePoints';
+import { db } from '@/utils/db';
+import type { PointsTableData } from './points-columns';
 
 export async function pointsTableData(): Promise<{
 	data: Array<PointsTableData>;
@@ -19,7 +19,7 @@ export async function pointsTableData(): Promise<{
 	]);
 
 	const users: Array<
-		Pick<PointsTableData, "username" | "points" | "coverage">
+		Pick<PointsTableData, 'username' | 'points' | 'coverage'>
 	> = [];
 	for (const user of data) {
 		users.push({
@@ -29,8 +29,8 @@ export async function pointsTableData(): Promise<{
 					calculatePoints({
 						type,
 						voter: { code: teamCode, score },
-						winner: { code: winnerCode, score: "1-0" },
-					}),
+						winner: { code: winnerCode, score: '1-0' },
+					})
 				)
 				.reduce((a, b) => a + b, 0 as number),
 			coverage:

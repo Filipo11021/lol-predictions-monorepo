@@ -1,58 +1,58 @@
-import { ComponentType, type Message } from 'discord.js'
-import { db } from '../utils/db'
+import { ComponentType, type Message } from 'discord.js';
+import { db } from 'utils/db';
 
 export async function collectTeamSelectResponses(
 	msg: Message | undefined,
 	{ withEndMessage = true }: { withEndMessage: boolean }
 ) {
-	if (!msg) return
+	if (!msg) return;
 
 	const collector = msg?.createMessageComponentCollector({
 		componentType: ComponentType.StringSelect,
-	})
+	});
 	const btnCollector = msg?.createMessageComponentCollector({
 		componentType: ComponentType.Button,
-	})
+	});
 
 	const intervalId = setInterval(async () => {
 		const res = await db.currentGameDay.findUnique({
 			where: { id: 'main' },
 			include: { gameDay: true },
-		})
+		});
 
 		if (
 			new Date().getTime() >
 			new Date(res?.gameDay?.firstMatchStart ?? '').getTime()
 		) {
-			collector?.stop()
-			clearInterval(intervalId)
+			collector?.stop();
+			clearInterval(intervalId);
 			if (withEndMessage) {
-				msg?.reply('Zakończono głosowanie')
+				msg?.reply('Zakończono głosowanie');
 			}
 		}
-	}, 60 * 1000)
+	}, 60 * 1000);
 	const res = await db.currentGameDay.findUnique({
 		where: { id: 'main' },
 		include: { gameDay: true },
-	})
+	});
 
 	if (
 		new Date().getTime() >
 		new Date(res?.gameDay?.firstMatchStart ?? '').getTime()
 	) {
-		collector?.stop()
-		clearInterval(intervalId)
+		collector?.stop();
+		clearInterval(intervalId);
 		if (withEndMessage) {
-			msg?.reply('Zakończono głosowanie')
+			msg?.reply('Zakończono głosowanie');
 		}
 	}
 
 	collector?.on('collect', async (i) => {
-		const id = i.customId
+		const id = i.customId;
 
-		const va = i.values[0].split('_')
-		const selection = va[0]
-		const score = va[1]
+		const va = i.values[0].split('_');
+		const selection = va[0];
+		const score = va[1];
 
 		await db.user.upsert({
 			where: { id: i.user.id },
@@ -61,12 +61,12 @@ export async function collectTeamSelectResponses(
 				username: i.user.tag,
 			},
 			update: {},
-		})
+		});
 
 		try {
-			const role = i?.guild?.roles.cache.get('1195437562450427999')
+			const role = i?.guild?.roles.cache.get('1195437562450427999');
 			if (!Array.isArray(i.member?.roles) && !!role) {
-				i.member?.roles?.add(role)
+				i.member?.roles?.add(role);
 			}
 		} catch {}
 
@@ -85,17 +85,17 @@ export async function collectTeamSelectResponses(
 				teamCode: selection,
 				score,
 			},
-		})
+		});
 		await i.reply({
 			content: `wybrano ${r.teamCode} ${
 				r.score !== '1-0' ? r.score : ''
 			}`.trim(),
 			ephemeral: true,
-		})
-	})
+		});
+	});
 
 	btnCollector?.on('collect', async (i) => {
-		const id = i.customId
+		const id = i.customId;
 
 		if (id === 'results') {
 			const res = await db.currentGameDay.findUnique({
@@ -117,7 +117,7 @@ export async function collectTeamSelectResponses(
 						},
 					},
 				},
-			})
+			});
 			const a = res?.gameDay?.games.map(({ voters, id }) => ({
 				voters: voters.map(({ team, user: { username, id }, score }) => ({
 					username,
@@ -127,7 +127,7 @@ export async function collectTeamSelectResponses(
 					score,
 				})),
 				id,
-			}))
+			}));
 
 			i.reply({
 				ephemeral: true,
@@ -143,8 +143,8 @@ export async function collectTeamSelectResponses(
 							}`
 					)
 					.join(' | '),
-			})
-			return
+			});
+			return;
 		}
-	})
+	});
 }

@@ -1,12 +1,12 @@
-import { ThemeProvider } from "@/components/theme-provider";
-import type { Metadata } from "next";
-import Script from "next/script";
-import type { ReactNode } from "react";
-import "./globals.css";
+import { ThemeProvider } from '@/components/theme-provider';
+import type { Metadata } from 'next';
+import Script from 'next/script';
+import type { ReactNode } from 'react';
+import './globals.css';
 
 export const metadata: Metadata = {
-	title: "LEC predictions - lewus",
-	description: "LEC predictions - lewus",
+	title: 'LEC predictions - lewus',
+	description: 'LEC predictions - lewus',
 };
 
 export default function RootLayout({

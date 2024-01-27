@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
 	Table,
@@ -7,9 +7,9 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "@/components/ui/table";
-import { cn } from "@/utils/ui";
-import { type Table as TableT, flexRender } from "@tanstack/react-table";
+} from '@/components/ui/table';
+import { cn } from '@/utils/ui';
+import { type Table as TableT, flexRender } from '@tanstack/react-table';
 
 interface DataTableProps<Data> {
 	table: TableT<Data>;
@@ -32,7 +32,7 @@ export function DataTable<Data>({ table, className }: DataTableProps<Data>) {
 											? null
 											: flexRender(
 													header.column.columnDef.header,
-													header.getContext(),
+													header.getContext()
 											  )}
 									</TableHead>
 								);
@@ -45,11 +45,11 @@ export function DataTable<Data>({ table, className }: DataTableProps<Data>) {
 						table.getRowModel().rows.map((row) => (
 							<TableRow
 								key={row.id}
-								data-state={row.getIsSelected() && "selected"}
+								data-state={row.getIsSelected() && 'selected'}
 							>
 								{row.getVisibleCells().map((cell) => (
 									<TableCell
-										className={cn(className?.cell ?? "", "bg-background")}
+										className={cn(className?.cell ?? '', 'bg-background')}
 										key={cell.id}
 									>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}

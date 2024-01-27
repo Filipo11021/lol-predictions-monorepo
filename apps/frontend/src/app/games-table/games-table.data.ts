@@ -1,15 +1,15 @@
-import { calculatePoints } from "@/utils/calculatePoints";
-import { db } from "@/utils/db";
-import type { GamesTableData, GamesTableInfo } from "./games-columns";
+import { calculatePoints } from '@/utils/calculatePoints';
+import { db } from '@/utils/db';
+import type { GamesTableData, GamesTableInfo } from './games-columns';
 
 export async function gamesTableData(
-	arg: { type: "all" } | { type: "one"; id: string },
+	arg: { type: 'all' } | { type: 'one'; id: string }
 ): Promise<{
 	tableData: Array<GamesTableData>;
 	tableInfo: GamesTableInfo;
 }> {
 	const [data] = await Promise.all([
-		arg.type === "one"
+		arg.type === 'one'
 			? db.gameDay.findFirst({
 					where: { id: arg.id },
 					include: {
@@ -33,10 +33,10 @@ export async function gamesTableData(
 			  }),
 	]);
 
-	if (!data) throw Error("unknown games data");
+	if (!data) throw Error('unknown games data');
 
-	const sortedGames = ("games" in data ? data.games : data).sort(
-		(a, b) => a.startTime.getTime() - b.startTime.getTime(),
+	const sortedGames = ('games' in data ? data.games : data).sort(
+		(a, b) => a.startTime.getTime() - b.startTime.getTime()
 	);
 
 	const tableData: Record<PropertyKey, GamesTableData> = {};
@@ -47,11 +47,10 @@ export async function gamesTableData(
 			teams: game.teamCodes,
 			winner: { code: game.winnerCode },
 		};
-		// biome-ignore lint/complexity/noForEach: <explanation>
 		game.voters.forEach((vote) => {
 			const points = calculatePoints({
 				type: game.type,
-				winner: { code: game.winnerCode, score: "1-0" },
+				winner: { code: game.winnerCode, score: '1-0' },
 				voter: { code: vote.teamCode, score: vote.score },
 			});
 

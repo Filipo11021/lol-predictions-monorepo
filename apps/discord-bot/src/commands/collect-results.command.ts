@@ -1,12 +1,12 @@
-import fs from 'node:fs'
-import { $Enums } from '@prisma/client'
+import fs from 'node:fs';
+import { $Enums } from '@prisma/client';
 import {
 	type CacheType,
 	type ChatInputCommandInteraction,
 	PermissionFlagsBits,
 	SlashCommandBuilder,
-} from 'discord.js'
-import { db } from '../utils/db'
+} from 'discord.js';
+import { db } from 'utils/db';
 
 export const data = new SlashCommandBuilder()
 	.setName('collect')
@@ -21,15 +21,15 @@ export const data = new SlashCommandBuilder()
 	)
 	.addStringOption((option) =>
 		option.setName('date').setDescription('Podaj date w formacie D-M np. 23-10')
-	)
+	);
 
 export const execute = async (
 	interaction: ChatInputCommandInteraction<CacheType>
 ) => {
-	const isPublic = interaction.options.getBoolean('public')
-	const gameDayId = interaction.options.getString('date')
+	const isPublic = interaction.options.getBoolean('public');
+	const gameDayId = interaction.options.getString('date');
 
-	await interaction.deferReply({ ephemeral: !isPublic })
+	await interaction.deferReply({ ephemeral: !isPublic });
 
 	const dataPromise = gameDayId
 		? await db.gameDay.findUnique({
@@ -83,15 +83,15 @@ export const execute = async (
 						},
 					},
 				},
-		  })
+		  });
 
-	const [data, allCount] = await Promise.all([dataPromise, db.game.count()])
+	const [data, allCount] = await Promise.all([dataPromise, db.game.count()]);
 
 	if (!data) {
 		await interaction.editReply({
 			content: 'Brak danych',
-		})
-		return
+		});
+		return;
 	}
 
 	const result = ('gameDay' in data ? data.gameDay : data)?.games.map(
@@ -109,23 +109,23 @@ export const execute = async (
 			type: type ?? $Enums.MatchType.BO3,
 			id,
 		})
-	)
+	);
 
 	if (!result) {
 		await interaction.editReply({
 			content: 'Brak danych',
-		})
-		return
+		});
+		return;
 	}
 
-	const date = new Date()
-	const fileName = `results_${date.getHours()}-${date.getMinutes()}_${date.getDate()}.${date.getMonth()}.${date.getFullYear()}.json`
+	const date = new Date();
+	const fileName = `results_${date.getHours()}-${date.getMinutes()}_${date.getDate()}.${date.getMonth()}.${date.getFullYear()}.json`;
 
-	fs.writeFileSync(fileName, JSON.stringify(result), { encoding: 'utf8' })
+	fs.writeFileSync(fileName, JSON.stringify(result), { encoding: 'utf8' });
 
 	await interaction.editReply({
 		files: [fileName],
-	})
+	});
 
-	fs.unlinkSync(fileName)
-}
+	fs.unlinkSync(fileName);
+};

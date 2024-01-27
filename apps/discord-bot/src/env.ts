@@ -1,5 +1,5 @@
-import 'dotenv/config'
-import { z } from 'zod'
+import 'dotenv/config';
+import { z } from 'zod';
 
 const envSchema = z.object({
 	PORT: z.coerce.number().default(4000),
@@ -13,6 +13,6 @@ const envSchema = z.object({
 	DISCORD_APP_ID: z.string(),
 
 	LOLESPORTS_API_KEY: z.string(),
-})
+});
 
-export const env = envSchema.parse(process.env)
+export const env = envSchema.parse(process.env);

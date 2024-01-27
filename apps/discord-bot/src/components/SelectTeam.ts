@@ -1,23 +1,23 @@
-import type { $Enums, Team } from '@prisma/client'
+import type { $Enums, Team } from '@prisma/client';
 import {
 	StringSelectMenuBuilder,
 	StringSelectMenuOptionBuilder,
-} from 'discord.js'
-import { getCurrentEvents } from '../api/events.api'
-import type { EventT } from '../schema/events.schema'
-import { db } from '../utils/db'
-import { addHours } from '../utils/time'
+} from 'discord.js';
+import type { EventT } from 'schema/events.schema';
+import { db } from 'utils/db';
+import { addHours } from 'utils/time';
+import { getCurrentEvents } from '../api/events.api';
 
 function buildTeamSelects(events: EventT[]) {
 	const selects = events.map(({ match: { id, teams, strategy } }) => {
-		let options: StringSelectMenuOptionBuilder[] = []
+		let options: StringSelectMenuOptionBuilder[] = [];
 
 		if (strategy.count === 1) {
 			options = teams.map(({ code, name }) => {
 				return new StringSelectMenuOptionBuilder()
 					.setLabel(`${name} (${code})`)
-					.setValue(code)
-			})
+					.setValue(code);
+			});
 		}
 
 		if (strategy.count === 3) {
@@ -29,8 +29,8 @@ function buildTeamSelects(events: EventT[]) {
 					new StringSelectMenuOptionBuilder()
 						.setLabel(`${name} (${code}) 2-1`)
 						.setValue(`${code}_2-1`),
-				]
-			})
+				];
+			});
 		}
 
 		if (strategy.count === 5) {
@@ -45,19 +45,19 @@ function buildTeamSelects(events: EventT[]) {
 					new StringSelectMenuOptionBuilder()
 						.setLabel(`${name} (${code}) 3-2`)
 						.setValue(`${code}_3-2`),
-				]
-			})
+				];
+			});
 		}
 
 		const select = new StringSelectMenuBuilder()
 			.setCustomId(id)
 			.setPlaceholder(`${teams[0].name} vs ${teams[1].name}`)
-			.addOptions(options)
+			.addOptions(options);
 
-		return select
-	})
+		return select;
+	});
 
-	return selects
+	return selects;
 }
 
 function createTeamIfNotExist({ code, image, name }: Omit<Team, 'gameIds'>) {
@@ -71,19 +71,19 @@ function createTeamIfNotExist({ code, image, name }: Omit<Team, 'gameIds'>) {
 			image,
 			name,
 		},
-	})
+	});
 }
 
 function strategyCountToEnumType(strategyCount: number): $Enums.MatchType {
 	switch (strategyCount) {
 		case 1:
-			return 'BO1'
+			return 'BO1';
 		case 3:
-			return 'BO3'
+			return 'BO3';
 		case 5:
-			return 'BO5'
+			return 'BO5';
 		default:
-			return 'BO1'
+			return 'BO1';
 	}
 }
 
@@ -102,7 +102,7 @@ async function createGame(
 			image: teams[1].image,
 			name: teams[1].name,
 		}),
-	])
+	]);
 
 	await db.game.upsert({
 		where: {
@@ -116,19 +116,19 @@ async function createGame(
 			type: strategyCountToEnumType(strategy.count),
 		},
 		update: {},
-	})
+	});
 }
 
 function generateGameDayId(events: EventT[]) {
 	// return events.map(({ match: { id } }) => id.slice(id.length - 10)).join("");
-	const date = new Date(events[0].startTime)
-	return `${date.getDate()}-${date.getMonth()}`
+	const date = new Date(events[0].startTime);
+	return `${date.getDate()}-${date.getMonth()}`;
 }
 
 export async function createTeamSelects() {
-	const events = await getCurrentEvents()
+	const events = await getCurrentEvents();
 
-	const selects = buildTeamSelects(events)
+	const selects = buildTeamSelects(events);
 
 	const gameDay = await db.gameDay.upsert({
 		create: {
@@ -142,9 +142,9 @@ export async function createTeamSelects() {
 		include: {
 			games: true,
 		},
-	})
+	});
 
-	await Promise.all(events.map((event) => createGame(gameDay.id, event)))
+	await Promise.all(events.map((event) => createGame(gameDay.id, event)));
 
 	await db.currentGameDay.upsert({
 		create: { gameDayId: gameDay.id },
@@ -152,10 +152,10 @@ export async function createTeamSelects() {
 		where: {
 			id: 'main',
 		},
-	})
+	});
 
-	const startDate = events[0].startTime
-	const title = events[0].blockName
+	const startDate = events[0].startTime;
+	const title = events[0].blockName;
 
 	return [
 		selects,
@@ -167,5 +167,5 @@ export async function createTeamSelects() {
 			title,
 			gameDayId: gameDay.id,
 		},
-	] as const
+	] as const;
 }
