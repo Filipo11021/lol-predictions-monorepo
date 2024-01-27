@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String  @id @map("_id")
+  username      String
+  notifications Boolean @default(true)
+
+  votes Vote[]
+}
+
+model Team {
+  code  String @id @map("_id")
+  name  String
+  image String
+
+  games   Game[]   @relation(fields: [gameIds], references: [id])
+  gameIds String[]
+
+  Vote Vote[]
+  wonGames Game[] @relation(name: "winner")
+}
+
+model Vote {
+  id String @id @map("_id")
+
+  team     Team   @relation(fields: [teamCode], references: [code])
+  teamCode String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  Game   Game   @relation(fields: [gameId], references: [id])
+  gameId String
+
+  score String @default("1-0")
+}
+
+model Game {
+  id String @id @map("_id")
+
+  gameDay   GameDay @relation(fields: [gameDayId], references: [id])
+  gameDayId String
+
+  teamCodes String[]
+  teams     Team[]   @relation(fields: [teamCodes], references: [code])
+
+  voters Vote[]
+
+  startTime DateTime
+
+  type MatchType? @default(BO3)
+
+  winner     Team?   @relation(fields: [winnerCode], references: [code], name: "winner")
+  winnerCode String?
+}
+
+enum MatchType {
+  BO1
+  BO3
+  BO5
+}
+
+model GameDay {
+  id String @id @map("_id")
+
+  games          Game[]
+  CurrentGameDay CurrentGameDay?
+
+  firstMatchStart DateTime
+}
+
+model CurrentGameDay {
+  id String @id @default("main") @map("_id")
+
+  gameDay   GameDay? @relation(fields: [gameDayId], references: [id])
+  gameDayId String?  @unique
+
+  messageId String?
+}
+
+model Info {
+  id                        String  @id @default("main") @map("_id")
+  notifyCheckMessageId      String?
+  notifyCheckMessageChannel String?
+}
