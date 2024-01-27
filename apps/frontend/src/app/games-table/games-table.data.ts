@@ -1,5 +1,5 @@
 import { calculatePoints } from '@/utils/calculatePoints';
-import { db } from '@/utils/db';
+import { prisma } from '@repo/database';
 import type { GamesTableData, GamesTableInfo } from './games-columns';
 
 export async function gamesTableData(
@@ -10,7 +10,7 @@ export async function gamesTableData(
 }> {
 	const [data] = await Promise.all([
 		arg.type === 'one'
-			? db.gameDay.findFirst({
+			? prisma.gameDay.findFirst({
 					where: { id: arg.id },
 					include: {
 						games: {
@@ -23,7 +23,7 @@ export async function gamesTableData(
 						},
 					},
 			  })
-			: db.game.findMany({
+			: prisma.game.findMany({
 					include: {
 						voters: {
 							include: { user: true },

@@ -1,12 +1,12 @@
 import { calculatePoints } from '@/utils/calculatePoints';
-import { db } from '@/utils/db';
+import { prisma } from '@repo/database';
 import type { PointsTableData } from './points-columns';
 
 export async function pointsTableData(): Promise<{
 	data: Array<PointsTableData>;
 }> {
 	const [data, gamesCount] = await Promise.all([
-		db.user.findMany({
+		prisma.user.findMany({
 			include: {
 				votes: {
 					include: {
@@ -15,7 +15,7 @@ export async function pointsTableData(): Promise<{
 				},
 			},
 		}),
-		db.game.count({ where: { winnerCode: { not: null } } }),
+		prisma.game.count({ where: { winnerCode: { not: null } } }),
 	]);
 
 	const users: Array<
