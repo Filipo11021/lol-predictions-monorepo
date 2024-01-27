@@ -23,6 +23,9 @@ importers:
       turbo:
         specifier: latest
         version: 1.11.3
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
 
   apps/discord-bot:
     dependencies:
