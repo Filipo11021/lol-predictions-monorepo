@@ -72,6 +72,9 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.0.2
         version: 1.0.2(@types/react@18.2.48)(react@18.2.0)
+      '@repo/database':
+        specifier: workspace:*
+        version: link:../../packages/database
       '@tanstack/react-table':
         specifier: ^8.11.6
         version: 8.11.7(react-dom@18.2.0)(react@18.2.0)
@@ -131,7 +134,24 @@ importers:
         specifier: ^5
         version: 5.3.3
 
-  packages/prisma: {}
+  packages/database:
+    dependencies:
+      '@prisma/client':
+        specifier: 5.8.1
+        version: 5.8.1(prisma@5.8.1)
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: ^20.11.7
+        version: 20.11.7
+      prisma:
+        specifier: ^5.8.1
+        version: 5.8.1
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
 
   packages/typescript-config: {}
 
