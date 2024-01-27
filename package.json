@@ -11,14 +11,13 @@
     "postinstall": "prisma generate && husky install"
   },
   "dependencies": {
-    "@prisma/client": "5.8.0",
+    "@prisma/client": "5.8.1",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-table": "^8.11.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.309.0",
     "next": "14.1.0",
     "next-themes": "^0.2.1",
@@ -28,8 +27,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.5.2",
-    "@types/lodash.debounce": "^4.0.9",
+    "@biomejs/biome": "1.5.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -37,8 +35,8 @@
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "postcss": "^8",
-    "prisma": "^5.8.0",
-    "tailwindcss": "^3.3.0",
+    "prisma": "^5.8.1",
+    "tailwindcss": "^4.0.0",
     "typescript": "^5"
   },
   "lint-staged": {
