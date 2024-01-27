@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@biomejs/biome':
+        specifier: 1.5.3
+        version: 1.5.3
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:packages/typescript-config

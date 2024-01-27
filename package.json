@@ -4,10 +4,11 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "turbo lint",
+    "lint": "biome check --apply .",
     "postinstall": "husky install"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.5.3",
     "@repo/typescript-config": "workspace:*",
     "husky": "^9.0.6",
     "lint-staged": "^15.2.0",

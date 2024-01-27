@@ -4,11 +4,10 @@
   "main": "./build/main.js",
   "scripts": {
     "build": "rm -rf ./build && tsc",
-    "start": "node ./build/deploy-slash-commands.js && node ./build/main.js",
+    "start": "export NODE_PATH=./build/ && node ./build/deploy-slash-commands.js && node ./build/main.js",
     "dev": "tsx watch ./src/main.ts",
     "deploy-cmd": "npm run build && node ./build/deploy-slash-commands.js",
-    "db:generate": "prisma generate",
-    "lint": "biome check --apply ."
+    "db:generate": "prisma generate"
   },
   "license": "MIT",
   "devDependencies": {
