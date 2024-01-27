@@ -1,4 +1,4 @@
-import { TableTitle } from "@/app/shared/table-title";
+import { PredictionsTitle } from "@/app/shared/predictions-title";
 import { getAllGameDays } from "../shared/game-days.data";
 import { GamesTable } from "./games-table";
 import { gamesTableData } from "./games-table.data";
@@ -11,7 +11,7 @@ export default async function Home() {
 
 	return (
 		<div className="mx-auto w-full relative p-4">
-			<TableTitle />
+			<PredictionsTitle />
 			<GamesTable
 				gameDays={gameDays}
 				tableData={tableData}

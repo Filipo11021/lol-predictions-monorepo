@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function TableTitle() {
+export function PredictionsTitle() {
 	return (
 		<Link
 			href="/"

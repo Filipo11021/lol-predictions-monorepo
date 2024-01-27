@@ -1,5 +1,5 @@
 import { getAllGameDays } from "@/app/shared/game-days.data";
-import { TableTitle } from "@/app/shared/table-title";
+import { PredictionsTitle } from "@/app/shared/predictions-title";
 import { GamesTable } from "../games-table";
 import { gamesTableData } from "../games-table.data";
 
@@ -14,7 +14,7 @@ export default async function Home({ params }: { params: { id: string } }) {
 
 	return (
 		<div className="mx-auto max-w-4xl p-4">
-			<TableTitle />
+			<PredictionsTitle />
 			<GamesTable
 				gameDays={gameDays}
 				tableData={tableData}
