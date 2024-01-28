@@ -3,11 +3,9 @@
   "version": "1.0.0",
   "main": "./build/main.js",
   "scripts": {
-    "build": "rm -rf ./build && tsc",
-    "start": "export NODE_PATH=./build/ && node ./build/deploy-slash-commands.js && node ./build/main.js",
+    "start": "npm run deploy-cmd && tsx ./src/main.ts",
     "dev": "tsx watch --clear-screen=false ./src/main.ts",
-    "deploy-cmd": "npm run build && node ./build/deploy-slash-commands.js",
-    "db:generate": "prisma generate"
+    "deploy-cmd": "tsx ./src/deploy-slash-commands.ts"
   },
   "license": "MIT",
   "devDependencies": {
