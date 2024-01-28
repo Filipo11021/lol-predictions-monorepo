@@ -11,7 +11,7 @@
     "format": "prisma format",
     "db:gen": "prisma generate",
     "dev:db:gen": "pnpm db:gen -- --watch",
-    "studio": "prisma studio"
+    "db:studio": "prisma studio"
   },
   "keywords": [],
   "author": "",

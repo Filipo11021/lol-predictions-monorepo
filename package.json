@@ -9,6 +9,7 @@
     "dev:db:gen": "turbo dev:db:gen",
     "db:gen": "turbo db:gen",
     "db:push": "turbo db:push",
+    "db:studio": "turbo db:studio",
     "postinstall": "husky install"
   },
   "devDependencies": {

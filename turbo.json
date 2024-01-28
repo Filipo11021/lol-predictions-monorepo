@@ -18,11 +18,12 @@
 			"dependsOn": ["^dev:db:gen"]
 		},
 		"db:gen": {
-			"dependsOn": ["^db:gen"]
+			"cache": false
 		},
 		"dev:db:gen": {
 			"dependsOn": ["^dev:db:gen"]
 		},
-		"db:push": {}
+		"db:push": { "cache": false },
+		"db:studio": { "cache": false }
 	}
 }
