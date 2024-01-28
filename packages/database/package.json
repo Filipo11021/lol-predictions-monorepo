@@ -2,16 +2,14 @@
   "name": "@repo/database",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/client.ts",
+  "types": "./src/client.ts",
   "scripts": {
     "db:push": "prisma db push",
     "format": "prisma format",
     "db:gen": "prisma generate",
     "dev:db:gen": "pnpm db:gen -- --watch",
     "studio": "prisma studio"
-  },
-  "exports": {
-    ".": "./src/client.ts" 
   },
   "keywords": [],
   "author": "",
