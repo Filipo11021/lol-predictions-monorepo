@@ -1,6 +1,5 @@
 import fs from 'node:fs';
-import { $Enums } from '@prisma/client';
-import { prisma } from '@repo/database';
+import { $Enums, prisma } from '@repo/database';
 import {
 	type CacheType,
 	type ChatInputCommandInteraction,

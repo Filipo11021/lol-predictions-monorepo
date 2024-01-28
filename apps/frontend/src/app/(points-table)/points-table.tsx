@@ -2,7 +2,7 @@
 
 import { TableSearch } from '@/app/shared/table-search';
 import { DataTable } from '@/components/ui/data-table';
-import type { GameDay } from '@prisma/client';
+import type { GameDay } from '@repo/database';
 import {
 	getCoreRowModel,
 	getFilteredRowModel,

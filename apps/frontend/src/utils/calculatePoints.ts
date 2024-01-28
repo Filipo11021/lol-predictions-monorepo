@@ -1,4 +1,4 @@
-import type { $Enums } from '@prisma/client';
+import type { $Enums } from '@repo/database';
 
 export function calculatePoints({
 	voter,

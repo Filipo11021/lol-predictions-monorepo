@@ -1,4 +1,4 @@
-import type { $Enums, Team } from '@prisma/client';
+import type { $Enums, Team } from '@repo/database';
 import { prisma } from '@repo/database';
 import {
 	StringSelectMenuBuilder,

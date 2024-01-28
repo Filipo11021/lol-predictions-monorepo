@@ -10,7 +10,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import type { GameDay } from '@prisma/client';
+import type { GameDay } from '@repo/database';
 import { XIcon } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 
