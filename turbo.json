@@ -6,6 +6,9 @@
 			"dependsOn": ["^db:gen", "^build"],
 			"outputs": [".next/**", "!.next/cache/**"]
 		},
+		"start": {
+			"dependsOn": ["^start"]
+		},
 		"lint": {
 			"dependsOn": ["^lint"]
 		},
