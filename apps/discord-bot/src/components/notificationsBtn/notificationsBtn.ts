@@ -1,3 +1,4 @@
+import { prisma } from '@repo/database';
 import {
 	ActionRowBuilder,
 	ButtonBuilder,
@@ -6,7 +7,6 @@ import {
 	ComponentType,
 	type Message,
 } from 'discord.js';
-import { db } from 'utils/db';
 
 const addNotifyRoleKey = 'addNotifyRole';
 const removeNotifyRoleKey = 'removeNotifyRole';
@@ -25,7 +25,7 @@ export const actionRowNotify = new ActionRowBuilder({
 });
 
 export async function interaction(client: Client<boolean>) {
-	const info = await db.info.findUnique({ where: { id: 'main' } });
+	const info = await prisma.info.findUnique({ where: { id: 'main' } });
 	if (!info?.notifyCheckMessageId) return;
 
 	const channel = client.channels.cache.get(info.id);
@@ -58,7 +58,7 @@ export async function create(client: Client<boolean>) {
 		content: 'Czy chcesz dostawać powiadomienia dotyczące predykcji?',
 	});
 
-	await db.info.upsert({
+	await prisma.info.upsert({
 		where: {
 			id: 'main',
 		},

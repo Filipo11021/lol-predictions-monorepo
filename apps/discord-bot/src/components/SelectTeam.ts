@@ -1,10 +1,10 @@
 import type { $Enums, Team } from '@prisma/client';
+import { prisma } from '@repo/database';
 import {
 	StringSelectMenuBuilder,
 	StringSelectMenuOptionBuilder,
 } from 'discord.js';
 import type { EventT } from 'schema/events.schema';
-import { db } from 'utils/db';
 import { addHours } from 'utils/time';
 import { getCurrentEvents } from '../api/events.api';
 
@@ -61,7 +61,7 @@ function buildTeamSelects(events: EventT[]) {
 }
 
 function createTeamIfNotExist({ code, image, name }: Omit<Team, 'gameIds'>) {
-	return db.team.upsert({
+	return prisma.team.upsert({
 		where: {
 			code,
 		},
@@ -104,7 +104,7 @@ async function createGame(
 		}),
 	]);
 
-	await db.game.upsert({
+	await prisma.game.upsert({
 		where: {
 			id: match.id,
 		},
@@ -130,7 +130,7 @@ export async function createTeamSelects() {
 
 	const selects = buildTeamSelects(events);
 
-	const gameDay = await db.gameDay.upsert({
+	const gameDay = await prisma.gameDay.upsert({
 		create: {
 			firstMatchStart: events[0].startTime,
 			id: generateGameDayId(events),
@@ -146,7 +146,7 @@ export async function createTeamSelects() {
 
 	await Promise.all(events.map((event) => createGame(gameDay.id, event)));
 
-	await db.currentGameDay.upsert({
+	await prisma.currentGameDay.upsert({
 		create: { gameDayId: gameDay.id },
 		update: { gameDayId: gameDay.id },
 		where: {

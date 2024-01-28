@@ -1,12 +1,12 @@
 import fs from 'node:fs';
 import { $Enums } from '@prisma/client';
+import { prisma } from '@repo/database';
 import {
 	type CacheType,
 	type ChatInputCommandInteraction,
 	PermissionFlagsBits,
 	SlashCommandBuilder,
 } from 'discord.js';
-import { db } from 'utils/db';
 
 export const data = new SlashCommandBuilder()
 	.setName('collect')
@@ -32,7 +32,7 @@ export const execute = async (
 	await interaction.deferReply({ ephemeral: !isPublic });
 
 	const dataPromise = gameDayId
-		? await db.gameDay.findUnique({
+		? await prisma.gameDay.findUnique({
 				where: { id: gameDayId },
 				include: {
 					games: {
@@ -56,7 +56,7 @@ export const execute = async (
 					},
 				},
 		  })
-		: db.currentGameDay.findUnique({
+		: prisma.currentGameDay.findUnique({
 				where: { id: 'main' },
 				include: {
 					gameDay: {
@@ -85,7 +85,10 @@ export const execute = async (
 				},
 		  });
 
-	const [data, allCount] = await Promise.all([dataPromise, db.game.count()]);
+	const [data, allCount] = await Promise.all([
+		dataPromise,
+		prisma.game.count(),
+	]);
 
 	if (!data) {
 		await interaction.editReply({

@@ -1,5 +1,5 @@
 {
-  "name": "lol-predictions-discord-bot",
+  "name": "discord-bot",
   "version": "1.0.0",
   "main": "./build/main.js",
   "scripts": {
@@ -17,6 +17,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@repo/database": "workspace:*",
     "@prisma/client": "5.8.1",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.1",

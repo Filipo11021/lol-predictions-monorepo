@@ -1,5 +1,5 @@
+import { prisma } from '@repo/database';
 import { ComponentType, type Message } from 'discord.js';
-import { db } from 'utils/db';
 
 export async function collectTeamSelectResponses(
 	msg: Message | undefined,
@@ -15,7 +15,7 @@ export async function collectTeamSelectResponses(
 	});
 
 	const intervalId = setInterval(async () => {
-		const res = await db.currentGameDay.findUnique({
+		const res = await prisma.currentGameDay.findUnique({
 			where: { id: 'main' },
 			include: { gameDay: true },
 		});
@@ -31,7 +31,7 @@ export async function collectTeamSelectResponses(
 			}
 		}
 	}, 60 * 1000);
-	const res = await db.currentGameDay.findUnique({
+	const res = await prisma.currentGameDay.findUnique({
 		where: { id: 'main' },
 		include: { gameDay: true },
 	});
@@ -54,7 +54,7 @@ export async function collectTeamSelectResponses(
 		const selection = va[0];
 		const score = va[1];
 
-		await db.user.upsert({
+		await prisma.user.upsert({
 			where: { id: i.user.id },
 			create: {
 				id: i.user.id,
@@ -70,7 +70,7 @@ export async function collectTeamSelectResponses(
 			}
 		} catch {}
 
-		const r = await db.vote.upsert({
+		const r = await prisma.vote.upsert({
 			where: {
 				id: id + i.user.id,
 			},
@@ -98,7 +98,7 @@ export async function collectTeamSelectResponses(
 		const id = i.customId;
 
 		if (id === 'results') {
-			const res = await db.currentGameDay.findUnique({
+			const res = await prisma.currentGameDay.findUnique({
 				where: { id: 'main' },
 				include: {
 					gameDay: {

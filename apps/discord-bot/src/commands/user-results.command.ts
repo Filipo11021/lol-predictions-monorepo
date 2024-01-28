@@ -1,9 +1,9 @@
+import { prisma } from '@repo/database';
 import {
 	type CacheType,
 	type ChatInputCommandInteraction,
 	SlashCommandBuilder,
 } from 'discord.js';
-import { db } from 'utils/db';
 
 export const data = new SlashCommandBuilder()
 	.setName('votes')
@@ -36,7 +36,7 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
 	}
 
 	const res = gameDayId
-		? await db.gameDay.findUnique({
+		? await prisma.gameDay.findUnique({
 				where: {
 					id: gameDayId,
 				},
@@ -55,7 +55,7 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
 				},
 		  })
 		: (
-				await db.currentGameDay.findUnique({
+				await prisma.currentGameDay.findUnique({
 					where: { id: 'main' },
 					include: {
 						gameDay: {

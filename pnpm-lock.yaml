@@ -32,6 +32,9 @@ importers:
       '@prisma/client':
         specifier: 5.8.1
         version: 5.8.1(prisma@5.8.1)
+      '@repo/database':
+        specifier: workspace:*
+        version: link:../../packages/database
       discord.js:
         specifier: ^14.14.1
         version: 14.14.1

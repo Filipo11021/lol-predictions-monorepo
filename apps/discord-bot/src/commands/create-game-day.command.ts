@@ -1,3 +1,4 @@
+import { prisma } from '@repo/database';
 import { createTeamSelects } from 'components/SelectTeam';
 import { collectTeamSelectResponses } from 'components/collect-team-select-responses';
 import {
@@ -9,7 +10,6 @@ import {
 	PermissionFlagsBits,
 	SlashCommandBuilder,
 } from 'discord.js';
-import { db } from 'utils/db';
 
 export const data = new SlashCommandBuilder()
 	.setName('game')
@@ -70,7 +70,7 @@ export const execute = async (
 		await collectTeamSelectResponses(res2, { withEndMessage: false });
 	}
 
-	await db.currentGameDay.update({
+	await prisma.currentGameDay.update({
 		data: {
 			messageId: res2?.id ? `${res1?.id}$$${res2?.id}` : res1?.id,
 		},

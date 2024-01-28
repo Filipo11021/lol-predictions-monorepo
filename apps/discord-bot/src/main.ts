@@ -1,6 +1,6 @@
+import { prisma } from '@repo/database';
 import { collectTeamSelectResponses } from 'components/collect-team-select-responses';
 import { ChannelType, Client, Events, GatewayIntentBits } from 'discord.js';
-import { db } from 'utils/db';
 import { env } from './env';
 import { handleSlashCommands } from './handle-slash-commands';
 
@@ -19,14 +19,14 @@ client.once(Events.ClientReady, async (c) => {
 		throw Error('channel type');
 	}
 
-	const currentGameDay = await db.currentGameDay.findUnique({
+	const currentGameDay = await prisma.currentGameDay.findUnique({
 		where: {
 			id: 'main',
 		},
 	});
 
 	setInterval(async () => {
-		const currentGameDay = await db.currentGameDay.findUnique({
+		const currentGameDay = await prisma.currentGameDay.findUnique({
 			where: {
 				id: 'main',
 			},

@@ -1,9 +1,9 @@
+import { prisma } from '@repo/database';
 import {
 	type CacheType,
 	type ChatInputCommandInteraction,
 	SlashCommandBuilder,
 } from 'discord.js';
-import { db } from 'utils/db';
 
 export const data = new SlashCommandBuilder()
 	.setName('count')
@@ -32,8 +32,8 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
 	}
 
 	const [gamesCount, votesCount] = await Promise.all([
-		db.game.count(),
-		db.vote.count({
+		prisma.game.count(),
+		prisma.vote.count({
 			where: {
 				userId: user.id,
 			},
