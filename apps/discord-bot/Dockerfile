@@ -51,9 +51,9 @@ FROM base AS runner
 WORKDIR /app
 
 # Don't run production as root
-RUN addgroup --system --gid 1001 docker
-RUN adduser --system --uid 1001 docker
-USER docker
+# RUN addgroup --system --gid 1001 docker
+# RUN adduser --system --uid 1001 docker
+# USER docker
 
 # Copy built application
 COPY --from=installer /app .
