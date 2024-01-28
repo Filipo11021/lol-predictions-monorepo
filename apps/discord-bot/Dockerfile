@@ -2,51 +2,61 @@
 ARG NODE_VERSION=20
 FROM node:${NODE_VERSION}-slim as base
 
-# App lives here
+# Install pnpm
+ARG PNPM_VERSION=8.14.3
+RUN npm install -g pnpm@$PNPM_VERSION
+
+# Install packages needed for deployment
+RUN apt-get update -qq && \
+    apt-get install -y openssl
+
+FROM base AS builder
+
+# Set working directory
+WORKDIR /app
+RUN npm install -g turbo
+COPY . .
+
+# Generate a partial monorepo with a pruned lockfile for a target workspace.
+RUN turbo prune discord-bot --docker
+
+# Add lockfile and package.json's of isolated subworkspace
+FROM base AS installer
 WORKDIR /app
 
 # Set production environment
 ENV NODE_ENV="production"
 
-# Install pnpm
-ARG PNPM_VERSION=8.14.3
-RUN npm install -g pnpm@$PNPM_VERSION
-
-
-# Throw-away build stage to reduce size of final image
-FROM base as build
-
 # Install packages needed to build node modules
 RUN apt-get update -qq && \
-    apt-get install -y build-essential openssl pkg-config python-is-python3
+    apt-get install -y build-essential pkg-config python-is-python3
 
 # Install node modules
-COPY --link package.json pnpm-lock.yaml ./
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY .npmrc .npmrc
 RUN pnpm install --frozen-lockfile --prod=false
 
-# Generate Prisma Client
-COPY --link prisma .
-RUN npx prisma generate
+# Build the project and its dependencies
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
 
-# Copy application code
-COPY --link . .
-
-# Build application
-RUN pnpm run build
+RUN pnpm turbo build --filter=discord-bot...
 
 # Remove development dependencies
 RUN pnpm prune --prod
 
 # Final stage for app image
-FROM base
+FROM base AS runner
+WORKDIR /app
 
-# Install packages needed for deployment
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y openssl && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+# Don't run production as root
+RUN addgroup --system --gid 1001 docker
+RUN adduser --system --uid 1001 docker
+USER docker
 
 # Copy built application
-COPY --from=build /app /app
+COPY --from=installer /app .
 
 # Start the server by default, this can be overwritten at runtime
 CMD [ "pnpm", "run", "start" ]
