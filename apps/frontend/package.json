@@ -10,10 +10,10 @@
     "type-check": "tsc --pretty --noEmit"
   },
   "dependencies": {
-    "@repo/database": "workspace:*",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
+    "@repo/database": "workspace:*",
     "@tanstack/react-table": "^8.11.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
+    "@prisma/nextjs-monorepo-workaround-plugin": "^5.8.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
