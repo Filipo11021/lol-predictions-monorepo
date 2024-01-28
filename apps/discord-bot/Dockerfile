@@ -41,6 +41,7 @@ RUN pnpm install --frozen-lockfile --prod=false
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 
+RUN pnpm turbo db:gen
 RUN pnpm turbo build --filter=discord-bot...
 
 # Remove development dependencies
