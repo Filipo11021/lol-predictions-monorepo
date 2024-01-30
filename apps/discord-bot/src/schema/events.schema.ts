@@ -30,10 +30,21 @@ const eventSchema = z.union([
 		startTime: z.string(),
 		state: z.string(),
 		type: z.string(),
-		league: z.object({
-			name: z.string(),
-			slug: z.string(),
-			image: z.string(),
+		blockName: z.string(),
+		league: z.object({ name: z.string(), slug: z.string() }),
+		match: z.object({
+			id: z.string(),
+			flags: z.array(z.string()),
+			teams: z.array(
+				z.object({
+					name: z.string(),
+					code: z.string(),
+					image: z.string(),
+					result: z.null(),
+					record: z.null(),
+				})
+			),
+			strategy: z.object({ type: z.string(), count: z.number() }),
 		}),
 	}),
 ]);
