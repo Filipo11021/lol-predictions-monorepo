@@ -82,7 +82,6 @@ client.once(Events.ClientReady, async (c) => {
 				)
 		);
 
-		// biome-ignore lint/correctness/noUnusedVariables: <explanation>
 		function formatDisplay(
 			teams: {
 				teamCode: string;
@@ -109,39 +108,39 @@ client.once(Events.ClientReady, async (c) => {
 		}
 
 		//TODO change for bo3 and bo5
-		function formatBo1(
-			teams: {
-				teamCode: string;
-				teamName: string;
-				count: object;
-			}[]
-		) {
-			let text = '';
+		// function formatBo1(
+		// 	teams: {
+		// 		teamCode: string;
+		// 		teamName: string;
+		// 		count: object;
+		// 	}[]
+		// ) {
+		// 	let text = '';
 
-			teams.forEach(({ teamCode, count }, i) => {
-				text += `${i !== 0 ? ' - ' : ''}${teamCode}: `;
+		// 	teams.forEach(({ teamCode, count }, i) => {
+		// 		text += `${i !== 0 ? ' - ' : ''}${teamCode}: `;
 
-				Object.keys(count).forEach((key, i) => {
-					//@ts-expect-error
-					text += count[key];
+		// 		Object.keys(count).forEach((key, i) => {
+		// 			//@ts-expect-error
+		// 			text += count[key];
 
-					if (Object.keys(count).length - 1 !== i) {
-						text += '| ';
-					}
-				});
+		// 			if (Object.keys(count).length - 1 !== i) {
+		// 				text += '| ';
+		// 			}
+		// 		});
 
-				if (Object.keys(count).length === 0) {
-					text += 0;
-				}
-			});
+		// 		if (Object.keys(count).length === 0) {
+		// 			text += 0;
+		// 		}
+		// 	});
 
-			return text;
-		}
+		// 	return text;
+		// }
 
 		const content = msg?.content.split('\n')[0];
 		msg?.edit({
 			content: `${content}\n${res
-				?.map((teams) => formatBo1(teams))
+				?.map((teams) => formatDisplay(teams))
 				.join('\n')}`,
 		});
 	}, 1000 * 28);
