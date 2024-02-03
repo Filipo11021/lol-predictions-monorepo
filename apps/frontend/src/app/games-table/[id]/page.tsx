@@ -7,7 +7,7 @@ export default async function Home({ params }: { params: { id: string } }) {
 	const [{ tableData, tableInfo }, gameDays] = await Promise.all([
 		await gamesTableData({
 			id: params.id,
-			type: 'one',
+			type: 'fromGameDay',
 		}),
 		getAllGameDays(),
 	]);

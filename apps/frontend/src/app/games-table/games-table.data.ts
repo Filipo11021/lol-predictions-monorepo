@@ -2,40 +2,47 @@ import { calculatePoints } from '@/utils/calculatePoints';
 import { prisma } from '@repo/database';
 import type { GamesTableData, GamesTableInfo } from './games-columns';
 
-export async function gamesTableData(
-	arg: { type: 'all' } | { type: 'one'; id: string }
-): Promise<{
-	tableData: Array<GamesTableData>;
-	tableInfo: GamesTableInfo;
-}> {
-	const [data] = await Promise.all([
-		arg.type === 'one'
-			? prisma.gameDay.findFirst({
-					where: { id: arg.id },
-					include: {
-						games: {
-							include: {
-								voters: {
-									include: { user: true },
-								},
-								winner: true,
-							},
-						},
-					},
-			  })
-			: prisma.game.findMany({
+async function getGames(
+	arg: { type: 'all' } | { type: 'fromGameDay'; id: string }
+) {
+	if (arg.type === 'fromGameDay') {
+		const data = await prisma.gameDay.findFirst({
+			where: { id: arg.id },
+			include: {
+				games: {
 					include: {
 						voters: {
 							include: { user: true },
 						},
 						winner: true,
 					},
-			  }),
-	]);
+				},
+			},
+		});
+		return data?.games;
+	}
+
+	return prisma.game.findMany({
+		include: {
+			voters: {
+				include: { user: true },
+			},
+			winner: true,
+		},
+	});
+}
+
+export async function gamesTableData(
+	arg: { type: 'all' } | { type: 'fromGameDay'; id: string }
+): Promise<{
+	tableData: Array<GamesTableData>;
+	tableInfo: GamesTableInfo;
+}> {
+	const [data] = await Promise.all([getGames(arg)]);
 
 	if (!data) throw Error('unknown games data');
 
-	const sortedGames = ('games' in data ? data.games : data).sort(
+	const sortedGames = data.sort(
 		(a, b) => a.startTime.getTime() - b.startTime.getTime()
 	);
 
