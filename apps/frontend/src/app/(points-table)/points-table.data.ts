@@ -25,11 +25,11 @@ export async function pointsTableData(): Promise<{
 		users.push({
 			username: user.username,
 			points: user.votes
-				.map(({ teamCode, score, Game: { winnerCode, type } }) =>
+				.map(({ teamCode, score, Game: { winnerCode, type }, Game }) =>
 					calculatePoints({
 						type,
 						voter: { code: teamCode, score },
-						winner: { code: winnerCode, score: '1-0' },
+						winner: { code: winnerCode, score: Game.score },
 					})
 				)
 				.reduce((a, b) => a + b, 0 as number),
