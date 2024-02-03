@@ -68,8 +68,9 @@ model Game {
 
   type MatchType? @default(BO3)
 
-  winner     Team?   @relation(fields: [winnerCode], references: [code], name: "winner")
-  winnerCode String?
+  winner      Team?   @relation(fields: [winnerCode], references: [code], name: "winner")
+  winnerCode  String?
+  score String?
 
   createdAt DateTime? @default(now())
 }
