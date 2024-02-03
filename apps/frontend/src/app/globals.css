@@ -28,6 +28,8 @@
     --error-foreground: theme(colors.black);
     --success-background: theme(colors.green.300);
     --success-foreground: theme(colors.black);
+    --warning-background: theme(colors.orange.200);
+    --warning-foreground: theme(colors.black);
   }
 
   .dark {
@@ -54,6 +56,8 @@
     --error-foreground: theme(colors.white);
     --success-background: theme(colors.green.950);
     --success-foreground: theme(colors.white);
+    --warning-background: theme(colors.orange.800);
+    --warning-foreground: theme(colors.white);
   }
 }
 

@@ -52,12 +52,12 @@ export async function gamesTableData(
 	sortedGames?.forEach((game, index) => {
 		tableInfo[`team${index}`] = {
 			teams: game.teamCodes,
-			winner: { code: game.winnerCode },
+			winner: { code: game.winnerCode, score: game.score },
 		};
 		game.voters.forEach((vote) => {
 			const points = calculatePoints({
 				type: game.type,
-				winner: { code: game.winnerCode, score: '1-0' },
+				winner: { code: game.winnerCode, score: game.score },
 				voter: { code: vote.teamCode, score: vote.score },
 			});
 
@@ -66,13 +66,19 @@ export async function gamesTableData(
 					username: vote.user.username,
 					points: points as number,
 				};
-				tableData[vote.user.username][`team${index}`] = vote.teamCode;
+				tableData[vote.user.username][`team${index}`] = {
+					code: vote.teamCode,
+					score: vote.score,
+				};
 
 				return;
 			}
 
 			tableData[vote.user.username].points += points;
-			tableData[vote.user.username][`team${index}`] = vote.teamCode;
+			tableData[vote.user.username][`team${index}`] = {
+				code: vote.teamCode,
+				score: vote.score,
+			};
 		});
 	});
 

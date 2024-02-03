@@ -32,6 +32,10 @@ const config = {
 					DEFAULT: 'var(--success-background)',
 					foreground: 'var(--success-foreground)',
 				},
+				warning: {
+					DEFAULT: 'var(--warning-background)',
+					foreground: 'var(--warning-foreground)',
+				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))',
