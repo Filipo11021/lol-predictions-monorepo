@@ -16,6 +16,8 @@ model User {
   notifications Boolean @default(true)
 
   votes Vote[]
+
+  createdAt DateTime? @default(now())
 }
 
 model Team {
@@ -26,8 +28,10 @@ model Team {
   games   Game[]   @relation(fields: [gameIds], references: [id])
   gameIds String[]
 
-  Vote Vote[]
+  Vote     Vote[]
   wonGames Game[] @relation(name: "winner")
+
+  createdAt DateTime? @default(now())
 }
 
 model Vote {
@@ -43,6 +47,10 @@ model Vote {
   gameId String
 
   score String @default("1-0")
+
+  createdAt DateTime? @default(now())
+
+  @@unique([userId, gameId])
 }
 
 model Game {
@@ -62,6 +70,8 @@ model Game {
 
   winner     Team?   @relation(fields: [winnerCode], references: [code], name: "winner")
   winnerCode String?
+
+  createdAt DateTime? @default(now())
 }
 
 enum MatchType {
@@ -77,6 +87,8 @@ model GameDay {
   CurrentGameDay CurrentGameDay?
 
   firstMatchStart DateTime
+
+  createdAt DateTime? @default(now())
 }
 
 model CurrentGameDay {
