@@ -36,13 +36,25 @@ const eventSchema = z.union([
 			id: z.string(),
 			flags: z.array(z.string()),
 			teams: z.array(
-				z.object({
-					name: z.string(),
-					code: z.string(),
-					image: z.string(),
-					result: z.null(),
-					record: z.null(),
-				})
+				z.union([
+					z.object({
+						name: z.string(),
+						code: z.string(),
+						image: z.string(),
+						result: z.null(),
+						record: z.null(),
+					}),
+					z.object({
+						name: z.string(),
+						code: z.string(),
+						image: z.string(),
+						result: z.object({
+							outcome: z.null(),
+							gameWins: z.number(),
+						}),
+						record: z.object({ wins: z.number(), losses: z.number() }),
+					}),
+				])
 			),
 			strategy: z.object({ type: z.string(), count: z.number() }),
 		}),
