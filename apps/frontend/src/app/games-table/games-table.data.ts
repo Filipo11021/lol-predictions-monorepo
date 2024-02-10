@@ -43,7 +43,7 @@ export async function gamesTableData(
 	if (!data) throw Error('unknown games data');
 
 	const sortedGames = data.sort(
-		(a, b) => a.startTime.getTime() - b.startTime.getTime()
+		(a, b) => b.startTime.getTime() - a.startTime.getTime()
 	);
 
 	const tableData: Record<PropertyKey, GamesTableData> = {};
