@@ -60,7 +60,11 @@ function buildTeamSelects(events: EventT[]) {
 	return selects;
 }
 
-function createTeamIfNotExist({ code, image, name }: Omit<Team, 'gameIds'>) {
+function createTeamIfNotExist({
+	code,
+	image,
+	name,
+}: Omit<Team, 'gameIds' | 'createdAt'>) {
 	return prisma.team.upsert({
 		where: {
 			code,

@@ -68,9 +68,9 @@ model Game {
 
   type MatchType? @default(BO3)
 
-  winner      Team?   @relation(fields: [winnerCode], references: [code], name: "winner")
-  winnerCode  String?
-  score String?
+  winner     Team?   @relation(fields: [winnerCode], references: [code], name: "winner")
+  winnerCode String?
+  score      String?
 
   createdAt DateTime? @default(now())
 }
@@ -99,6 +99,23 @@ model CurrentGameDay {
   gameDayId String?  @unique
 
   messageId String?
+}
+
+model Question {
+  id            String           @id @default(cuid()) @map("_id")
+  messageId     String
+  question      String
+  answers       String[]
+  correctAnswer String?
+  points        Int              @default(1)
+  userAnswers   QuestionAnswer[]
+}
+
+model QuestionAnswer {
+  id         String   @id @map("_id")
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String
+  answer     String
 }
 
 model Info {
