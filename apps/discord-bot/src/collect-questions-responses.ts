@@ -45,6 +45,7 @@ export async function collectQuestionsResponses(channel: TextChannel) {
 						answer,
 					},
 				});
+				i.reply({});
 			} catch (error) {
 				// biome-ignore lint/suspicious/noConsoleLog: <explanation>
 				console.log(error);
