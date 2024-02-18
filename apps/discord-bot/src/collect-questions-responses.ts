@@ -59,7 +59,7 @@ export async function collectQuestionsResponses(channel: TextChannel) {
 			try {
 				const answer = i.values[0];
 
-				await prisma.questionAnswer.upsert({
+				const data = await prisma.questionAnswer.upsert({
 					where: {
 						id: question.id + i.user.id,
 					},
@@ -73,7 +73,7 @@ export async function collectQuestionsResponses(channel: TextChannel) {
 						answer,
 					},
 				});
-				i.reply({});
+				i.reply({ content: `wybrano ${data.answer}`, ephemeral: true });
 			} catch (error) {
 				// biome-ignore lint/suspicious/noConsoleLog: <explanation>
 				console.log(error);
