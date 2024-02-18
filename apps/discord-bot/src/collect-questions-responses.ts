@@ -2,7 +2,11 @@ import { prisma } from '@repo/database';
 import { ComponentType, type TextChannel } from 'discord.js';
 
 export async function collectQuestionsResponses(channel: TextChannel) {
-	const questions = await prisma.question.findMany({});
+	const questions = await prisma.question.findMany({
+		orderBy: {
+			id: 'asc',
+		},
+	});
 	const lastMessageId = questions.at(-1)?.messageId;
 
 	const buttonMsg = (await channel.messages.fetch({ limit: 10 })).find(
