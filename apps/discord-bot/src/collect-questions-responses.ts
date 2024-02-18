@@ -15,10 +15,15 @@ export async function collectQuestionsResponses(channel: TextChannel) {
 	btnCollector?.on('collect', async (i) => {
 		const answers = await prisma.questionAnswer.findMany({
 			where: { userId: i.user.id },
+			orderBy: {
+				questionId: 'asc',
+			},
 		});
 		i.reply({
 			ephemeral: true,
-			content: answers.map(({ answer }, i) => `${i + 1}. ${answer} `).join(','),
+			content: answers.length
+				? answers.map(({ answer }, i) => ` ${i + 1}. ${answer}`).join(',')
+				: 'Brak',
 		});
 	});
 
