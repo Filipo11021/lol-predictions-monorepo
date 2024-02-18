@@ -107,7 +107,7 @@ model Question {
   messageId     String
   question      String
   answers       String[]
-  correctAnswer String?
+  correctAnswer String[]
   points        Int              @default(1)
   userAnswers   QuestionAnswer[]
 }
