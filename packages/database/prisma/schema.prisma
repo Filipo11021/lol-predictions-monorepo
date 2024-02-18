@@ -17,7 +17,8 @@ model User {
 
   votes Vote[]
 
-  createdAt DateTime? @default(now())
+  createdAt      DateTime?        @default(now())
+  QuestionAnswer QuestionAnswer[]
 }
 
 model Team {
@@ -116,6 +117,10 @@ model QuestionAnswer {
   question   Question @relation(fields: [questionId], references: [id])
   questionId String
   answer     String
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@unique([questionId, userId])
 }
 
 model Info {

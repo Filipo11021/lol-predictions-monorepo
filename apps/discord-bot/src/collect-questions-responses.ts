@@ -3,6 +3,24 @@ import { ComponentType, type TextChannel } from 'discord.js';
 
 export async function collectQuestionsResponses(channel: TextChannel) {
 	const questions = await prisma.question.findMany({});
+	const lastMessageId = questions.at(-1)?.messageId;
+
+	const buttonMsg = (await channel.messages.fetch({ limit: 10 })).find(
+		({ id }) => lastMessageId === id
+	);
+	const btnCollector = buttonMsg?.createMessageComponentCollector({
+		componentType: ComponentType.Button,
+	});
+
+	btnCollector?.on('collect', async (i) => {
+		const answers = await prisma.questionAnswer.findMany({
+			where: { userId: i.user.id },
+		});
+		i.reply({
+			ephemeral: true,
+			content: answers.map(({ answer }, i) => `${i + 1}. ${answer} `).join(','),
+		});
+	});
 
 	for (const question of questions) {
 		const msg = (await channel.messages.fetch({ limit: 10 })).find(
@@ -40,6 +58,7 @@ export async function collectQuestionsResponses(channel: TextChannel) {
 						id: question.id + i.user.id,
 						answer,
 						questionId: question.id,
+						userId: i.user.id,
 					},
 					update: {
 						answer,
