@@ -1,0 +1,40 @@
+{
+  "name": "@repo/ui",
+  "version": "1.0.0",
+  "description": "",
+  "exports": {
+    "./utils": "./src/utils.ts",
+    "./tailwind.config": "./src/config/tailwind.config.ts",
+    "./theme.css": "./src/config/theme.css",
+    "./postcss.config": "./src/config/postcss.config.js",
+    "./*": "./src/components/*.tsx"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^20.11.7",
+    "@types/react": "^18",
+    "autoprefixer": "^10.0.1",
+    "tailwindcss": "^3",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "@tanstack/react-table": "8.x.x",
+    "lucide-react": "^0.309.x",
+    "react": "18.x.x"
+  },
+  "dependencies": {
+    "@prisma/client": "5.8.1",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "next-themes": "^0.2.1",
+    "tailwind-merge": "^2.2.0",
+    "tailwindcss-animate": "^1.0.7"
+  }
+}

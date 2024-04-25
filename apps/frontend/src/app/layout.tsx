@@ -1,8 +1,8 @@
 import { ThemeProvider } from '@/components/theme-provider';
+import '@repo/ui/theme.css';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import type { ReactNode } from 'react';
-import './globals.css';
 
 export const metadata: Metadata = {
 	title: 'LEC predictions - lewus',
