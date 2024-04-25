@@ -94,12 +94,22 @@ model GameDay {
 }
 
 model CurrentGameDay {
-  id String @id @default("main") @map("_id")
+  id Workspace @id @default(Main) @map("_id")
 
   gameDay   GameDay? @relation(fields: [gameDayId], references: [id])
   gameDayId String?  @unique
 
   messageId String?
+}
+
+enum Workspace {
+  Main
+}
+
+model Info {
+  id                        Workspace @id @default(Main) @map("_id")
+  notifyCheckMessageId      String?
+  notifyCheckMessageChannel String?
 }
 
 model Question {
@@ -121,10 +131,4 @@ model QuestionAnswer {
   user       User     @relation(fields: [userId], references: [id])
 
   @@unique([questionId, userId])
-}
-
-model Info {
-  id                        String  @id @default("main") @map("_id")
-  notifyCheckMessageId      String?
-  notifyCheckMessageChannel String?
 }

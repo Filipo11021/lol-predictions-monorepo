@@ -1,4 +1,4 @@
-import { prisma } from '@repo/database';
+import { Workspace, prisma } from '@repo/database';
 import {
 	type CacheType,
 	type ChatInputCommandInteraction,
@@ -56,7 +56,7 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
 		  })
 		: (
 				await prisma.currentGameDay.findUnique({
-					where: { id: 'main' },
+					where: { id: Workspace.Main },
 					include: {
 						gameDay: {
 							include: {

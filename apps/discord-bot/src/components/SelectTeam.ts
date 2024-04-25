@@ -1,5 +1,5 @@
 import type { $Enums, Team } from '@repo/database';
-import { prisma } from '@repo/database';
+import { Workspace, prisma } from '@repo/database';
 import {
 	StringSelectMenuBuilder,
 	StringSelectMenuOptionBuilder,
@@ -154,7 +154,7 @@ export async function createTeamSelects() {
 		create: { gameDayId: gameDay.id },
 		update: { gameDayId: gameDay.id },
 		where: {
-			id: 'main',
+			id: Workspace.Main,
 		},
 	});
 

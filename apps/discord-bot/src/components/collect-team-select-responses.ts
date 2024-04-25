@@ -1,4 +1,4 @@
-import { prisma } from '@repo/database';
+import { Workspace, prisma } from '@repo/database';
 import { ComponentType, type Message } from 'discord.js';
 
 export async function collectTeamSelectResponses(
@@ -16,7 +16,7 @@ export async function collectTeamSelectResponses(
 
 	const intervalId = setInterval(async () => {
 		const res = await prisma.currentGameDay.findUnique({
-			where: { id: 'main' },
+			where: { id: Workspace.Main },
 			include: { gameDay: true },
 		});
 
@@ -32,7 +32,7 @@ export async function collectTeamSelectResponses(
 		}
 	}, 60 * 1000);
 	const res = await prisma.currentGameDay.findUnique({
-		where: { id: 'main' },
+		where: { id: Workspace.Main },
 		include: { gameDay: true },
 	});
 
@@ -99,7 +99,7 @@ export async function collectTeamSelectResponses(
 
 		if (id === 'results') {
 			const res = await prisma.currentGameDay.findUnique({
-				where: { id: 'main' },
+				where: { id: Workspace.Main },
 				include: {
 					gameDay: {
 						include: {

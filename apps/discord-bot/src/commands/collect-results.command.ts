@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { $Enums, prisma } from '@repo/database';
+import { $Enums, Workspace, prisma } from '@repo/database';
 import {
 	type CacheType,
 	type ChatInputCommandInteraction,
@@ -56,7 +56,7 @@ export const execute = async (
 				},
 		  })
 		: prisma.currentGameDay.findUnique({
-				where: { id: 'main' },
+				where: { id: Workspace.Main },
 				include: {
 					gameDay: {
 						include: {
