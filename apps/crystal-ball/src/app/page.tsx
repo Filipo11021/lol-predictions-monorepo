@@ -91,8 +91,9 @@ export default async function Home() {
 															image,
 														}));
 													case 'PLAYERS':
-														return players.map(({ name, image }) => ({
+														return players.map(({ name, image, team, role }) => ({
 															value: name,
+															label: `${team.code} ${name} ${role}`,
 															image,
 														}));
 													default:
