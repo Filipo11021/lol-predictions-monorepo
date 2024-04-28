@@ -13,5 +13,8 @@ export const en = {
 		make: 'Make Pick',
 		change: 'Change Pick',
 		confirm: 'Confirm Pick',
+		error: {
+			title: 'Unknown Error. Try Again.'
+		}
 	},
 };

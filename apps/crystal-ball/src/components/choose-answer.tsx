@@ -20,6 +20,7 @@ import { selectPickAction } from './select-pick';
 import { useRef, useState } from 'react';
 import { cn } from '@/utils/ui';
 import type { Translation } from '@/i18n/i18n';
+import { Loader2 } from 'lucide-react';
 
 export function ChooseAnswer({
 	options,
@@ -39,6 +40,30 @@ export function ChooseAnswer({
 	const lastSubmittedValue = useRef<undefined | string>(selectedOption);
 	const [value, setValue] = useState<string | undefined>(selectedOption);
 	const [isOpen, setIsOpen] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState<null | string>(null);
+
+	async function confirmPickHandler() {
+		setError(null);
+
+		if (!value) {
+			return setError('unknown');
+		}
+
+		try {
+			setIsLoading(true);
+			const val = value;
+			const { ok } = await selectPickAction({ questionId, value });
+			if (!ok) return setError('unknown');
+
+			lastSubmittedValue.current = val;
+			setIsOpen(false);
+		} catch {
+			setError('unknown');
+		} finally {
+			setIsLoading(false);
+		}
+	}
 
 	return (
 		<Dialog
@@ -115,23 +140,20 @@ export function ChooseAnswer({
 						</Button>
 					))}
 				</div>
-				<DialogFooter>
+				<DialogFooter className="flex gap-8 items-center">
+					{error && (
+						<div className="font-light text-yellow-400">
+							{translation.error.title}
+						</div>
+					)}
 					<Button
-						disabled={!value}
-						onClick={async () => {
-							if (value) {
-								const val = value;
-								const { ok } = await selectPickAction({ questionId, value });
-								if (ok) {
-									lastSubmittedValue.current = val;
-									setIsOpen(false);
-								}
-							}
-						}}
+						disabled={!value || isLoading}
+						onClick={confirmPickHandler}
 						type="submit"
 						size="lg"
 						className="uppercase"
 					>
+						{isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
 						{translation.confirm}
 					</Button>
 				</DialogFooter>

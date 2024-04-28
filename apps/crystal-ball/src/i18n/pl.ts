@@ -13,5 +13,8 @@ export const pl = {
 		make: 'Wybierz',
 		change: 'Zmień',
 		confirm: 'Zatwierdz',
+		error: {
+			title: 'Nieznany błąd. Spróbuj ponownie'
+		}
 	},
 };
