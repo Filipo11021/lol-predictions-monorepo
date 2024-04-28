@@ -5,8 +5,8 @@ import type { ReactNode } from 'react';
 import '@repo/ui/theme.css';
 
 export const metadata: Metadata = {
-	title: 'MSI - Crystal Ball',
-	description: 'MSI - Crystal Ball',
+	title: 'Lewus MSI - Crystal Ball',
+	description: 'Lewus MSI - Crystal Ball',
 };
 
 export default function RootLayout({

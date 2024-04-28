@@ -16,6 +16,7 @@ export const en = {
 		error: {
 			title: 'Unknown Error. Try Again.'
 		},
-		search: "Search by Name"
+		search: "Search by Name",
+		submit: 'Submit'
 	},
 };

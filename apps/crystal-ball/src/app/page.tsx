@@ -8,6 +8,7 @@ import {
 } from '@/i18n/get-server-translation';
 import champions from '@/data/champions.json';
 import players from '@/data/players.json';
+import { Button } from '@repo/ui/button';
 
 function getCrystalBallQuestions({
 	category,
@@ -53,7 +54,7 @@ export default async function Home() {
 	return (
 		<div>
 			<AppHeader />
-			<main className="w-full flex flex-col gap-12 p-8 pb-28 max-w-[2000px] mx-auto">
+			<main className="w-full flex flex-col gap-12 p-8 max-w-[2000px] mx-auto">
 				{[eventQuestion, championQuestions, playerQuestions, teamQuestions].map(
 					(questions) => {
 						if (!questions.length) return;
@@ -125,6 +126,11 @@ export default async function Home() {
 						);
 					}
 				)}
+				<div className="pt-6 pb-12 flex justify-center">
+					<Button className="text-xl capitalize" size="lg" asChild>
+						<a href="https://twitch.tv/lewus">{translation.pick.submit}</a>
+					</Button>
+				</div>
 			</main>
 		</div>
 	);

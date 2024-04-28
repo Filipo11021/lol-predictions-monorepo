@@ -16,6 +16,7 @@ export const pl = {
 		error: {
 			title: 'Nieznany błąd. Spróbuj ponownie'
 		},
-		search: "Wyszukaj po nazwie"
+		search: "Wyszukaj po nazwie",
+		submit: 'zakończ'
 	},
 };
