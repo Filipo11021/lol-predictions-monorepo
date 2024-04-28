@@ -10,7 +10,7 @@
     "db:gen": "turbo db:gen",
     "db:push": "turbo db:push",
     "db:studio": "turbo db:studio",
-    "postinstall": "husky install"
+    "prepare": "if [[ $NODE_ENVIRONMENT != \"production\" ]]; then husky install; fi"
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
