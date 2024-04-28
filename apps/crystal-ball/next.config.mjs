@@ -18,14 +18,14 @@ const nextConfig = {
 			{
 				hostname: 's3.us-west-2.amazonaws.com',
 			},
-		],
-		webpack: (config, { isServer }) => {
-			if (isServer) {
-				config.plugins = [...config.plugins, new PrismaPlugin()];
-			}
+		],	
+	},
+	webpack: (config, { isServer }) => {
+		if (isServer) {
+			config.plugins = [...config.plugins, new PrismaPlugin()];
+		}
 
-			return config;
-		},
+		return config;
 	},
 };
 
