@@ -7,7 +7,7 @@ export const env = createEnv({
 		DISCORD_ID: z.string().min(1),
 		DISCORD_SECRET: z.string().min(1),
 		DISCORD_REDIRECT_URI: z.string().min(1),
-		NODE_ENV: z.enum(['development', 'production', 'test']),
+		NODE_ENV: z.enum(['development', 'production', 'test']).optional(),
 	},
 	client: {},
 	// For Next.js >= 13.4.4, you only need to destructure client variables:
