@@ -8,6 +8,13 @@ jiti('./src/env');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	webpack: (config, { isServer }) => {
+		if (isServer) {
+			config.plugins = [...config.plugins, new PrismaPlugin()];
+		}
+
+		return config;
+	},
 	images: {
 		remotePatterns: [
 			{ hostname: 'ddragon.leagueoflegends.com' },
@@ -18,14 +25,7 @@ const nextConfig = {
 			{
 				hostname: 's3.us-west-2.amazonaws.com',
 			},
-		],	
-	},
-	webpack: (config, { isServer }) => {
-		if (isServer) {
-			config.plugins = [...config.plugins, new PrismaPlugin()];
-		}
-
-		return config;
+		],
 	},
 };
 
