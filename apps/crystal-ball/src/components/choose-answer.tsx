@@ -32,7 +32,12 @@ export function ChooseAnswer({
 }: {
 	questionId: string;
 	title: string;
-	options: { value: string; image?: string; label?: string }[];
+	options: {
+		value: string;
+		image?: string;
+		title?: string;
+		subtitle?: string;
+	}[];
 	points: number;
 	selectedOption?: string;
 	translation: Translation['pick'];
@@ -111,12 +116,12 @@ export function ChooseAnswer({
 			</Card>
 			<DialogContent className="max-w-6xl w-11/12">
 				<DialogHeader>
-					<DialogTitle className="font-normal">{title}</DialogTitle>
+					<DialogTitle className="font-light text-2xl">{title}</DialogTitle>
 				</DialogHeader>
 
 				<div
 					className={cn(
-						'grid grid-cols-2 sm:grid-cols-3 gap-8 py-4 max-h-[70dvh] overflow-y-scroll',
+						'grid grid-cols-2 sm:grid-cols-3 gap-8 py-4 px-3 max-h-[70dvh] overflow-y-scroll',
 						{
 							'grid-cols-1': options.some(({ image }) => image),
 						}
@@ -126,7 +131,7 @@ export function ChooseAnswer({
 						<Button
 							onClick={() => setValue(answer.value)}
 							className={cn(
-								'cursor-pointer border flex justify-start gap-4 capitalize border-border px-8 py-10  rounded-md text-base',
+								'cursor-pointer border overflow-hidden flex justify-start gap-4 capitalize border-border px-8 py-10  rounded-md text-base',
 								{
 									'border-primary': value === answer.value,
 								}
@@ -134,9 +139,14 @@ export function ChooseAnswer({
 							variant="ghost"
 						>
 							{answer?.image ? (
-								<Image alt="" src={answer.image} width={70} height={70} />
+								<Image alt="" src={answer.image} width={85} height={85} />
 							) : null}
-							{answer?.label ?? answer.value}
+							<div className='flex flex-col justify-center items-start'>
+								{answer.subtitle && (
+									<p className="text-sm font-light mb-1">{answer.subtitle}</p>
+								)}
+								<p className='text-lg'>{answer?.title ?? answer.value}</p>
+							</div>
 						</Button>
 					))}
 				</div>

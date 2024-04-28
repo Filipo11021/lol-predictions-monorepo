@@ -87,15 +87,20 @@ export default async function Home() {
 													case 'TEAMS':
 														return teams.map(({ name, code, image }) => ({
 															value: code,
-															label: name,
+															title: name,
 															image,
 														}));
 													case 'PLAYERS':
-														return players.map(({ name, image, team, role }) => ({
-															value: name,
-															label: `${team.code} ${name} ${role}`,
-															image,
-														}));
+														return players.map(
+															({ name, image, team, role }) => ({
+																value: name,
+																subtitle:
+																	role === 'none'
+																		? team.code
+																		: `${team.code} - ${role}`,
+																image,
+															})
+														);
 													default:
 														return availableOptions.map((option) => ({
 															value: option,
