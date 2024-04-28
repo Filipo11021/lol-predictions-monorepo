@@ -11,17 +11,24 @@ datasource db {
 }
 
 model User {
-  id            String  @id @map("_id")
-  username      String
+  // discord user id
+  id String @id @map("_id")
+
+  username String
+  avatar   String
+
   notifications Boolean @default(true)
 
   votes Vote[]
 
-  createdAt      DateTime?        @default(now())
-  QuestionAnswer QuestionAnswer[]
+  answers Answer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Team {
+  // team code
   code  String @id @map("_id")
   name  String
   image String
@@ -29,13 +36,18 @@ model Team {
   games   Game[]   @relation(fields: [gameIds], references: [id])
   gameIds String[]
 
-  Vote     Vote[]
+  votes    Vote[]
   wonGames Game[] @relation(name: "winner")
 
-  createdAt DateTime? @default(now())
+  event   Event   @relation(fields: [eventId], references: [id])
+  eventId EventId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Vote {
+  // created from gameId + userId
   id String @id @map("_id")
 
   team     Team   @relation(fields: [teamCode], references: [code])
@@ -49,12 +61,14 @@ model Vote {
 
   score String @default("1-0")
 
-  createdAt DateTime? @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([userId, gameId])
 }
 
 model Game {
+  // riot game id
   id String @id @map("_id")
 
   gameDay   GameDay @relation(fields: [gameDayId], references: [id])
@@ -67,13 +81,17 @@ model Game {
 
   startTime DateTime
 
-  type MatchType? @default(BO3)
+  type MatchType @default(BO1)
 
   winner     Team?   @relation(fields: [winnerCode], references: [code], name: "winner")
   winnerCode String?
   score      String?
 
-  createdAt DateTime? @default(now())
+  event   Event   @relation(fields: [eventId], references: [id])
+  eventId EventId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum MatchType {
@@ -83,52 +101,108 @@ enum MatchType {
 }
 
 model GameDay {
+  // generated in app
   id String @id @map("_id")
 
-  games          Game[]
-  CurrentGameDay CurrentGameDay?
+  games Game[]
+
+  event   Event   @relation(fields: [eventId], references: [id])
+  eventId EventId
 
   firstMatchStart DateTime
 
-  createdAt DateTime? @default(now())
-}
+  current Current?
 
-model CurrentGameDay {
-  id Workspace @id @default(Main) @map("_id")
-
-  gameDay   GameDay? @relation(fields: [gameDayId], references: [id])
-  gameDayId String?  @unique
-
-  messageId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Workspace {
-  Main
+  MAIN
 }
 
-model Info {
-  id                        Workspace @id @default(Main) @map("_id")
-  notifyCheckMessageId      String?
-  notifyCheckMessageChannel String?
+model Current {
+  id Workspace @id @default(MAIN) @map("_id")
+
+  game      GameDay? @relation(fields: [gameDayId], references: [id])
+  gameDayId String?  @unique
+
+  messageId String? @unique
+
+  cevent  Event   @relation(fields: [eventId], references: [id])
+  eventId EventId
 }
 
 model Question {
-  id            String           @id @default(cuid()) @map("_id")
-  messageId     String
-  question      String
-  answers       String[]
-  correctAnswer String[]
-  points        Int              @default(1)
-  userAnswers   QuestionAnswer[]
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  messageId String?
+  title     Translation
+
+  availableOptions String[]
+  correctOptions   String[]
+
+  points Int @default(1)
+
+  type     QuestionType
+  category QuestionCategory
+
+  answers Answer[]
+
+  event   Event   @relation(fields: [eventId], references: [id])
+  eventId EventId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model QuestionAnswer {
-  id         String   @id @map("_id")
+enum QuestionType {
+  BONUS_QUESTION
+  CRYSTAL_BALL
+}
+
+enum QuestionCategory {
+  EVENT
+  PLAYERS
+  CHAMPIONS
+  TEAMS
+}
+
+model Answer {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  selectedOptions String[]
+
   question   Question @relation(fields: [questionId], references: [id])
-  questionId String
-  answer     String
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
+  questionId String   @db.ObjectId
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([questionId, userId])
+}
+
+enum EventId {
+  MSI_2024
+}
+
+model Event {
+  id EventId @id @map("_id")
+
+  gameDays  GameDay[]
+  games     Game[]
+  questions Question[]
+  current   Current[]
+  tems      Team[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+type Translation {
+  en String
+  pl String
 }
