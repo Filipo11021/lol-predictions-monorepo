@@ -1,7 +1,8 @@
 import { fileURLToPath } from 'node:url';
 import createJiti from 'jiti';
+import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
+
 const jiti = createJiti(fileURLToPath(import.meta.url));
-const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin');
 
 // Import env here to validate during build. Using jiti we can import .ts files :)
 jiti('./src/env');
