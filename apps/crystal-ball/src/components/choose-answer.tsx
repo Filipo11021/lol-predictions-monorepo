@@ -122,7 +122,7 @@ export function ChooseAnswer({
 				</DialogHeader>
 
 				{options.length > 10 && (
-					<div className="flex gap-3 mx-6 mt-4 mb-2">
+					<div className="flex gap-2 mx-6 mt-4 mb-2">
 						<Input
 							onInput={(e) =>
 								setAvailableOptions(

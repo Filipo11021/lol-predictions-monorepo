@@ -53,7 +53,7 @@ export default async function Home() {
 	return (
 		<div>
 			<AppHeader />
-			<main className="w-full flex flex-col gap-12 p-8 max-w-[2000px] mx-auto">
+			<main className="w-full flex flex-col gap-12 p-8 pb-28 max-w-[2000px] mx-auto">
 				{[eventQuestion, championQuestions, playerQuestions, teamQuestions].map(
 					(questions) => {
 						if (!questions.length) return;
