@@ -15,6 +15,7 @@ export const en = {
 		confirm: 'Confirm Pick',
 		error: {
 			title: 'Unknown Error. Try Again.'
-		}
+		},
+		search: "Search by Name"
 	},
 };

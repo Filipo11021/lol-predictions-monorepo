@@ -20,7 +20,8 @@ import { selectPickAction } from './select-pick';
 import { useRef, useState } from 'react';
 import { cn } from '@/utils/ui';
 import type { Translation } from '@/i18n/i18n';
-import { Loader2 } from 'lucide-react';
+import { Loader2, XIcon } from 'lucide-react';
+import { Input } from '@repo/ui/input';
 
 export function ChooseAnswer({
 	options,
@@ -47,6 +48,7 @@ export function ChooseAnswer({
 	const [isOpen, setIsOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<null | string>(null);
+	const [availableOptions, setAvailableOptions] = useState(options);
 
 	async function confirmPickHandler() {
 		setError(null);
@@ -119,38 +121,67 @@ export function ChooseAnswer({
 					<DialogTitle className="font-light text-2xl">{title}</DialogTitle>
 				</DialogHeader>
 
-				<div
-					className={cn(
-						'grid grid-cols-2 sm:grid-cols-3 gap-8 py-4 px-3 max-h-[70dvh] overflow-y-scroll',
-						{
-							'grid-cols-1': options.some(({ image }) => image),
-						}
-					)}
-				>
-					{options.map((answer) => (
+				{options.length > 10 && (
+					<div className="flex gap-3 mx-6 mt-4 mb-2">
+						<Input
+							onInput={(e) =>
+								setAvailableOptions(
+									options.filter(({ value, title }) =>
+										(title ?? value)
+											.toLowerCase()
+											.includes(e.currentTarget.value.toLowerCase())
+									)
+								)
+							}
+							placeholder={translation.search}
+							type="search"
+						/>
 						<Button
-							onClick={() => setValue(answer.value)}
-							className={cn(
-								'cursor-pointer border overflow-hidden flex justify-start gap-4 capitalize border-border px-8 py-10  rounded-md text-base',
-								{
-									'border-primary': value === answer.value,
-								}
-							)}
 							variant="ghost"
+							className="p-1"
+							onClick={() => setAvailableOptions(options)}
 						>
-							{answer?.image ? (
-								<Image alt="" src={answer.image} width={85} height={85} />
-							) : null}
-							<div className='flex flex-col justify-center items-start'>
-								{answer.subtitle && (
-									<p className="text-sm font-light mb-1">{answer.subtitle}</p>
-								)}
-								<p className='text-lg'>{answer?.title ?? answer.value}</p>
-							</div>
+							<span className="sr-only">clear</span>
+							<XIcon className="text-yellow-300" />
 						</Button>
-					))}
+					</div>
+				)}
+				<div
+					className={cn(' overflow-y-scroll', {
+						'h-[55dvh] sm:h-[65dvh]': options.length > 10,
+						'max-h-[55dvh] sm:max-h-[65dvh]': options.length <= 10,
+					})}
+				>
+					<div
+						className={cn('grid grid-cols-2 sm:grid-cols-3 gap-8 py-4 px-3', {
+							'grid-cols-1': options.some(({ image }) => image),
+						})}
+					>
+						{availableOptions.map((answer) => (
+							<Button
+								onClick={() => setValue(answer.value)}
+								className={cn(
+									'cursor-pointer border overflow-hidden flex justify-start gap-4 capitalize border-border px-8 py-10  rounded-md text-base',
+									{
+										'border-primary': value === answer.value,
+									}
+								)}
+								variant="ghost"
+							>
+								{answer?.image ? (
+									<Image alt="" src={answer.image} width={85} height={85} />
+								) : null}
+								<div className="flex flex-col justify-center items-start">
+									{answer.subtitle && (
+										<p className="text-sm font-light mb-1">{answer.subtitle}</p>
+									)}
+									<p className="text-lg">{answer?.title ?? answer.value}</p>
+								</div>
+							</Button>
+						))}
+					</div>
 				</div>
-				<DialogFooter className="flex gap-8 items-center">
+				<DialogFooter className="flex gap-8 items-center px-8">
 					{error && (
 						<div className="font-light text-yellow-400">
 							{translation.error.title}

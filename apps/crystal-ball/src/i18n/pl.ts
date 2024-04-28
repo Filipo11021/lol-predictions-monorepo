@@ -15,6 +15,7 @@ export const pl = {
 		confirm: 'Zatwierdz',
 		error: {
 			title: 'Nieznany błąd. Spróbuj ponownie'
-		}
+		},
+		search: "Wyszukaj po nazwie"
 	},
 };
