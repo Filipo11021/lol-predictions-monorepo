@@ -5,8 +5,8 @@ import type { ReactNode } from 'react';
 import '@repo/ui/theme.css';
 
 export const metadata: Metadata = {
-	title: 'MSI - Wróżenie z Fusów',
-	description: 'MSI - Wróżenie z Fusów',
+	title: 'MSI - Crystal Ball',
+	description: 'MSI - Crystal Ball',
 };
 
 export default function RootLayout({
@@ -23,8 +23,8 @@ export default function RootLayout({
 
 				<Script
 					async
-					src="/stats/script.js"
-					data-website-id="e3de5d2c-5740-4c7c-a7e9-65d9d939bc7c"
+					src="https://analytics.filipo.dev/script.js"
+					data-website-id="c6b96461-30a9-4f2f-897b-179fdd64160a"
 				/>
 			</body>
 		</html>
