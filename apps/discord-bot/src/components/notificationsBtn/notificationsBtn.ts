@@ -1,4 +1,4 @@
-import { prisma } from '@repo/database';
+import { Workspace, prisma } from '@repo/database';
 import {
 	ActionRowBuilder,
 	ButtonBuilder,
@@ -25,7 +25,7 @@ export const actionRowNotify = new ActionRowBuilder({
 });
 
 export async function interaction(client: Client<boolean>) {
-	const info = await prisma.info.findUnique({ where: { id: 'main' } });
+	const info = await prisma.info.findUnique({ where: { id: Workspace.Main } });
 	if (!info?.notifyCheckMessageId) return;
 
 	const channel = client.channels.cache.get(info.id);
@@ -60,10 +60,10 @@ export async function create(client: Client<boolean>) {
 
 	await prisma.info.upsert({
 		where: {
-			id: 'main',
+			id: Workspace.Main,
 		},
 		create: {
-			id: 'main',
+			id: Workspace.Main,
 			notifyCheckMessageChannel: channelId,
 			notifyCheckMessageId: msg.id,
 		},

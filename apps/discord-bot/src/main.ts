@@ -1,4 +1,4 @@
-import { prisma } from '@repo/database';
+import { Workspace, prisma } from '@repo/database';
 import { collectQuestionsResponses } from 'collect-questions-responses';
 import { collectTeamSelectResponses } from 'components/collect-team-select-responses';
 import { ChannelType, Client, Events, GatewayIntentBits } from 'discord.js';
@@ -22,14 +22,14 @@ client.once(Events.ClientReady, async (c) => {
 
 	const currentGameDay = await prisma.currentGameDay.findUnique({
 		where: {
-			id: 'main',
+			id: Workspace.Main,
 		},
 	});
 
 	setInterval(async () => {
 		const currentGameDay = await prisma.currentGameDay.findUnique({
 			where: {
-				id: 'main',
+				id: Workspace.Main,
 			},
 			include: {
 				gameDay: {

@@ -1,4 +1,4 @@
-import { prisma } from '@repo/database';
+import { Workspace, prisma } from '@repo/database';
 import { ComponentType, type TextChannel } from 'discord.js';
 
 export async function collectQuestionsResponses(channel: TextChannel) {
@@ -42,7 +42,7 @@ export async function collectQuestionsResponses(channel: TextChannel) {
 
 		const intervalId = setInterval(async () => {
 			const res = await prisma.currentGameDay.findUnique({
-				where: { id: 'main' },
+				where: { id: Workspace.Main },
 				include: { gameDay: true },
 			});
 

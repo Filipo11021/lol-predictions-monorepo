@@ -1,4 +1,4 @@
-import { prisma } from '@repo/database';
+import { Workspace, prisma } from '@repo/database';
 import { createTeamSelects } from 'components/SelectTeam';
 import { collectTeamSelectResponses } from 'components/collect-team-select-responses';
 import {
@@ -75,7 +75,7 @@ export const execute = async (
 			messageId: res2?.id ? `${res1?.id}$$${res2?.id}` : res1?.id,
 		},
 		where: {
-			id: 'main',
+			id: Workspace.Main,
 		},
 	});
 };
