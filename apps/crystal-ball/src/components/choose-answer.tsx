@@ -20,15 +20,15 @@ import { selectPickAction } from './select-pick';
 import { useRef, useState } from 'react';
 import { cn } from '@/utils/ui';
 import type { Translation } from '@/i18n/i18n';
-import { Loader2, XIcon } from 'lucide-react';
-import { Input } from '@repo/ui/input';
+import { Loader2 } from 'lucide-react';
+import { ChooseAnswerSearch } from './choose-answer-search';
 
 export function ChooseAnswer({
 	options,
 	title,
 	questionId,
 	points,
-	selectedOption,
+	initialValue,
 	translation,
 }: {
 	questionId: string;
@@ -38,17 +38,20 @@ export function ChooseAnswer({
 		image?: string;
 		title?: string;
 		subtitle?: string;
+		icon?: string;
 	}[];
 	points: number;
-	selectedOption?: string;
+	initialValue?: string;
 	translation: Translation['pick'];
 }) {
-	const lastSubmittedValue = useRef<undefined | string>(selectedOption);
-	const [value, setValue] = useState<string | undefined>(selectedOption);
+	const lastSubmittedValue = useRef<undefined | string>(initialValue);
+	const [value, setValue] = useState<string | undefined>(initialValue);
 	const [isOpen, setIsOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<null | string>(null);
 	const [availableOptions, setAvailableOptions] = useState(options);
+
+	const selectedOption = options.find((opt) => opt.value === value);
 
 	async function confirmPickHandler() {
 		setError(null);
@@ -90,11 +93,12 @@ export function ChooseAnswer({
 							<img
 								alt=""
 								src={
-									options.find((opt) => opt.value === value)?.image
-										? options.find((opt) => opt.value === value)?.image
+									selectedOption?.image
+										? selectedOption.image
 										: 'https://upload.wikimedia.org/wikipedia/en/e/e7/LOL_MSI_logo.svg'
 								}
 							/>
+
 							{value ? (
 								<div className="bg-black/40 capitalize  text-base font-semibold p-2 w-full text-center absolute bottom-0 left-0">
 									{value}
@@ -122,30 +126,21 @@ export function ChooseAnswer({
 				</DialogHeader>
 
 				{options.length > 10 && (
-					<div className="flex gap-2 mx-6 mt-4 mb-2">
-						<Input
-							onInput={(e) =>
-								setAvailableOptions(
-									options.filter(({ value, title }) =>
-										(title ?? value)
-											.toLowerCase()
-											.includes(e.currentTarget.value.toLowerCase())
-									)
+					<ChooseAnswerSearch
+						onInput={(e) =>
+							setAvailableOptions(
+								options.filter(({ value, title }) =>
+									(title ?? value)
+										.toLowerCase()
+										.includes(e.currentTarget.value.toLowerCase())
 								)
-							}
-							placeholder={translation.search}
-							type="search"
-						/>
-						<Button
-							variant="ghost"
-							className="p-1"
-							onClick={() => setAvailableOptions(options)}
-						>
-							<span className="sr-only">clear</span>
-							<XIcon className="text-yellow-300" />
-						</Button>
-					</div>
+							)
+						}
+						onClear={() => setAvailableOptions(options)}
+						translation={{ placeholder: translation.search }}
+					/>
 				)}
+
 				<div
 					className={cn(' overflow-y-scroll', {
 						'h-[55dvh] sm:h-[65dvh]': options.length > 10,
@@ -157,28 +152,37 @@ export function ChooseAnswer({
 							'grid-cols-1': options.some(({ image }) => image),
 						})}
 					>
-						{availableOptions.map((answer) => (
-							<Button
-								onClick={() => setValue(answer.value)}
-								className={cn(
-									'cursor-pointer border overflow-hidden flex justify-start gap-4 capitalize border-border px-8 py-10  rounded-md text-base',
-									{
-										'border-primary': value === answer.value,
-									}
-								)}
-								variant="ghost"
-							>
-								{answer?.image ? (
-									<Image alt="" src={answer.image} width={85} height={85} />
-								) : null}
-								<div className="flex flex-col justify-center items-start">
-									{answer.subtitle && (
-										<p className="text-sm font-light mb-1">{answer.subtitle}</p>
+						{availableOptions.map((answer) => {
+							const title = answer.title ?? answer.value;
+							const icon = answer.icon ?? answer.image;
+							const isSelected = value === answer.value;
+
+							return (
+								<Button
+									onClick={() => setValue(answer.value)}
+									className={cn(
+										'cursor-pointer border overflow-hidden flex justify-start gap-4 capitalize border-border px-8 py-10  rounded-md text-base',
+										{
+											'border-primary': isSelected,
+										}
 									)}
-									<p className="text-lg">{answer?.title ?? answer.value}</p>
-								</div>
-							</Button>
-						))}
+									variant="ghost"
+								>
+									{icon ? (
+										<Image alt="" src={icon} width={85} height={85} />
+									) : null}
+
+									<div className="flex flex-col justify-center items-start">
+										{answer.subtitle && (
+											<p className="text-sm font-light mb-1">
+												{answer.subtitle}
+											</p>
+										)}
+										<p className="text-lg">{title}</p>
+									</div>
+								</Button>
+							);
+						})}
 					</div>
 				</div>
 				<DialogFooter className="flex gap-8 items-center px-8">
