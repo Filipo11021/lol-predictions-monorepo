@@ -129,11 +129,16 @@ export function ChooseAnswer({
 					<ChooseAnswerSearch
 						onInput={(e) =>
 							setAvailableOptions(
-								options.filter(({ value, title }) =>
-									(title ?? value)
+								options.filter(({ value, title }) => {
+									const a = (title ?? value)
 										.toLowerCase()
-										.includes(e.currentTarget.value.toLowerCase())
-								)
+										.includes(e.currentTarget.value.toLowerCase());
+									const b = (title ?? value)
+										.replaceAll("'", '')
+										.toLowerCase()
+										.includes(e.currentTarget.value.toLowerCase());
+									return a || b
+								})
 							)
 						}
 						onClear={() => setAvailableOptions(options)}
