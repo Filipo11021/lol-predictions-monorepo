@@ -10,7 +10,7 @@ export default function LoginPage({
 	const t = getServerTranslation();
 	return (
 		<div className="flex justify-center items-center min-h-screen">
-			<div className="flex flex-col items-center">
+			<div className="flex flex-col items-center p-4">
 				<h1
 					style={{
 						backgroundImage: 'linear-gradient(to top left,#19e6c3,#9470fd)',
@@ -19,6 +19,13 @@ export default function LoginPage({
 				>
 					Crystal Ball
 				</h1>
+				<p className="max-w-[600px] text-center mb-8 leading-6 text-lg">
+					Crystall ball to konkurs predykcji nietypowych zdarzeń na{' '}
+					<span className="font-semibold">FAZĘ GŁÓWNĄ MSI</span> (PLAYINY
+					POMIJAMY). Pokaż domanicję swoimi typami i wygraj koszulkę esportową.
+					Ligę Typera i więcej informacji znajdziesz na discordzie na kanale{' '}
+					<a className='border-b border-blue-400' href="https://discord.gg/HvWEJZ3GcE">#predykcje-info-msi2024</a>
+				</p>
 				<Button
 					size="lg"
 					variant="ghost"

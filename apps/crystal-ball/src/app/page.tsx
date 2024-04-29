@@ -56,7 +56,7 @@ function formatOptions({
 }: { question: Question; teams: Team[] }) {
 	switch (category) {
 		case 'CHAMPIONS':
-			return champions.map(({ id, name}) => {
+			return champions.map(({ id, name }) => {
 				return {
 					value: name,
 					image: `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${id}_0.jpg`,
@@ -128,6 +128,7 @@ export default async function Home() {
 												points={question.points}
 												initialValue={initialValue}
 												translation={translation.pick}
+												isContain={question.category === 'TEAMS'}
 											/>
 										);
 									})}
