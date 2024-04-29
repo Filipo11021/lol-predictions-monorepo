@@ -137,7 +137,7 @@ export function ChooseAnswer({
 										.replaceAll("'", '')
 										.toLowerCase()
 										.includes(e.currentTarget.value.toLowerCase());
-									return a || b
+									return a || b;
 								})
 							)
 						}
