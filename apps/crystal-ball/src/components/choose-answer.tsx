@@ -82,6 +82,10 @@ export function ChooseAnswer({
 					setValue(lastSubmittedValue.current);
 				}
 
+				if (open === false) {
+					setAvailableOptions(options);
+				}
+
 				setIsOpen(open);
 			}}
 			open={isOpen}
