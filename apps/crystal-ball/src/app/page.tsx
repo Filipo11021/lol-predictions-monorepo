@@ -56,7 +56,13 @@ function formatOptions({
 }: { question: Question; teams: Team[] }) {
 	switch (category) {
 		case 'CHAMPIONS':
-			return champions;
+			return champions.map(({ id, name}) => {
+				return {
+					value: name,
+					image: `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${id}_0.jpg`,
+					icon: `https://ddragon.leagueoflegends.com/cdn/14.8.1/img/champion/${id}.png`,
+				};
+			});
 		case 'TEAMS':
 			return teams.map(({ name, code, image }) => ({
 				value: code,

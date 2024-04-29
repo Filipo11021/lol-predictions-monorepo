@@ -20,7 +20,7 @@ export function AppHeader() {
 	return (
 		<header className="sticky top-0 border-b bg-background z-10">
 			<div className="flex items-center justify-between gap-4 max-w-[2000px] py-3 px-4 md:px-6 mx-auto">
-				<div className='flex gap-2'>
+				<div className="flex gap-2">
 					<p>Lewus MSI</p>
 					<h1>Crystal Ball</h1>
 				</div>
