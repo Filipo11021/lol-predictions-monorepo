@@ -19,4 +19,5 @@ export const pl = {
 		search: "Wyszukaj po nazwie",
 		submit: 'zakończ'
 	},
+	picksLockIn: "Czas do"
 };

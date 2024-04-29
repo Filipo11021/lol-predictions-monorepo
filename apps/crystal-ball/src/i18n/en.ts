@@ -19,4 +19,5 @@ export const en = {
 		search: "Search by Name",
 		submit: 'Submit'
 	},
+	picksLockIn: "picks lock in"
 };

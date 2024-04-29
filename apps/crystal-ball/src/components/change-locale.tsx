@@ -27,10 +27,10 @@ export function ChangeLocale() {
 					?.split('=')[1] ?? 'pl'
 			}
 		>
-			<SelectTrigger className="w-[180px]">
+			<SelectTrigger className="w-[100px]">
 				<SelectValue />
 			</SelectTrigger>
-			<SelectContent>
+			<SelectContent className='w-[100px]'>
 				<SelectGroup>
 					<SelectItem value="pl">Polski</SelectItem>
 					<SelectItem value="en">English</SelectItem>
