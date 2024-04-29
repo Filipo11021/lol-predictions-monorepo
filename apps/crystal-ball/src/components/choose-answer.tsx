@@ -30,6 +30,7 @@ export function ChooseAnswer({
 	points,
 	initialValue,
 	translation,
+	isContain,
 }: {
 	questionId: string;
 	title: string;
@@ -43,6 +44,7 @@ export function ChooseAnswer({
 	points: number;
 	initialValue?: string;
 	translation: Translation['pick'];
+	isContain?: boolean;
 }) {
 	const lastSubmittedValue = useRef<undefined | string>(initialValue);
 	const [value, setValue] = useState<string | undefined>(initialValue);
@@ -96,6 +98,9 @@ export function ChooseAnswer({
 						<div className="relative flex flex-col">
 							<img
 								alt=""
+								className={cn('object-cover h-48', {
+									'object-contain': isContain,
+								})}
 								src={
 									selectedOption?.image
 										? selectedOption.image
