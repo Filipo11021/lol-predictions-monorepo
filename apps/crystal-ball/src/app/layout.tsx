@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import type { ReactNode } from 'react';
 import '@repo/ui/theme.css';
+import { getServerLocale } from '@/i18n/get-server-translation';
 
 export const metadata: Metadata = {
 	title: 'Lewus MSI - Crystal Ball',
@@ -14,8 +15,13 @@ export default function RootLayout({
 }: {
 	children: ReactNode;
 }) {
+	const locale = getServerLocale();
+
 	return (
-		<html lang="en">
+		<html lang={locale}>
+			<head>
+				<link rel="icon" href="/favicon.ico" sizes="any" />
+			</head>
 			<body className="bg-background">
 				<ThemeProvider attribute="class" defaultTheme="dark">
 					{children}
