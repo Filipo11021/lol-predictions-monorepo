@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 
 	if (discordUser.ok && request.nextUrl.pathname.startsWith('/login')) {
 		return NextResponse.redirect(new URL('/', request.url), {
-			headers: { 'x-user': JSON.stringify(discordUser) },
+			headers: { 'x-user': JSON.stringify(discordUser.data) },
 		});
 	}
 
