@@ -1,23 +1,23 @@
 {
-  "name": "discord-bot",
-  "version": "1.0.0",
-  "main": "./build/main.js",
-  "scripts": {
-    "start": "npm run deploy-cmd && tsx ./src/main.ts",
-    "dev": "tsx watch --clear-screen=false ./src/main.ts",
-    "deploy-cmd": "tsx ./src/deploy-slash-commands.ts"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "@biomejs/biome": "1.5.3",
-    "@types/node": "^20.6.3",
-    "tsx": "^4.7.0",
-    "typescript": "^5.3.3"
-  },
-  "dependencies": {
-    "@repo/database": "workspace:*",
-    "discord.js": "^14.14.1",
-    "dotenv": "^16.4.1",
-    "zod": "^3.22.4"
-  }
+	"name": "discord-bot",
+	"version": "1.0.0",
+	"main": "./build/main.js",
+	"scripts": {
+		"start": "npm run deploy-cmd && tsx ./src/main.ts",
+		"dev": "tsx watch --clear-screen=false ./src/main.ts",
+		"deploy-cmd": "tsx ./src/deploy-slash-commands.ts"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"@biomejs/biome": "1.7.2",
+		"@types/node": "^20.6.3",
+		"tsx": "^4.7.0",
+		"typescript": "^5.4.5"
+	},
+	"dependencies": {
+		"@repo/database": "workspace:*",
+		"discord.js": "^14.14.1",
+		"dotenv": "^16.4.1",
+		"zod": "^3.22.4"
+	}
 }

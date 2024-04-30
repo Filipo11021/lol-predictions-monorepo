@@ -1,32 +1,31 @@
 {
-  "name": "lol-predictions",
-  "private": true,
-  "scripts": {
-    "build": "turbo build",
-    "start": "turbo start",
-    "dev": "turbo dev",
-    "lint": "biome check --apply .",
-    "dev:db:gen": "turbo dev:db:gen",
-    "db:gen": "turbo db:gen",
-    "db:push": "turbo db:push",
-    "db:studio": "turbo db:studio",
-    "prepare": "if [[ $NODE_ENV != \"production\" ]]; then husky install; fi"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.5.3",
-    "@repo/typescript-config": "workspace:*",
-    "husky": "^9.0.6",
-    "lint-staged": "^15.2.0",
-    "turbo": "latest",
-    "typescript": "^5.3.3"
-  },
-  "packageManager": "pnpm@8.14.3",
-  "engines": {
-    "node": ">=18"
-  },
-  "lint-staged": {
-    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
-      "biome check --files-ignore-unknown=true"
-    ]
-  }
+	"name": "lol-predictions",
+	"private": true,
+	"scripts": {
+		"build": "turbo build",
+		"start": "turbo start",
+		"dev": "turbo dev",
+		"lint": "biome check --apply .",
+		"dev:db:gen": "turbo dev:db:gen",
+		"db:gen": "turbo db:gen",
+		"db:push": "turbo db:push",
+		"db:studio": "turbo db:studio",
+		"prepare": "if [[ $NODE_ENV != \"production\" ]]; then husky install; fi"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.7.2",
+		"@repo/typescript-config": "workspace:*",
+		"husky": "^9.0.6",
+		"lint-staged": "^15.2.0",
+		"turbo": "latest",
+		"typescript": "^5.4.5"
+	},
+	"engines": {
+		"node": ">=18"
+	},
+	"lint-staged": {
+		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+			"biome check --files-ignore-unknown=true"
+		]
+	}
 }

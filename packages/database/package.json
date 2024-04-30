@@ -1,26 +1,26 @@
 {
-  "name": "@repo/database",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./src/client.ts",
-  "types": "./src/client.ts",
-  "scripts": {
-    "db:push": "prisma db push",
-    "format": "prisma format",
-    "db:gen": "prisma generate",
-    "dev:db:gen": "pnpm db:gen -- --watch",
-    "db:studio": "prisma studio"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@repo/typescript-config": "workspace:*",
-    "@types/node": "^20.11.7",
-    "prisma": "5.8.1",
-    "typescript": "^5.3.3"
-  },
-  "dependencies": {
-    "@prisma/client": "5.8.1"
-  }
+	"name": "@repo/database",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./src/client.ts",
+	"types": "./src/client.ts",
+	"scripts": {
+		"db:push": "prisma db push",
+		"format": "prisma format",
+		"db:gen": "prisma generate",
+		"dev:db:gen": "pnpm db:gen -- --watch",
+		"db:studio": "prisma studio"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@repo/typescript-config": "workspace:*",
+		"@types/node": "^20.11.7",
+		"prisma": "5.8.1",
+		"typescript": "^5.4.5"
+	},
+	"dependencies": {
+		"@prisma/client": "5.8.1"
+	}
 }
