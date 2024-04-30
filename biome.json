@@ -43,7 +43,7 @@
 		}
 	},
 	"formatter": {
-		"ignore": [".next", "build"],
+		"ignore": [".next", "build", "champions.json", "players.json"],
 		"enabled": true,
 		"indentStyle": "tab",
 		"lineEnding": "lf",

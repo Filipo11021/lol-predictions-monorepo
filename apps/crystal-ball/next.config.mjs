@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url';
-import createJiti from 'jiti';
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
+import createJiti from 'jiti';
 
 const jiti = createJiti(fileURLToPath(import.meta.url));
 

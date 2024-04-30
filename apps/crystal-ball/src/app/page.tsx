@@ -1,20 +1,20 @@
 import { ChooseAnswer } from '@/components/choose-answer';
-import {
-	$Enums,
-	type Question,
-	type Team,
-	prisma,
-	type Answer,
-} from '@repo/database';
-import { AppHeader } from './app-header';
+import champions from '@/data/champions.json';
+import players from '@/data/players.json';
 import { getDiscordUserFromHeader } from '@/discord-auth/get-discord-user';
 import {
 	getServerLocale,
 	getServerTranslation,
 } from '@/i18n/get-server-translation';
-import champions from '@/data/champions.json';
-import players from '@/data/players.json';
+import {
+	$Enums,
+	type Answer,
+	type Question,
+	type Team,
+	prisma,
+} from '@repo/database';
 import { Button } from '@repo/ui/button';
+import { AppHeader } from './app-header';
 
 function getCrystalBallQuestions({
 	category,

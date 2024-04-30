@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { getServerTranslation } from '@/i18n/get-server-translation';
 import { AlertCircle } from 'lucide-react';
 import Link from 'next/link';
-import { getServerTranslation } from '@/i18n/get-server-translation';
 
 export default function LoginPage({
 	searchParams: { error },
@@ -24,7 +24,12 @@ export default function LoginPage({
 					<span className="font-semibold">FAZĘ GŁÓWNĄ MSI</span> (PLAYINY
 					POMIJAMY). Pokaż domanicję swoimi typami i wygraj koszulkę esportową.
 					Ligę Typera i więcej informacji znajdziesz na discordzie na kanale{' '}
-					<a className='border-b border-blue-400' href="https://discord.gg/HvWEJZ3GcE">#predykcje-info-msi2024</a>
+					<a
+						className="border-b border-blue-400"
+						href="https://discord.gg/HvWEJZ3GcE"
+					>
+						#predykcje-info-msi2024
+					</a>
 				</p>
 				<Button
 					size="lg"

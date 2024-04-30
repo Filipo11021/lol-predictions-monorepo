@@ -2,6 +2,12 @@
 
 import { Button } from '@/components/ui/button';
 import {
+	Card,
+	CardContent,
+	CardFooter,
+	CardHeader,
+} from '@/components/ui/card';
+import {
 	Dialog,
 	DialogContent,
 	DialogFooter,
@@ -9,19 +15,13 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog';
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-} from '@/components/ui/card';
-import Image from 'next/image';
-import { selectPickAction } from './select-pick';
-import { useRef, useState } from 'react';
-import { cn } from '@/utils/ui';
 import type { Translation } from '@/i18n/i18n';
+import { cn } from '@/utils/ui';
 import { Loader2 } from 'lucide-react';
+import Image from 'next/image';
+import { useRef, useState } from 'react';
 import { ChooseAnswerSearch } from './choose-answer-search';
+import { selectPickAction } from './select-pick';
 
 export function ChooseAnswer({
 	options,

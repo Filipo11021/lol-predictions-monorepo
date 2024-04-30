@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { XIcon } from 'lucide-react';
-import { useRef, type FormEvent } from 'react';
+import { type FormEvent, useRef } from 'react';
 
 export function ChooseAnswerSearch({
 	onInput,

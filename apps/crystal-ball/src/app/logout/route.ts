@@ -1,8 +1,8 @@
-import { env } from '@/env';
 import {
 	clearDiscordTokensCookie,
 	getDiscordRefreshTokenFromCookie,
 } from '@/discord-auth/discord-tokens';
+import { env } from '@/env';
 
 export async function GET(): Promise<Response> {
 	try {

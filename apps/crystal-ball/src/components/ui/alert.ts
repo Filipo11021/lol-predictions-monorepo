@@ -1,1 +1,1 @@
-export * from '@repo/ui/alert'
+export * from '@repo/ui/alert';

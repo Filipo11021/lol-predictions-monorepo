@@ -1,6 +1,6 @@
+import { validateDiscordUser } from '@/discord-auth/get-discord-user';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { validateDiscordUser } from '@/discord-auth/get-discord-user';
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
 	const discordUser = await validateDiscordUser();

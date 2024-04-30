@@ -1,9 +1,9 @@
 import { discord } from '@/discord-auth/discord-oauth-client';
-import { cookies } from 'next/headers';
-import { OAuth2RequestError } from 'arctic';
-import { prisma } from '@repo/database';
-import { getDiscordUser } from '@/discord-auth/get-discord-user';
 import { setDiscordTokensCookie } from '@/discord-auth/discord-tokens';
+import { getDiscordUser } from '@/discord-auth/get-discord-user';
+import { prisma } from '@repo/database';
+import { OAuth2RequestError } from 'arctic';
+import { cookies } from 'next/headers';
 
 export async function GET(request: Request): Promise<Response> {
 	const url = new URL(request.url);

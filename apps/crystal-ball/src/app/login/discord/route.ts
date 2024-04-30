@@ -1,7 +1,7 @@
-import { generateState } from 'arctic';
-import { cookies } from 'next/headers';
 import { discord } from '@/discord-auth/discord-oauth-client';
 import { env } from '@/env';
+import { generateState } from 'arctic';
+import { cookies } from 'next/headers';
 
 export async function GET(): Promise<Response> {
 	const state = generateState();

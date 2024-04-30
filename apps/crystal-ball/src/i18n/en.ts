@@ -1,23 +1,23 @@
 export const en = {
 	auth: {
 		discord: {
-      login: 'Login With Discord',
-      error: {
-        title: 'Error',
-        description: 'Unknown Error. Please log in again.'
-      }
-    },
-		logout: 'log out'
+			login: 'Login With Discord',
+			error: {
+				title: 'Error',
+				description: 'Unknown Error. Please log in again.',
+			},
+		},
+		logout: 'log out',
 	},
 	pick: {
 		make: 'Make Pick',
 		change: 'Change Pick',
 		confirm: 'Confirm Pick',
 		error: {
-			title: 'Unknown Error. Try Again.'
+			title: 'Unknown Error. Try Again.',
 		},
-		search: "Search by Name",
-		submit: 'Submit'
+		search: 'Search by Name',
+		submit: 'Submit',
 	},
-	picksLockIn: "picks lock in"
+	picksLockIn: 'picks lock in',
 };

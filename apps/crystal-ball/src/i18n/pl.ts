@@ -14,10 +14,10 @@ export const pl = {
 		change: 'Zmień',
 		confirm: 'Zatwierdz',
 		error: {
-			title: 'Nieznany błąd. Spróbuj ponownie'
+			title: 'Nieznany błąd. Spróbuj ponownie',
 		},
-		search: "Wyszukaj po nazwie",
-		submit: 'zakończ'
+		search: 'Wyszukaj po nazwie',
+		submit: 'zakończ',
 	},
-	picksLockIn: "Czas do"
+	picksLockIn: 'Czas do',
 };

@@ -1,9 +1,9 @@
 import { ThemeProvider } from '@/components/ui/change-theme';
+import { getServerLocale } from '@/i18n/get-server-translation';
+import '@repo/ui/theme.css';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import type { ReactNode } from 'react';
-import '@repo/ui/theme.css';
-import { getServerLocale } from '@/i18n/get-server-translation';
 
 export const metadata: Metadata = {
 	title: 'Lewus MSI - Crystal Ball',
