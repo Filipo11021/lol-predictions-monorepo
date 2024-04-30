@@ -54,7 +54,7 @@ export const execute = async (
 						},
 					},
 				},
-		  })
+			})
 		: prisma.currentGameDay.findUnique({
 				where: { id: Workspace.Main },
 				include: {
@@ -82,7 +82,7 @@ export const execute = async (
 						},
 					},
 				},
-		  });
+			});
 
 	const [data, allCount] = await Promise.all([
 		dataPromise,

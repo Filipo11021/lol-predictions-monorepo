@@ -44,8 +44,8 @@ function getSelectedOptionValue({ answers }: { answers: Answer[] }) {
 		answers.length <= 0
 			? undefined
 			: answers[0].selectedOptions.length <= 0
-			  ? undefined
-			  : answers[0].selectedOptions[0];
+				? undefined
+				: answers[0].selectedOptions[0];
 
 	return value;
 }
@@ -103,7 +103,7 @@ export default async function Home() {
 	return (
 		<div>
 			<AppHeader />
-			<main className="w-full flex flex-col gap-12 p-8 max-w-[2000px] mx-auto">
+			<main className="mx-auto flex w-full max-w-[2000px] flex-col gap-12 p-8">
 				{[eventQuestion, championQuestions, playerQuestions, teamQuestions].map(
 					(questions) => {
 						if (!questions.length) return;
@@ -111,9 +111,9 @@ export default async function Home() {
 						const { category } = questions[0];
 
 						return (
-							<div className="flex flex-col gap-6">
+							<div key={category} className="flex flex-col gap-6">
 								<h2 className="text-2xl">{category}</h2>
-								<div className="grid max-w-[1800px] w-full mx-auto gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 justify-around">
+								<div className="mx-auto grid w-full max-w-[1800px] grid-cols-1 justify-around gap-8 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-5">
 									{questions.map((question) => {
 										const translatedTitle = question.title[locale];
 										const initialValue = getSelectedOptionValue({
@@ -122,6 +122,7 @@ export default async function Home() {
 
 										return (
 											<ChooseAnswer
+												key={question.id}
 												title={translatedTitle}
 												options={formatOptions({ question, teams })}
 												questionId={question.id}
@@ -137,7 +138,7 @@ export default async function Home() {
 						);
 					}
 				)}
-				<div className="pt-6 pb-11 flex justify-center">
+				<div className="flex justify-center pt-6 pb-11">
 					<Button className="text-xl capitalize" size="lg" asChild>
 						<a href="https://twitch.tv/lewus">{translation.pick.submit}</a>
 					</Button>

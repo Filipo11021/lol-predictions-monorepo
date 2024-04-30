@@ -15,7 +15,7 @@ export function ChooseAnswerSearch({
 	const inputRef = useRef<null | HTMLInputElement>(null);
 
 	return (
-		<div className="flex gap-2 mx-6 mt-4 mb-2">
+		<div className="mx-6 mt-4 mb-2 flex gap-2">
 			<Input
 				onInput={(e) => {
 					onInput(e);

@@ -64,7 +64,7 @@ export const getColumns = ({
 				const resultStatus = getResult({ winner, vote: value });
 				return (
 					<div
-						className={cn('p-4 font-medium text-center h-full border-x', {
+						className={cn('h-full border-x p-4 text-center font-medium', {
 							'bg-success text-success-foreground':
 								resultStatus === 'wonWithScore',
 							'bg-error text-error-foreground': resultStatus === 'lose',
@@ -85,7 +85,7 @@ export const getColumns = ({
 			},
 			cell(props) {
 				return (
-					<div className="p-4 border-t mt-[-1px]">
+					<div className="mt-[-1px] border-t p-4">
 						{props.getValue() as string}
 					</div>
 				);
@@ -97,7 +97,7 @@ export const getColumns = ({
 				return (
 					<Button
 						variant="ghost"
-						className="text-center flex mx-auto"
+						className="mx-auto flex text-center"
 						onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 					>
 						Points
@@ -106,7 +106,7 @@ export const getColumns = ({
 				);
 			},
 			cell({ getValue }) {
-				return <div className="text-center p-4">{Number(getValue())}</div>;
+				return <div className="p-4 text-center">{Number(getValue())}</div>;
 			},
 		},
 		//@ts-expect-error

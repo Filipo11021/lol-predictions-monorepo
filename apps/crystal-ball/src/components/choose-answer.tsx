@@ -98,7 +98,7 @@ export function ChooseAnswer({
 						<div className="relative flex flex-col">
 							<img
 								alt=""
-								className={cn('object-cover h-48', {
+								className={cn('h-48 object-cover', {
 									'object-contain': isContain,
 								})}
 								src={
@@ -109,7 +109,7 @@ export function ChooseAnswer({
 							/>
 
 							{value ? (
-								<div className="bg-black/40 capitalize  text-base font-semibold p-2 w-full text-center absolute bottom-0 left-0">
+								<div className="absolute bottom-0 left-0 w-full bg-black/40 p-2 text-center font-semibold text-base capitalize">
 									{value}
 								</div>
 							) : null}
@@ -119,7 +119,7 @@ export function ChooseAnswer({
 				</div>
 
 				<CardFooter className="flex flex-col items-center gap-4">
-					<div className="px-3 rounded-md py-2 text-base border-2 border-yellow-500 text-yellow-500">
+					<div className="rounded-md border-2 border-yellow-500 px-3 py-2 text-base text-yellow-500">
 						{points} PTS
 					</div>
 					<DialogTrigger asChild>
@@ -129,7 +129,7 @@ export function ChooseAnswer({
 					</DialogTrigger>
 				</CardFooter>
 			</Card>
-			<DialogContent className="max-w-6xl w-11/12">
+			<DialogContent className="w-11/12 max-w-6xl">
 				<DialogHeader>
 					<DialogTitle className="font-light text-2xl">{title}</DialogTitle>
 				</DialogHeader>
@@ -156,13 +156,13 @@ export function ChooseAnswer({
 				)}
 
 				<div
-					className={cn(' overflow-y-scroll', {
+					className={cn('overflow-y-scroll', {
 						'h-[55dvh] sm:h-[65dvh]': options.length > 10,
 						'max-h-[55dvh] sm:max-h-[65dvh]': options.length <= 10,
 					})}
 				>
 					<div
-						className={cn('grid grid-cols-2 sm:grid-cols-3 gap-8 py-4 px-3', {
+						className={cn('grid grid-cols-2 gap-8 px-3 py-4 sm:grid-cols-3', {
 							'grid-cols-1': options.some(({ image }) => image),
 						})}
 					>
@@ -173,9 +173,10 @@ export function ChooseAnswer({
 
 							return (
 								<Button
+									key={answer.value}
 									onClick={() => setValue(answer.value)}
 									className={cn(
-										'cursor-pointer border overflow-hidden flex justify-start gap-4 capitalize border-border px-8 py-10  rounded-md text-base',
+										'flex cursor-pointer justify-start gap-4 overflow-hidden rounded-md border border-border px-8 py-10 text-base capitalize',
 										{
 											'border-primary': isSelected,
 										}
@@ -186,9 +187,9 @@ export function ChooseAnswer({
 										<Image alt="" src={icon} width={85} height={85} />
 									) : null}
 
-									<div className="flex flex-col justify-center items-start">
+									<div className="flex flex-col items-start justify-center">
 										{answer.subtitle && (
-											<p className="text-sm font-light mb-1">
+											<p className="mb-1 font-light text-sm">
 												{answer.subtitle}
 											</p>
 										)}
@@ -199,7 +200,7 @@ export function ChooseAnswer({
 						})}
 					</div>
 				</div>
-				<DialogFooter className="flex gap-8 items-center px-8">
+				<DialogFooter className="flex items-center gap-8 px-8">
 					{error && (
 						<div className="font-light text-yellow-400">
 							{translation.error.title}

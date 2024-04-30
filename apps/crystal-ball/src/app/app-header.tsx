@@ -19,13 +19,13 @@ export function AppHeader() {
 	const t = getServerTranslation();
 
 	return (
-		<header className="sticky top-0 border-b bg-background z-10">
-			<div className="flex items-center justify-between gap-4 max-w-[2000px] py-3 px-4 md:px-6 mx-auto">
+		<header className="sticky top-0 z-10 border-b bg-background">
+			<div className="mx-auto flex max-w-[2000px] items-center justify-between gap-4 px-4 py-3 md:px-6">
 				<div className="text-sm sm:text-base">
 					<p className="mr-1 inline-block">Lewus MSI</p>
 					<h1 className="inline-block">Crystal Ball</h1>
 				</div>
-				<div className="flex flex-col min-w-[80px] items-center text-xs sm:text-base">
+				<div className="flex min-w-[80px] flex-col items-center text-xs sm:text-base">
 					<div className="uppercase">{t.picksLockIn}</div>
 					<div>10:00 07.05</div>
 				</div>

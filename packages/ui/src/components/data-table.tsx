@@ -20,7 +20,7 @@ interface DataTableProps<Data> {
 
 export function DataTable<Data>({ table, className }: DataTableProps<Data>) {
 	return (
-		<div className="rounded-md border overflow-hidden">
+		<div className="overflow-hidden rounded-md border">
 			<Table>
 				<TableHeader>
 					{table.getHeaderGroups().map((headerGroup) => (
@@ -33,7 +33,7 @@ export function DataTable<Data>({ table, className }: DataTableProps<Data>) {
 											: flexRender(
 													header.column.columnDef.header,
 													header.getContext()
-											  )}
+												)}
 									</TableHead>
 								);
 							})}

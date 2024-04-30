@@ -30,7 +30,7 @@ export const columns: ColumnDef<PointsTableData>[] = [
 			return (
 				<Button
 					variant="ghost"
-					className="text-center flex mx-auto"
+					className="mx-auto flex text-center"
 					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
 					Points
@@ -48,7 +48,7 @@ export const columns: ColumnDef<PointsTableData>[] = [
 			return (
 				<Button
 					variant="ghost"
-					className="text-center flex mx-auto"
+					className="mx-auto flex text-center"
 					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
 					Coverage

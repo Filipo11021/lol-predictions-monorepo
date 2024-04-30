@@ -28,7 +28,7 @@ export function TableSearch({
 	const path = usePathname();
 
 	return (
-		<div className="flex gap-2 max-w-lg w-full mx-auto justify-center items-center">
+		<div className="mx-auto flex w-full max-w-lg items-center justify-center gap-2">
 			<ModeToggle />
 			<Input
 				onInput={(e) => usernameFilter.handler(e.currentTarget.value)}
@@ -38,7 +38,7 @@ export function TableSearch({
 			/>
 			<Button
 				variant="ghost"
-				className="p-1 mr-3"
+				className="mr-3 p-1"
 				onClick={() => usernameFilter.handler('')}
 			>
 				<span className="sr-only">clear username filter</span>

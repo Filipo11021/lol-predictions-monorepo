@@ -139,7 +139,7 @@ export async function collectTeamSelectResponses(
 									? 'Brak'
 									: `${voters[0].teamCode} ${
 											voters[0].score !== '1-0' ? voters[0].score : ''
-									  }`.trim()
+										}`.trim()
 							}`
 					)
 					.join(' | '),

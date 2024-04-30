@@ -38,12 +38,12 @@ export const execute = async (
 						new ActionRowBuilder().addComponents(select)
 					),
 					new ActionRowBuilder().addComponents(btn),
-			  ]
+				]
 			: [
 					...selects1.map((select) =>
 						new ActionRowBuilder().addComponents(select)
 					),
-			  ];
+				];
 
 	const res1 = await interaction.channel?.send({
 		//@ts-expect-error
@@ -62,7 +62,7 @@ export const execute = async (
 						//@ts-expect-error
 						new ActionRowBuilder().addComponents(btn),
 					],
-			  })
+				})
 			: undefined;
 
 	await collectTeamSelectResponses(res1, { withEndMessage: true });

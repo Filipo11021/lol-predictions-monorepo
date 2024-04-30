@@ -7,7 +7,7 @@ export function PredictionsTitle() {
 			style={{
 				backgroundImage: 'linear-gradient(to top left,#19e6c3,#9470fd)',
 			}}
-			className="scroll-m-20 text-center mx-auto bg-clip-text text-transparent block text-4xl mb-5 font-extrabold tracking-tight lg:text-5xl"
+			className="mx-auto mb-5 block scroll-m-20 bg-clip-text text-center font-extrabold text-4xl text-transparent tracking-tight lg:text-5xl"
 		>
 			LEC PREDYKCJE
 		</Link>

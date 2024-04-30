@@ -1,32 +1,32 @@
 {
-  "name": "crystal-ball",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@repo/database": "workspace:*",
-    "@repo/ui": "workspace:*",
-    "@t3-oss/env-nextjs": "^0.10.1",
-    "arctic": "^1.7.0",
-    "jiti": "^1.21.0",
-    "lucide-react": "^0.309.0",
-    "next": "14.2.3",
-    "react": "^18",
-    "react-dom": "^18",
-    "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "@prisma/nextjs-monorepo-workaround-plugin": "^5.8.1",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.4.5"
-  }
+	"name": "crystal-ball",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"@repo/database": "workspace:*",
+		"@repo/ui": "workspace:*",
+		"@t3-oss/env-nextjs": "^0.10.1",
+		"arctic": "^1.7.0",
+		"jiti": "^1.21.0",
+		"lucide-react": "^0.309.0",
+		"next": "14.2.3",
+		"react": "^18",
+		"react-dom": "^18",
+		"zod": "^3.22.4"
+	},
+	"devDependencies": {
+		"@prisma/nextjs-monorepo-workaround-plugin": "^5.8.1",
+		"@types/node": "^20",
+		"@types/react": "^18",
+		"@types/react-dom": "^18",
+		"postcss": "^8",
+		"tailwindcss": "^3.4.1",
+		"typescript": "^5.4.5"
+	}
 }

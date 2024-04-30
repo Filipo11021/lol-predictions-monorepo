@@ -53,7 +53,7 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
 						},
 					},
 				},
-		  })
+			})
 		: (
 				await prisma.currentGameDay.findUnique({
 					where: { id: Workspace.Main },
@@ -75,7 +75,7 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
 						},
 					},
 				})
-		  )?.gameDay;
+			)?.gameDay;
 
 	const a = res?.games.map(({ voters, id }) => ({
 		voters: voters.map(({ team, user: { username, id }, score }) => ({
@@ -105,7 +105,7 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
 						? 'Brak'
 						: `${voters[0].teamCode} ${
 								voters[0].score !== '1-0' ? voters[0].score : ''
-						  }`
+							}`
 				}`.trim()
 			)
 			.join(' | ')}`,
