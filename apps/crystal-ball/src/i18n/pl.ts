@@ -7,7 +7,7 @@ export const pl = {
 				description: 'Nieznany Błąd. Zaloguj się ponowanie.',
 			},
 		},
-		logout: 'Wologuj',
+		logout: 'Wyloguj',
 	},
 	pick: {
 		make: 'Wybierz',
