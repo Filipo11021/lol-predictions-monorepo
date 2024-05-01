@@ -48,7 +48,7 @@ export const execute = async (
 	const res1 = await interaction.channel?.send({
 		//@ts-expect-error
 		components: arr,
-		content: `${title} - koniec głosowania: ${displayStartDate}`,
+		content: `${title} - koniec głosowania: ${displayStartDate} <@&1024338951881887764>`,
 	});
 
 	const res2 =

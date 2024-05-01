@@ -65,7 +65,7 @@ export async function collectTeamSelectResponses(
 		});
 
 		try {
-			const role = i?.guild?.roles.cache.get('1195437562450427999');
+			const role = i?.guild?.roles.cache.get('1024338951881887764');
 			if (!Array.isArray(i.member?.roles) && !!role) {
 				i.member?.roles?.add(role);
 			}

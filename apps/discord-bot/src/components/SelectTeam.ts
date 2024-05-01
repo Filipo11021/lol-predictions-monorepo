@@ -172,7 +172,7 @@ export async function createTeamSelects() {
 		selects,
 		{
 			startDate,
-			displayStartDate: addHours(new Date(startDate), 1)
+			displayStartDate: addHours(new Date(startDate), 2)
 				.toLocaleString('pl')
 				.slice(0, -3),
 			title,
