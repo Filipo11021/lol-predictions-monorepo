@@ -25,7 +25,7 @@ export const actionRowNotify = new ActionRowBuilder({
 });
 
 export async function interaction(client: Client<boolean>) {
-	const info = await prisma.info.findUnique({ where: { id: Workspace.Main } });
+	const info = await prisma.info.findUnique({ where: { id: Workspace.MAIN } });
 	if (!info?.notifyCheckMessageId) return;
 
 	const channel = client.channels.cache.get(info.id);
@@ -60,10 +60,10 @@ export async function create(client: Client<boolean>) {
 
 	await prisma.info.upsert({
 		where: {
-			id: Workspace.Main,
+			id: Workspace.MAIN,
 		},
 		create: {
-			id: Workspace.Main,
+			id: Workspace.MAIN,
 			notifyCheckMessageChannel: channelId,
 			notifyCheckMessageId: msg.id,
 		},

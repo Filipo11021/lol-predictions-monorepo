@@ -15,7 +15,7 @@ model User {
   id String @id @map("_id")
 
   username String
-  avatar   String
+  avatar   String?
 
   notifications Boolean @default(true)
 
@@ -56,10 +56,10 @@ model Vote {
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
-  Game   Game   @relation(fields: [gameId], references: [id])
+  game   Game   @relation(fields: [gameId], references: [id])
   gameId String
 
-  score String @default("1-0")
+  score String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -81,7 +81,7 @@ model Game {
 
   startTime DateTime
 
-  type MatchType @default(BO1)
+  type MatchType
 
   winner     Team?   @relation(fields: [winnerCode], references: [code], name: "winner")
   winnerCode String?
@@ -124,7 +124,7 @@ enum Workspace {
 model Current {
   id Workspace @id @default(MAIN) @map("_id")
 
-  game      GameDay? @relation(fields: [gameDayId], references: [id])
+  gameDay   GameDay? @relation(fields: [gameDayId], references: [id])
   gameDayId String?  @unique
 
   messageId String? @unique

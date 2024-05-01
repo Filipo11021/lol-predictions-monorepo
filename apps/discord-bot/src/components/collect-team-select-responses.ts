@@ -15,8 +15,8 @@ export async function collectTeamSelectResponses(
 	});
 
 	const intervalId = setInterval(async () => {
-		const res = await prisma.currentGameDay.findUnique({
-			where: { id: Workspace.Main },
+		const res = await prisma.current.findUnique({
+			where: { id: Workspace.MAIN },
 			include: { gameDay: true },
 		});
 
@@ -31,8 +31,8 @@ export async function collectTeamSelectResponses(
 			}
 		}
 	}, 60 * 1000);
-	const res = await prisma.currentGameDay.findUnique({
-		where: { id: Workspace.Main },
+	const res = await prisma.current.findUnique({
+		where: { id: Workspace.MAIN },
 		include: { gameDay: true },
 	});
 
@@ -59,6 +59,7 @@ export async function collectTeamSelectResponses(
 			create: {
 				id: i.user.id,
 				username: i.user.tag,
+				avatar: i.user.avatar
 			},
 			update: {},
 		});
@@ -98,8 +99,8 @@ export async function collectTeamSelectResponses(
 		const id = i.customId;
 
 		if (id === 'results') {
-			const res = await prisma.currentGameDay.findUnique({
-				where: { id: Workspace.Main },
+			const res = await prisma.current.findUnique({
+				where: { id: Workspace.MAIN },
 				include: {
 					gameDay: {
 						include: {

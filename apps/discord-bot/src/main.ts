@@ -20,16 +20,16 @@ client.once(Events.ClientReady, async (c) => {
 		throw Error('channel type');
 	}
 
-	const currentGameDay = await prisma.currentGameDay.findUnique({
+	const current = await prisma.current.findUnique({
 		where: {
-			id: Workspace.Main,
+			id: Workspace.MAIN,
 		},
 	});
 
 	setInterval(async () => {
-		const currentGameDay = await prisma.currentGameDay.findUnique({
+		const current = await prisma.current.findUnique({
 			where: {
-				id: Workspace.Main,
+				id: Workspace.MAIN,
 			},
 			include: {
 				gameDay: {
@@ -50,10 +50,10 @@ client.once(Events.ClientReady, async (c) => {
 		});
 
 		const msg = (await channel.messages.fetch({ limit: 10 })).find(
-			({ id }) => currentGameDay?.messageId?.split('$$')[0] === id
+			({ id }) => current?.messageId?.split('$$')[0] === id
 		);
 
-		const res = currentGameDay?.gameDay?.games.map(({ voters, teams }) =>
+		const res = current?.gameDay?.games.map(({ voters, teams }) =>
 			voters
 				.map(({ team, score }) => ({
 					teamCode: team.code,
@@ -147,10 +147,10 @@ client.once(Events.ClientReady, async (c) => {
 	}, 1000 * 28);
 
 	const msg1 = (await channel.messages.fetch({ limit: 10 })).find(
-		({ id }) => currentGameDay?.messageId?.split('$$')[0] === id
+		({ id }) => current?.messageId?.split('$$')[0] === id
 	);
 	const msg2 = (await channel.messages.fetch({ limit: 10 })).find(
-		({ id }) => currentGameDay?.messageId?.split('$$')[1] === id
+		({ id }) => current?.messageId?.split('$$')[1] === id
 	);
 	collectTeamSelectResponses(msg1, { withEndMessage: true });
 	if (msg2) {

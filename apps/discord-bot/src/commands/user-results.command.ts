@@ -55,8 +55,8 @@ export const execute = async (i: ChatInputCommandInteraction<CacheType>) => {
 				},
 			})
 		: (
-				await prisma.currentGameDay.findUnique({
-					where: { id: Workspace.Main },
+				await prisma.current.findUnique({
+					where: { id: Workspace.MAIN },
 					include: {
 						gameDay: {
 							include: {

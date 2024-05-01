@@ -70,12 +70,12 @@ export const execute = async (
 		await collectTeamSelectResponses(res2, { withEndMessage: false });
 	}
 
-	await prisma.currentGameDay.update({
+	await prisma.current.update({
 		data: {
 			messageId: res2?.id ? `${res1?.id}$$${res2?.id}` : res1?.id,
 		},
 		where: {
-			id: Workspace.Main,
+			id: Workspace.MAIN,
 		},
 	});
 };

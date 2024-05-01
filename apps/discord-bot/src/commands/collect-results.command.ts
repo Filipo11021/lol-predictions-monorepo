@@ -55,8 +55,8 @@ export const execute = async (
 					},
 				},
 			})
-		: prisma.currentGameDay.findUnique({
-				where: { id: Workspace.Main },
+		: prisma.current.findUnique({
+				where: { id: Workspace.MAIN },
 				include: {
 					gameDay: {
 						include: {
