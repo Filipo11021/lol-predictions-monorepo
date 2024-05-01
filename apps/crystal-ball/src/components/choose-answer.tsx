@@ -84,7 +84,7 @@ export function ChooseAnswer({
 					setValue(lastSubmittedValue.current);
 				}
 
-				if (open === false) {
+				if (open === true) {
 					setAvailableOptions(options);
 				}
 
