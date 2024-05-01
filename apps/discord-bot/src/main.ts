@@ -5,6 +5,8 @@ import { ChannelType, Client, Events, GatewayIntentBits } from 'discord.js';
 import { env } from './env';
 import { handleSlashCommands } from './handle-slash-commands';
 
+console.log("v0.0.1")
+
 const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
