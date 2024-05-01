@@ -157,8 +157,8 @@ export function ChooseAnswer({
 
 				<div
 					className={cn('overflow-y-scroll', {
-						'h-[55dvh] sm:h-[65dvh]': options.length > 10,
-						'max-h-[55dvh] sm:max-h-[65dvh]': options.length <= 10,
+						'h-[55vh] sm:h-[65vh]': options.length > 10,
+						'max-h-[55vh] sm:max-h-[65vh]': options.length <= 10,
 					})}
 				>
 					<div
