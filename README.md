@@ -3,6 +3,7 @@
 
 This monorepo with Turborepo for discord lol predictions apps includes the following packages/apps:
 
+
 ### Apps and Packages
 
 - [frontend](./apps//frontend/): a Next.js app for predictions data visualization
