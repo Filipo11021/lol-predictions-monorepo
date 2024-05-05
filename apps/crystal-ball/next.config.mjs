@@ -28,6 +28,14 @@ const nextConfig = {
 			},
 		],
 	},
+	rewrites() {
+		return [
+			{
+				source: '/stats/:match*',
+				destination: 'https://analytics.filipo.dev/:match*',
+			},
+		];
+	},
 };
 
 export default nextConfig;

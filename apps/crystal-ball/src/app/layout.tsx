@@ -29,7 +29,7 @@ export default function RootLayout({
 
 				<Script
 					async
-					src="https://analytics.filipo.dev/script.js"
+					src="/stats/script.js"
 					data-website-id="c6b96461-30a9-4f2f-897b-179fdd64160a"
 				/>
 			</body>

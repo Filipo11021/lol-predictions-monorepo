@@ -8,6 +8,14 @@ const nextConfig = {
 
 		return config;
 	},
+	rewrites() {
+		return [
+			{
+				source: '/stats/:match*',
+				destination: 'https://analytics.filipo.dev/:match*',
+			},
+		];
+	},
 };
 
 module.exports = nextConfig;
