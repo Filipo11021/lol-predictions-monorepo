@@ -39,8 +39,8 @@ model Team {
   votes    Vote[]
   wonGames Game[] @relation(name: "winner")
 
-  event   Event   @relation(fields: [eventId], references: [id])
-  eventId EventId
+  tournament   Tournament    @relation(fields: [tournamentId], references: [id])
+  tournamentId TOURNAMENT_ID
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -87,8 +87,8 @@ model Game {
   winnerCode String?
   score      String?
 
-  event   Event   @relation(fields: [eventId], references: [id])
-  eventId EventId
+  tournament   Tournament    @relation(fields: [tournamentId], references: [id])
+  tournamentId TOURNAMENT_ID
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -106,8 +106,8 @@ model GameDay {
 
   games Game[]
 
-  event   Event   @relation(fields: [eventId], references: [id])
-  eventId EventId
+  tournament   Tournament    @relation(fields: [tournamentId], references: [id])
+  tournamentId TOURNAMENT_ID
 
   firstMatchStart DateTime
 
@@ -129,8 +129,8 @@ model Current {
 
   messageId String? @unique
 
-  cevent  Event   @relation(fields: [eventId], references: [id])
-  eventId EventId
+  ctournament  Tournament    @relation(fields: [tournamentId], references: [id])
+  tournamentId TOURNAMENT_ID
 }
 
 model Question {
@@ -149,8 +149,8 @@ model Question {
 
   answers Answer[]
 
-  event   Event   @relation(fields: [eventId], references: [id])
-  eventId EventId
+  tournament   Tournament    @relation(fields: [tournamentId], references: [id])
+  tournamentId TOURNAMENT_ID
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -185,18 +185,18 @@ model Answer {
   @@unique([questionId, userId])
 }
 
-enum EventId {
+enum TOURNAMENT_ID {
   MSI_2024
 }
 
-model Event {
-  id EventId @id @map("_id")
+model Tournament {
+  id TOURNAMENT_ID @id @map("_id")
 
   gameDays  GameDay[]
   games     Game[]
   questions Question[]
   current   Current[]
-  tems      Team[]
+  teams     Team[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
