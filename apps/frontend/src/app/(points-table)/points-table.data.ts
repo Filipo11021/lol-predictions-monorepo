@@ -24,16 +24,15 @@ export async function pointsTableData(): Promise<{
 	for (const user of data) {
 		users.push({
 			username: user.username,
-			points:
-				user.votes
-					.map(({ teamCode, score, game: { winnerCode, type }, game }) =>
-						calculatePoints({
-							type,
-							voter: { code: teamCode, score },
-							winner: { code: winnerCode, score: game.score },
-						})
-					)
-					.reduce((a, b) => a + b, 0 as number),
+			points: user.votes
+				.map(({ teamCode, score, game: { winnerCode, type }, game }) =>
+					calculatePoints({
+						type,
+						voter: { code: teamCode, score },
+						winner: { code: winnerCode, score: game.score },
+					})
+				)
+				.reduce((a, b) => a + b, 0 as number),
 			coverage:
 				(user.votes.filter(({ game: { winnerCode } }) => winnerCode).length *
 					100) /
@@ -59,5 +58,5 @@ export async function pointsTableData(): Promise<{
 		});
 	});
 
-	return { data: dataWithIndex };
+	return { data: dataWithIndex.filter(({ coverage }) => coverage > 0) };
 }
