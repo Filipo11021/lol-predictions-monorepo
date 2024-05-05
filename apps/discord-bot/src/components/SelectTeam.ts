@@ -1,5 +1,5 @@
-import { $Enums, Team } from '@repo/database';
-import { Workspace, prisma } from '@repo/database';
+import type { Team } from '@repo/database';
+import { Workspace, prisma, $Enums } from '@repo/database';
 import {
 	StringSelectMenuBuilder,
 	StringSelectMenuOptionBuilder,
