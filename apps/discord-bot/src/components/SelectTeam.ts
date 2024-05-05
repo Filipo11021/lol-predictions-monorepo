@@ -1,4 +1,4 @@
-import type { $Enums, Team } from '@repo/database';
+import { $Enums, Team } from '@repo/database';
 import { Workspace, prisma } from '@repo/database';
 import {
 	StringSelectMenuBuilder,
@@ -64,7 +64,7 @@ function createTeamIfNotExist({
 	code,
 	image,
 	name,
-	eventId
+	tournamentId,
 }: Omit<Team, 'gameIds' | 'createdAt' | 'updatedAt'>) {
 	return prisma.team.upsert({
 		where: {
@@ -75,7 +75,7 @@ function createTeamIfNotExist({
 			code,
 			image,
 			name,
-			eventId
+			tournamentId,
 		},
 	});
 }
@@ -96,20 +96,20 @@ function strategyCountToEnumType(strategyCount: number): $Enums.MatchType {
 export async function createGame(
 	gameDayId: string,
 	{ match: { teams, strategy }, match, startTime }: EventT,
-	eventId: $Enums.EventId
+	tournamentId: $Enums.TOURNAMENT_ID
 ) {
 	await Promise.all([
 		createTeamIfNotExist({
 			code: teams[0].code,
 			image: teams[0].image,
 			name: teams[0].name,
-			eventId
+			tournamentId,
 		}),
 		createTeamIfNotExist({
 			code: teams[1].code,
 			image: teams[1].image,
 			name: teams[1].name,
-			eventId
+			tournamentId,
 		}),
 	]);
 
@@ -123,7 +123,7 @@ export async function createGame(
 			gameDayId,
 			teamCodes: [teams[0].code, teams[1].code],
 			type: strategyCountToEnumType(strategy.count),
-			eventId: 'MSI_2024'
+			tournamentId: $Enums.TOURNAMENT_ID.MSI_2024,
 		},
 		update: {},
 	});
@@ -144,7 +144,7 @@ export async function createTeamSelects() {
 		create: {
 			firstMatchStart: events[0].startTime,
 			id: generateGameDayId(events),
-			eventId: 'MSI_2024'
+			tournamentId: $Enums.TOURNAMENT_ID.MSI_2024,
 		},
 		update: {},
 		where: {
@@ -155,10 +155,12 @@ export async function createTeamSelects() {
 		},
 	});
 
-	await Promise.all(events.map((event) => createGame(gameDay.id, event, 'MSI_2024')));
+	await Promise.all(
+		events.map((event) => createGame(gameDay.id, event, 'MSI_2024'))
+	);
 
 	await prisma.current.upsert({
-		create: { gameDayId: gameDay.id, eventId: 'MSI_2024' },
+		create: { gameDayId: gameDay.id, tournamentId: $Enums.TOURNAMENT_ID.MSI_2024 },
 		update: { gameDayId: gameDay.id },
 		where: {
 			id: Workspace.MAIN,

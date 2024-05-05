@@ -25,7 +25,7 @@ function getCrystalBallQuestions({
 	const user = userRes.ok ? userRes.data : null;
 	return prisma.question.findMany({
 		where: {
-			eventId: $Enums.EventId.MSI_2024,
+			tournamentId: $Enums.TOURNAMENT_ID.MSI_2024,
 			category: category,
 			type: $Enums.QuestionType.CRYSTAL_BALL,
 		},
