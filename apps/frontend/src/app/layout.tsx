@@ -5,8 +5,8 @@ import Script from 'next/script';
 import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-	title: 'LEC predictions - lewus',
-	description: 'LEC predictions - lewus',
+	title: 'MSI predictions - lewus',
+	description: 'MSI predictions - lewus',
 };
 
 export default function RootLayout({

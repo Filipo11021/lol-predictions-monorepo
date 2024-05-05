@@ -17,7 +17,7 @@ export function calculatePoints({
 		case 'BO1':
 			return 1;
 		case 'BO3':
-			return voter.score === winner.score ? 3 : 2;
+			return voter.score === winner.score ? 2 : 1;
 		case 'BO5':
 			return voter.score === winner.score ? 5 : 3;
 		default:

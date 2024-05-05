@@ -1,5 +1,4 @@
 import { calculatePoints } from '@/utils/calculatePoints';
-import { calculateQuestionsPoints } from '@/utils/calculateQuestionsPoints';
 import { prisma } from '@repo/database';
 import type { PointsTableData } from './points-columns';
 
@@ -11,7 +10,7 @@ export async function pointsTableData(): Promise<{
 			include: {
 				votes: {
 					include: {
-						Game: true,
+						game: true,
 					},
 				},
 			},
@@ -23,23 +22,20 @@ export async function pointsTableData(): Promise<{
 		Pick<PointsTableData, 'username' | 'points' | 'coverage'>
 	> = [];
 	for (const user of data) {
-		const questionsPoints = await calculateQuestionsPoints({
-			user: { id: user.id },
-		});
 		users.push({
 			username: user.username,
 			points:
 				user.votes
-					.map(({ teamCode, score, Game: { winnerCode, type }, Game }) =>
+					.map(({ teamCode, score, game: { winnerCode, type }, game }) =>
 						calculatePoints({
 							type,
 							voter: { code: teamCode, score },
-							winner: { code: winnerCode, score: Game.score },
+							winner: { code: winnerCode, score: game.score },
 						})
 					)
-					.reduce((a, b) => a + b, 0 as number) + questionsPoints,
+					.reduce((a, b) => a + b, 0 as number),
 			coverage:
-				(user.votes.filter(({ Game: { winnerCode } }) => winnerCode).length *
+				(user.votes.filter(({ game: { winnerCode } }) => winnerCode).length *
 					100) /
 				gamesCount,
 		});
