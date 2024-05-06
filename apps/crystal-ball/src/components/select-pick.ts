@@ -10,6 +10,9 @@ export async function selectPickAction({
 	value: string;
 	questionId: string;
 }) {
+	if (new Date().getTime() > new Date("2024-05-07T09:01:00Z").getTime())
+		throw Error('end');
+
 	try {
 		const discordUser = await validateDiscordUser();
 		if (!discordUser.ok) throw Error('Unauthorized');

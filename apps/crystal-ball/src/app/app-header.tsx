@@ -27,7 +27,7 @@ export function AppHeader() {
 				</div>
 				<div className="flex min-w-[80px] flex-col items-center text-xs sm:text-base">
 					<div className="uppercase">{t.picksLockIn}</div>
-					<div>10:00 07.05</div>
+					<div>11:00 07.05</div>
 				</div>
 				<div className="flex gap-8">
 					<ChangeLocale />

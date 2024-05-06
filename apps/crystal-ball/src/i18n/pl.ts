@@ -12,6 +12,7 @@ export const pl = {
 	pick: {
 		make: 'Wybierz',
 		change: 'Zmień',
+		finished: 'Skończono głosowanie',
 		confirm: 'Zatwierdz',
 		error: {
 			title: 'Nieznany błąd. Spróbuj ponownie',
