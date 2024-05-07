@@ -1,6 +1,6 @@
 'use client';
 
-import { TableSearch } from '@/app/shared/table-search';
+import { TableSearch } from '@/app/(app)/shared/table-search';
 import { DataTable } from '@/components/ui/data-table';
 import type { GameDay } from '@repo/database';
 import {

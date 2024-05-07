@@ -1,4 +1,4 @@
-import { PredictionsTitle } from '@/app/shared/predictions-title';
+import { PredictionsTitle } from '@/app/(app)/shared/predictions-title';
 import { getAllGameDays } from '../shared/game-days.data';
 import { PointsTable } from './points-table';
 import { pointsTableData } from './points-table.data';
