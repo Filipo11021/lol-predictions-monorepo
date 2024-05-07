@@ -1,5 +1,4 @@
 import { prisma } from '@repo/database';
-import '@repo/ui/theme.css';
 
 export default async function WidgetPage({
 	params,
