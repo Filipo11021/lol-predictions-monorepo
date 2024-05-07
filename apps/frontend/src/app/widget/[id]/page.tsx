@@ -18,7 +18,7 @@ export default async function WidgetPage({
 
 
 
-	return <div className="bg-black p-3 rounded-sm text-[#fe0000] m-8 flex max-w-fit gap-4 items-center">
+	return <div className="bg-black p-3 rounded-sm text-[#fe0000] flex max-w-fit gap-4 items-center">
     <ScoreCard count={votes[0].count} teamCode={votes[0].teamCode} />
     <div>VS</div>
     <ScoreCard count={votes[1].count} teamCode={votes[1].teamCode} />
