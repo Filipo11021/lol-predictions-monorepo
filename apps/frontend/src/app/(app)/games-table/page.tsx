@@ -3,6 +3,8 @@ import { getAllGameDays } from '../shared/game-days.data';
 import { GamesTable } from './games-table';
 import { gamesTableData } from './games-table.data';
 
+export const revalidate = 2;
+
 export default async function Home() {
 	const [{ tableData, tableInfo }, gameDays] = await Promise.all([
 		gamesTableData({ type: 'all' }),
