@@ -4,6 +4,7 @@ import { GamesTable } from './games-table';
 import { gamesTableData } from './games-table.data';
 
 export const revalidate = 2;
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
 	const [{ tableData, tableInfo }, gameDays] = await Promise.all([
