@@ -1,9 +1,9 @@
 import { Workspace, prisma } from '@repo/database';
-// import { collectQuestionsResponses } from 'collect-questions-responses';
 import { collectTeamSelectResponses } from 'components/collect-team-select-responses';
 import { ChannelType, Client, Events, GatewayIntentBits } from 'discord.js';
 import { env } from './env';
 import { handleSlashCommands } from './handle-slash-commands';
+import { collectQuestionsResponses } from 'collect-questions-responses';
 
 console.log("v0.0.1")
 
@@ -159,7 +159,7 @@ client.once(Events.ClientReady, async (c) => {
 		collectTeamSelectResponses(msg2, { withEndMessage: false });
 	}
 
-	// collectQuestionsResponses(channel);
+	collectQuestionsResponses(channel);
 
 	// biome-ignore lint/suspicious/noConsoleLog: bot ready info
 	console.log(`Ready! Logged in as ${c.user.tag}`);
