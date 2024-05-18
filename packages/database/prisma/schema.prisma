@@ -169,7 +169,7 @@ enum QuestionCategory {
 }
 
 model Answer {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(cuid()) @map("_id")
 
   selectedOptions String[]
 
