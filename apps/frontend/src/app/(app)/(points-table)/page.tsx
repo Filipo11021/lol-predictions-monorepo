@@ -10,7 +10,7 @@ export default async function Home() {
 	]);
 
 	return (
-		<div className="mx-auto max-w-2xl p-4">
+		<div className="mx-auto max-w-2xl p-4 h-full">
 			<PredictionsTitle />
 			<PointsTable gameDays={gameDays} data={data} />
 			<p className="my-8 opacity-80">
