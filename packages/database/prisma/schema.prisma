@@ -187,6 +187,7 @@ model Answer {
 
 enum TOURNAMENT_ID {
   MSI_2024
+  WORLDS_2024
 }
 
 model Tournament {

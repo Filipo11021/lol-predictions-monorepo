@@ -1,7 +1,6 @@
 import { PredictionsTitle } from '@/app/(app)/shared/predictions-title';
 import { getAllGameDays } from '../shared/game-days.data';
 import { bonusQuestionsTableData } from './bonus-questions-data';
-import { GamesTable } from '../games-table/games-table';
 import { BonusQuestionTable } from './bonus-questions-table';
 
 export default async function Home() {
@@ -15,7 +14,7 @@ export default async function Home() {
 			<PredictionsTitle />
 			<BonusQuestionTable
 				gameDays={gameDays}
-				tableData={tableData}
+				tableData={tableData.slice(-1619)}
 				tableInfo={tableInfo}
 			/>
 		</div>

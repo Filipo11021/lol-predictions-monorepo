@@ -1,5 +1,5 @@
 import { prisma } from "@repo/database";
-import {
+import type {
   BonusQuestionsData,
   BonusQuestionsInfo,
 } from "./bonus-questions-columns";
@@ -11,6 +11,7 @@ function getResult({
   selectedOptions?: string[];
 	correctOptions?: string[];
 }): 'won' | 'lose' | 'unfinished' {
+	// biome-ignore lint/complexity/useSimplifiedLogicExpression: <explanation>
 	if (!selectedOptions || !correctOptions) return 'unfinished';
 
   if (selectedOptions.some((el) => correctOptions.includes(el))) return 'won'
@@ -18,7 +19,7 @@ function getResult({
   return 'lose'
 }
 
-async function getQuestions(arg: { type: "all" }) {
+function getQuestions(_: { type: "all" }) {
   return prisma.question.findMany({
     include: {
       answers: {

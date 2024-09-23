@@ -73,7 +73,9 @@ export function BonusQuestionTable({
 	return (
 		<div className="flex flex-col gap-6">
 			<TableSearch gameDays={gameDays} usernameFilter={usernameFilter} />
+			<div className='h-70vh overflow-scroll'>
 			<DataTable className={{ cell: 'p-0' }} table={table} />
+			</div>
 			<style jsx>{`
 :global(td:nth-of-type(1)),
 :global(th:nth-of-type(1)) {
