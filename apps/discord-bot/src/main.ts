@@ -4,8 +4,14 @@ import { ChannelType, Client, Events, GatewayIntentBits } from 'discord.js';
 import { env } from './env';
 import { handleSlashCommands } from './handle-slash-commands';
 import { collectQuestionsResponses } from 'collect-questions-responses';
+import http from 'node:http'
 
 console.log("v0.0.1")
+
+http.createServer(function (req, res) {
+  res.write('Hello World!');
+  res.end();
+}).listen(process.env.PORT ?? 3000)
 
 const client = new Client({
 	intents: [
