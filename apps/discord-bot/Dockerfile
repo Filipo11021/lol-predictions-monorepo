@@ -34,7 +34,6 @@ RUN apt-get update -qq && \
 # Install node modules
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY .npmrc .npmrc
 RUN pnpm install --frozen-lockfile --prod=false
 
 # Build the project and its dependencies
