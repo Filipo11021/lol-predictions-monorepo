@@ -26,6 +26,5 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./apps/discord-bot
-          file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/lol-predictions-bot:latest
