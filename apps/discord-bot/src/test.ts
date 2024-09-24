@@ -120,7 +120,7 @@ client.login(env.DISCORD_TOKEN);
 // 		data: q.map(({ pl }) => ({
 // 			title: { pl, en: pl },
 // 			category: $Enums.QuestionCategory.PLAYERS,
-// 			tournamentId: $Enums.TOURNAMENT_ID.MSI_2024,
+// 			tournamentId: $Enums.TOURNAMENT_ID.WORLDS_2024,
 // 			points: 1,
 // 			availableOptions: names,
 // 			type: $Enums.QuestionType.BONUS_QUESTION,

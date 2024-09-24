@@ -9,7 +9,7 @@ export function PredictionsTitle() {
 			}}
 			className="mx-auto mb-5 block scroll-m-20 bg-clip-text text-center font-extrabold text-4xl text-transparent tracking-tight lg:text-5xl"
 		>
-			MSI PREDYKCJE
+			Worlds PREDYKCJE
 		</Link>
 	);
 }

@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-	title: 'MSI predictions - lewus',
-	description: 'MSI predictions - lewus',
+	title: 'Worlds predictions - lewus',
+	description: 'Worlds predictions - lewus',
 };
 
 export default function RootLayout({

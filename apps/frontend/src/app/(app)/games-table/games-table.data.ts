@@ -1,5 +1,5 @@
 import { calculatePoints } from '@/utils/calculatePoints';
-import { prisma } from '@repo/database';
+import { $Enums, prisma } from '@repo/database';
 import type { GamesTableData, GamesTableInfo } from './games-columns';
 
 async function getGames(
@@ -7,9 +7,12 @@ async function getGames(
 ) {
 	if (arg.type === 'fromGameDay') {
 		const data = await prisma.gameDay.findFirst({
-			where: { id: arg.id },
+			where: { id: arg.id, tournamentId: 'WORLDS_2024' },
 			include: {
 				games: {
+					where: {
+						tournamentId: 'WORLDS_2024' 
+					},
 					include: {
 						voters: {
 							include: { user: true },
@@ -23,6 +26,9 @@ async function getGames(
 	}
 
 	return prisma.game.findMany({
+		where: {
+			tournamentId: 'WORLDS_2024'
+		},
 		include: {
 			voters: {
 				include: { user: true },

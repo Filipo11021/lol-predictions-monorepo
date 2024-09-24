@@ -123,7 +123,7 @@ export async function createGame(
 			gameDayId,
 			teamCodes: [teams[0].code, teams[1].code],
 			type: strategyCountToEnumType(strategy.count),
-			tournamentId: $Enums.TOURNAMENT_ID.MSI_2024,
+			tournamentId: $Enums.TOURNAMENT_ID.WORLDS_2024,
 		},
 		update: {},
 	});
@@ -144,7 +144,7 @@ export async function createTeamSelects() {
 		create: {
 			firstMatchStart: events[0].startTime,
 			id: generateGameDayId(events),
-			tournamentId: $Enums.TOURNAMENT_ID.MSI_2024,
+			tournamentId: $Enums.TOURNAMENT_ID.WORLDS_2024,
 		},
 		update: {},
 		where: {
@@ -156,11 +156,11 @@ export async function createTeamSelects() {
 	});
 
 	await Promise.all(
-		events.map((event) => createGame(gameDay.id, event, 'MSI_2024'))
+		events.map((event) => createGame(gameDay.id, event, 'WORLDS_2024'))
 	);
 
 	await prisma.current.upsert({
-		create: { gameDayId: gameDay.id, tournamentId: $Enums.TOURNAMENT_ID.MSI_2024 },
+		create: { gameDayId: gameDay.id, tournamentId: $Enums.TOURNAMENT_ID.WORLDS_2024 },
 		update: { gameDayId: gameDay.id },
 		where: {
 			id: Workspace.MAIN,
