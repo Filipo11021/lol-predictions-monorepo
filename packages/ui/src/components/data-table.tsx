@@ -20,8 +20,8 @@ interface DataTableProps<Data> {
 
 export function DataTable<Data>({ table, className }: DataTableProps<Data>) {
 	return (
-		<div className="h-[70vh] rounded-md border">
-			<Table className='h-[70vh]'>
+		<div className="overflow-scroll rounded-md border">
+			<Table className=''>
 				<TableHeader>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<TableRow key={headerGroup.id}>

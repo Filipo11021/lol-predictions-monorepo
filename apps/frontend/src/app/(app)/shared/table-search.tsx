@@ -57,7 +57,7 @@ export function TableSearch({
 				<SelectContent>
 					<SelectItem value={'/'}>points</SelectItem>
 					<SelectItem value={'/games-table'}>all games</SelectItem>
-					<SelectItem value={'/bonus-questions'}>bonus questions</SelectItem>
+					{/* <SelectItem value={'/bonus-questions'}>bonus questions</SelectItem> */}
 
 					{gameDays.map(({ firstMatchStart, id }) => (
 						<SelectItem key={id} value={`/games-table/${id}`}>

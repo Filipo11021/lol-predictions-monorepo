@@ -13,7 +13,7 @@ export default async function Home() {
 	]);
 
 	return (
-		<div className="relative mx-auto w-full p-4">
+		<div className="relative mx-auto min-h-screen w-full p-4">
 			<PredictionsTitle />
 			<GamesTable
 				gameDays={gameDays}

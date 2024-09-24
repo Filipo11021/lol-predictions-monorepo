@@ -13,7 +13,7 @@ export default async function Home({ params }: { params: { id: string } }) {
 	]);
 
 	return (
-		<div className="mx-auto max-w-4xl p-4">
+		<div className="mx-auto min-h-screen max-w-4xl p-4">
 			<PredictionsTitle />
 			<GamesTable
 				gameDays={gameDays}

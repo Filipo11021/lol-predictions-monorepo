@@ -10,10 +10,10 @@ export default async function Home() {
 	]);
 
 	return (
-		<div className="mx-auto max-w-2xl p-4 h-full">
+		<div className="mx-auto min-h-screen max-w-2xl p-4">
 			<PredictionsTitle />
 			<PointsTable gameDays={gameDays} data={data} />
-			<p className="my-8 opacity-80">
+			<p className="mt-2 mb-1 opacity-80">
 				last update: {new Date().toLocaleString('pl')}
 			</p>
 		</div>
