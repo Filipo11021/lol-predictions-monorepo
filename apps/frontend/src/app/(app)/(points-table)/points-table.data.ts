@@ -8,24 +8,20 @@ export async function pointsTableData(): Promise<{
 }> {
   const [data, gamesCount] = await Promise.all([
     prisma.user.findMany({
-      where: {
+      include: {
         votes: {
-          every: {
+          where: {
             game: {
               tournamentId: 'WORLDS_2024'
             }
-          }
-        }
-      },
-      include: {
-        votes: {
+          },
           include: {
             game: true,
           },
         },
       },
     }),
-    prisma.game.count({ where: { winnerCode: { not: null } } }),
+    prisma.game.count({ where: { winnerCode: { not: null }, tournamentId: 'WORLDS_2024' } }),
   ]);
 
   const users: Array<
