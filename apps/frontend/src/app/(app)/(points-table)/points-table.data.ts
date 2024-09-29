@@ -29,9 +29,10 @@ export async function pointsTableData(): Promise<{
   > = [];
   await Promise.all(
     data.map(async (user) => {
-      const questionsPoints = await calculateQuestionsPoints({
-        user: { id: user.id },
-      });
+      // const questionsPoints = await calculateQuestionsPoints({
+      //   user: { id: user.id },
+      // });
+      const questionsPoints = 0
 
       users.push({
         username: user.username,
