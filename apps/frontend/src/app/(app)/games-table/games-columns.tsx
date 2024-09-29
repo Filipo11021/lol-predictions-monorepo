@@ -109,7 +109,7 @@ export const getColumns = ({
 				return <div className="p-4 text-center">{Number(getValue())}</div>;
 			},
 		},
-		//@ts-expect-error
+		//@ts-ignore
 		...cols,
 	];
 };
