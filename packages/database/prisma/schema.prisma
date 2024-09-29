@@ -59,7 +59,7 @@ model Vote {
   game   Game   @relation(fields: [gameId], references: [id])
   gameId String
 
-  score String
+  score String @default("1-0")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
