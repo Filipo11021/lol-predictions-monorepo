@@ -101,7 +101,7 @@ client.once(Events.ClientReady, async (c) => {
 			let text = '';
 
 			teams.forEach(({ teamCode, count }, i) => {
-				text += `${i !== 0 ? '\n' : ''}${teamCode}: `;
+				text += `${i !== 0 ? ' | ' : ''}${teamCode}: `;
 
 				Object.keys(count).forEach((key, i) => {
 					//@ts-expect-error
