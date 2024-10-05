@@ -5,6 +5,7 @@
 	"scripts": {
 		"build": "turbo build",
 		"start": "turbo start",
+		"bun:start": "turbo bun:start",
 		"dev": "turbo dev",
 		"lint": "biome check --apply .",
 		"dev:db:gen": "turbo dev:db:gen",

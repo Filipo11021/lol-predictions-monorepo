@@ -1,6 +1,6 @@
 # Adjust NODE_VERSION as desired
 ARG NODE_VERSION=20
-FROM node:${NODE_VERSION}-slim as base
+FROM node:${NODE_VERSION}-slim AS base
 
 # Install pnpm
 ARG PNPM_VERSION=8.14.3
@@ -48,7 +48,8 @@ RUN pnpm turbo build --filter=discord-bot...
 RUN pnpm prune --prod
 
 # Final stage for app image
-FROM base AS runner
+FROM docker.io/oven/bun:1.1-slim AS runner
+
 WORKDIR /app
 
 # Don't run production as root
@@ -60,4 +61,4 @@ WORKDIR /app
 COPY --from=installer /app .
 
 # Start the server by default, this can be overwritten at runtime
-CMD [ "pnpm", "run", "start" ]
+CMD [ "sh", "-c", "cd ./apps/discord-bot && bun run bun:start" ]

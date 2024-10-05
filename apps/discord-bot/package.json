@@ -4,6 +4,7 @@
 	"main": "./build/main.js",
 	"scripts": {
 		"start": "npm run deploy-cmd && tsx ./src/main.ts",
+		"bun:start": "bun --smol run ./src/deploy-slash-commands.ts && bun --smol run ./src/main.ts",
 		"dev": "tsx watch --clear-screen=false ./src/main.ts",
 		"deploy-cmd": "tsx ./src/deploy-slash-commands.ts"
 	},

@@ -9,6 +9,9 @@
 		"start": {
 			"dependsOn": ["^start"]
 		},
+		"bun:start": {
+			"dependsOn": ["^bun:start"]
+		},
 		"lint": {
 			"dependsOn": ["^lint"]
 		},
