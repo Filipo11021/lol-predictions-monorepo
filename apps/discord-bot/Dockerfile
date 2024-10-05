@@ -61,4 +61,4 @@ WORKDIR /app
 COPY --from=installer /app .
 
 # Start the server by default, this can be overwritten at runtime
-CMD [ "sh", "-c", "cd ./apps/discord-bot && bun run bun:start" ]
+CMD [ "pnpm", "run", "start" ]
