@@ -48,7 +48,7 @@ RUN pnpm turbo build --filter=discord-bot...
 RUN pnpm prune --prod
 
 # Final stage for app image
-FROM docker.io/oven/bun:1.1-slim AS runner
+FROM base AS runner
 
 WORKDIR /app
 
