@@ -19,7 +19,7 @@ export function calculatePoints({
 		case 'BO3':
 			return voter.score === winner.score ? 2 : 1;
 		case 'BO5':
-			return voter.score === winner.score ? 5 : 2;
+			return voter.score === winner.score ? 5 : 3;
 		default:
 			throw Error('not implemented');
 	}
